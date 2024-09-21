@@ -38,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               blurRadius: 7),
                         ],
                       ),
-                      height: 300,
-                      width: MediaQuery.sizeOf(context).width / 1.6,
+                      height: 250,
+                      width: MediaQuery.sizeOf(context).width / 1.7,
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.all(15),
@@ -128,9 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   blurRadius: 7),
                             ],
                           ),
-                          height: 180,
+                          height: 170,
                           width: MediaQuery.sizeOf(context).width -
-                              ((MediaQuery.sizeOf(context).width / 1.6) + 30),
+                              ((MediaQuery.sizeOf(context).width / 1.7) + 30),
                           child: Padding(
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
@@ -237,9 +237,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ],
                           ),
-                          height: 110,
+                          height: 70,
                           width: MediaQuery.sizeOf(context).width -
-                              ((MediaQuery.sizeOf(context).width / 1.6) + 30),
+                              ((MediaQuery.sizeOf(context).width / 1.7) + 30),
                           child: Center(
                             child: Text(
                               '${_currentDate.day}/${_currentDate.month}/${_currentDate.year}',
