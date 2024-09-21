@@ -11,24 +11,31 @@ class CommonBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<NavBarController>(
-      builder: (controller) {
-        return Scaffold(
-          appBar: commonAppBar(context),
-          body: screens[controller.currentIndex],
-          bottomNavigationBar: BottomNavigationBar(
-              currentIndex: Get.find<NavBarController>().currentIndex,
-              onTap: (index) {
-                Get.find<NavBarController>().setCurrentIndex(index);
-              },
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.calendar_view_week), label: 'Week Scheduler',),
-                BottomNavigationBarItem(icon: Icon(Icons.home_outlined), label: 'Home',),
-                BottomNavigationBarItem(icon: Icon(Icons.task_outlined), label: 'Tasks',)
-              ]),
-        );
-      }
-    );
+    return GetBuilder<NavBarController>(builder: (controller) {
+      return Scaffold(
+        appBar: commonAppBar(context),
+        body: screens[controller.currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: Get.find<NavBarController>().currentIndex,
+            onTap: (index) {
+              Get.find<NavBarController>().setCurrentIndex(index);
+            },
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_view_week),
+                label: 'Week Scheduler',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined),
+                label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.task_outlined),
+                label: 'Tasks',
+              )
+            ]),
+      );
+    });
   }
 
   //----------------------------------Variables----------------------------------
