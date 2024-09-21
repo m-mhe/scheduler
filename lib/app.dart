@@ -25,9 +25,9 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            unselectedItemColor: Colors.black54,
+            unselectedItemColor: Colors.black87,
             elevation: 20,
-            selectedItemColor: ThemeColors.titleColor),
+            selectedItemColor: ThemeColors.accentColor),
       ),
       home: CommonBottomNavBar(),
       initialBinding: ControllerBindings(),
