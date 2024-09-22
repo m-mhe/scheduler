@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/controller_bindings.dart';
-import 'package:scheduler/ui/screens/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:scheduler/ui/utils/nav_bar_controller.dart';
 import 'package:scheduler/ui/utils/theme_colors.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 
@@ -20,6 +18,17 @@ class MyApp extends StatelessWidget {
           labelLarge: TextStyle(fontSize: 16),
           labelSmall: TextStyle(fontSize: 10)
         ),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(color: ThemeColors.accentColor),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: ThemeColors.accentColor,),
+            borderRadius: BorderRadius.circular(7),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: ThemeColors.accentColor,),
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
         appBarTheme: AppBarTheme(
           backgroundColor: ThemeColors.titleColor,
           foregroundColor: Colors.white,
@@ -30,9 +39,13 @@ class MyApp extends StatelessWidget {
             foregroundColor: ThemeColors.lightColor,
             fixedSize: Size.fromWidth(125),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(7),
             )
           )
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: ThemeColors.lightColor,
+          foregroundColor: ThemeColors.accentColor,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             unselectedItemColor: Colors.black87,

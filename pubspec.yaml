@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   fl_chart: ^0.69.0
   get: ^4.6.6
+  numberpicker: ^2.1.2
 
 dev_dependencies:
   flutter_test:

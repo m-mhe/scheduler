@@ -1,5 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:scheduler/ui/screens/create_task_screen.dart';
 
 import '../utils/theme_colors.dart';
 
@@ -100,8 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                  color:
-                                      ThemeColors.lightColor,
+                                  color: ThemeColors.lightColor,
                                   spreadRadius: 1,
                                   blurRadius: 7),
                             ],
@@ -200,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10,bottom: 20),
+                padding: const EdgeInsets.only(top: 10, bottom: 20),
                 child: Container(
                   width: double.maxFinite,
                   height: 250,
@@ -220,17 +222,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ListView.separated(
                         itemBuilder: (contex, i) {
                           return ListTile(
-                            title: Text('Task Title', style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                                color: ThemeColors.titleColor,),),
-                            subtitle: Text('${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}', style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .copyWith(
-                                color: ThemeColors.titleColor,),),
-                            trailing: ElevatedButton(onPressed: (){}, child: Text('Late')),
+                            title: Text(
+                              'Task Title',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    color: ThemeColors.titleColor,
+                                  ),
+                            ),
+                            subtitle: Text(
+                              '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .copyWith(
+                                    color: ThemeColors.titleColor,
+                                  ),
+                            ),
+                            trailing: ElevatedButton(
+                                onPressed: () {}, child: Text('Late')),
                           );
                         },
                         separatorBuilder: (contex, i) {
@@ -243,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 10),
                 child: Container(
                   width: double.maxFinite,
                   height: 350,
@@ -261,22 +272,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ListView.separated(
-                        itemBuilder: (contex, i) {
+                        itemBuilder: (context, i) {
                           return ListTile(
-                            title: Text('Task Title', style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(
-                              color: ThemeColors.titleColor,),),
-                            subtitle: Text('${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}', style: Theme.of(context)
-                                .textTheme
-                                .labelSmall!
-                                .copyWith(
-                              color: ThemeColors.titleColor,),),
-                            trailing: ElevatedButton(onPressed: (){}, child: Text('Due')),
+                            title: Text(
+                              'Task Title',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge!
+                                  .copyWith(
+                                    color: ThemeColors.titleColor,
+                                  ),
+                            ),
+                            subtitle: Text(
+                              '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelSmall!
+                                  .copyWith(
+                                    color: ThemeColors.titleColor,
+                                  ),
+                            ),
+                            trailing: ElevatedButton(
+                                onPressed: () {}, child: Text('Due')),
                           );
                         },
-                        separatorBuilder: (contex, i) {
+                        separatorBuilder: (context, i) {
                           return const SizedBox(
                             height: 10,
                           );
@@ -288,6 +308,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Get.to(const CreateTaskScreen());
+        },
+        child: Icon(Icons.add),
       ),
     );
   }
