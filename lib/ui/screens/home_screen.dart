@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .textTheme
                                       .labelLarge!
                                       .copyWith(color: Colors.white),
-                                  showTitle: _chartTouchedIndex == 0,
+                                  showTitle: true,
                                   value: 66,
                                   color: ThemeColors.accentColor,
                                 ),
