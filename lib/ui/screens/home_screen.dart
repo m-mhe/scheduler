@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                              color: ThemeColors.lightColor.withOpacity(0.3),
+                              color: ThemeColors.lightColor,
                               spreadRadius: 1,
                               blurRadius: 7),
                         ],
@@ -60,45 +60,23 @@ class _HomeScreenState extends State<HomeScreen> {
                               }),
                               sections: [
                                 PieChartSectionData(
-                                  title: '32%',
+                                  title: '66%',
                                   titleStyle: Theme.of(context)
                                       .textTheme
                                       .labelLarge!
                                       .copyWith(color: Colors.white),
                                   showTitle: _chartTouchedIndex == 0,
-                                  value: 32,
-                                  color: ThemeColors.titleColor,
+                                  value: 66,
+                                  color: ThemeColors.accentColor,
                                 ),
                                 PieChartSectionData(
-                                  title: '10%',
+                                  title: '34%',
                                   titleStyle: Theme.of(context)
                                       .textTheme
                                       .labelLarge!
-                                      .copyWith(color: Colors.white),
+                                      .copyWith(color: ThemeColors.titleColor),
                                   showTitle: _chartTouchedIndex == 1,
-                                  value: 10,
-                                  color:
-                                      ThemeColors.accentColor.withOpacity(0.9),
-                                ),
-                                PieChartSectionData(
-                                  title: '20%',
-                                  titleStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .copyWith(color: Colors.white),
-                                  showTitle: _chartTouchedIndex == 2,
-                                  value: 20,
-                                  color:
-                                      ThemeColors.lightColor.withOpacity(0.7),
-                                ),
-                                PieChartSectionData(
-                                  title: '20%',
-                                  titleStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .copyWith(color: Colors.black45),
-                                  showTitle: _chartTouchedIndex == 3,
-                                  value: 20,
+                                  value: 34,
                                   color: ThemeColors.midColor.withOpacity(0.3),
                                 ),
                               ],
@@ -123,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             boxShadow: [
                               BoxShadow(
                                   color:
-                                      ThemeColors.lightColor.withOpacity(0.3),
+                                      ThemeColors.lightColor,
                                   spreadRadius: 1,
                                   blurRadius: 7),
                             ],
@@ -149,51 +127,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                     Text('Completed',
-                                       style: Theme.of(context)
-                                           .textTheme
-                                           .labelSmall!
-                                           .copyWith(color: ThemeColors.titleColor),)
-                                  ],
-                                ),
-                                Wrap(
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      color: ThemeColors.accentColor
-                                          .withOpacity(0.9),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                     Text('Due',
-                                       style: Theme.of(context)
-                                           .textTheme
-                                           .labelSmall!
-                                           .copyWith(color: ThemeColors.titleColor),)
-                                  ],
-                                ),
-                                Wrap(
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.center,
-                                  children: [
-                                    Container(
-                                      height: 10,
-                                      width: 10,
-                                      color: ThemeColors.lightColor
-                                          .withOpacity(0.7),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                     Text('Late',
-                                       style: Theme.of(context)
-                                           .textTheme
-                                           .labelSmall!
-                                           .copyWith(color: ThemeColors.titleColor),)
+                                    Text(
+                                      'Completed',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelSmall!
+                                          .copyWith(
+                                              color: ThemeColors.titleColor),
+                                    )
                                   ],
                                 ),
                                 Wrap(
@@ -209,12 +150,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                     Text(
+                                    Text(
                                       'Canceled',
                                       style: Theme.of(context)
                                           .textTheme
                                           .labelSmall!
-                                          .copyWith(color: ThemeColors.titleColor),
+                                          .copyWith(
+                                              color: ThemeColors.titleColor),
                                     )
                                   ],
                                 ),
@@ -231,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: ThemeColors.lightColor.withOpacity(0.3),
+                                color: ThemeColors.lightColor,
                                 spreadRadius: 1,
                                 blurRadius: 7,
                               ),
@@ -246,7 +188,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge!
-                                  .copyWith(color: ThemeColors.titleColor, fontSize: 13),
+                                  .copyWith(
+                                      color: ThemeColors.titleColor,
+                                      fontSize: 13),
                             ),
                           ),
                         ),
@@ -254,7 +198,93 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ],
-              )
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10,bottom: 20),
+                child: Container(
+                  width: double.maxFinite,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ThemeColors.lightColor.withOpacity(0.5),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ThemeColors.lightColor.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 7,
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ListView.separated(
+                        itemBuilder: (contex, i) {
+                          return ListTile(
+                            title: Text('Task Title', style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                                color: ThemeColors.titleColor,),),
+                            subtitle: Text('${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}', style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                                color: ThemeColors.titleColor,),),
+                            trailing: ElevatedButton(onPressed: (){}, child: Text('Late')),
+                          );
+                        },
+                        separatorBuilder: (contex, i) {
+                          return SizedBox(
+                            height: 10,
+                          );
+                        },
+                        itemCount: 40),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: Container(
+                  width: double.maxFinite,
+                  height: 350,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: ThemeColors.secondColor.withOpacity(0.2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: ThemeColors.lightColor.withOpacity(0.3),
+                        spreadRadius: 1,
+                        blurRadius: 7,
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: ListView.separated(
+                        itemBuilder: (contex, i) {
+                          return ListTile(
+                            title: Text('Task Title', style: Theme.of(context)
+                                .textTheme
+                                .labelLarge!
+                                .copyWith(
+                              color: ThemeColors.titleColor,),),
+                            subtitle: Text('${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}', style: Theme.of(context)
+                                .textTheme
+                                .labelSmall!
+                                .copyWith(
+                              color: ThemeColors.titleColor,),),
+                            trailing: ElevatedButton(onPressed: (){}, child: Text('Due')),
+                          );
+                        },
+                        separatorBuilder: (contex, i) {
+                          return const SizedBox(
+                            height: 10,
+                          );
+                        },
+                        itemCount: 40),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

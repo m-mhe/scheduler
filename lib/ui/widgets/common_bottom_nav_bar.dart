@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/ui/screens/home_screen.dart';
 import 'package:scheduler/ui/screens/task_screen.dart';
-import 'package:scheduler/ui/screens/week_planer_screen.dart';
+import 'package:scheduler/ui/screens/previous_tasks_screen.dart';
 import 'package:scheduler/ui/utils/nav_bar_controller.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:get/get.dart';
@@ -23,7 +23,7 @@ class CommonBottomNavBar extends StatelessWidget {
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_view_week),
-                label: 'Week Scheduler',
+                label: 'Old Tasks',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
@@ -40,7 +40,7 @@ class CommonBottomNavBar extends StatelessWidget {
 
   //----------------------------------Variables----------------------------------
   final List<Widget> screens = [
-    const WeekPlanerScreen(),
+    const PreviousTasks(),
     const HomeScreen(),
     const TaskScreen(),
   ];

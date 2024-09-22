@@ -24,6 +24,16 @@ class MyApp extends StatelessWidget {
           backgroundColor: ThemeColors.titleColor,
           foregroundColor: Colors.white,
         ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ThemeColors.accentColor,
+            foregroundColor: ThemeColors.lightColor,
+            fixedSize: Size.fromWidth(125),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            )
+          )
+        ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
             unselectedItemColor: Colors.black87,
             elevation: 20,
