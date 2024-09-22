@@ -14,11 +14,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final DateTime _currentDate = DateTime.now();
   late int _fromTime;
   late int _toTime;
+  late int _toTimeMin;
 
   @override
   void initState() {
     _fromTime = _currentDate.hour;
     _toTime = _currentDate.hour;
+    _toTimeMin = _toTime;
     super.initState();
   }
 
@@ -37,17 +39,19 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   NumberPicker(
                       textStyle: Theme.of(context)
                           .textTheme
-                          .labelLarge!
+                          .labelSmall!
                           .copyWith(color: Colors.black45),
                       selectedTextStyle: Theme.of(context)
                           .textTheme
-                          .titleLarge!
+                          .labelLarge!
                           .copyWith(color: ThemeColors.titleColor),
                       minValue: _currentDate.hour,
                       maxValue: 24,
                       value: _fromTime,
                       onChanged: (i) {
                         _fromTime = i;
+                        _toTimeMin = i;
+                        _toTime = i;
                         setState(() {});
                       }),
                   Column(
@@ -69,13 +73,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   NumberPicker(
                       textStyle: Theme.of(context)
                           .textTheme
-                          .labelLarge!
+                          .labelSmall!
                           .copyWith(color: Colors.black45),
                       selectedTextStyle: Theme.of(context)
                           .textTheme
-                          .titleLarge!
+                          .labelLarge!
                           .copyWith(color: ThemeColors.titleColor),
-                      minValue: _currentDate.hour,
+                      minValue: _toTimeMin,
                       maxValue: 24,
                       value: _toTime,
                       onChanged: (i) {
@@ -92,7 +96,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     .textTheme
                     .labelLarge!
                     .copyWith(color: ThemeColors.titleColor),
-                decoration: InputDecoration(hintText: 'Title:'),
+                decoration: const InputDecoration(hintText: 'Title:'),
               ),
               const SizedBox(
                 height: 10,
@@ -103,7 +107,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     .textTheme
                     .labelLarge!
                     .copyWith(color: ThemeColors.titleColor),
-                decoration: InputDecoration(hintText: 'Description:'),
+                decoration: const InputDecoration(hintText: 'Description:'),
               ),
               const SizedBox(
                 height: 10,
