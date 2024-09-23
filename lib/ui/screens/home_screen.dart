@@ -260,6 +260,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                               color: ThemeColors.titleColor,
                                             ),
                                       ),
+                                      content: Text("If this task is completed then click 'Yes', Otherwise click 'No'. And If you wish to cancel this task then Delete it.", style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall!
+                                          .copyWith(
+                                        color: ThemeColors.titleColor,
+                                      ),),
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () {},
@@ -267,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () {},
-                                          child: const Text('Delete'),
+                                          child: Icon(Icons.delete_outline),
                                         ),
                                         ElevatedButton(
                                           onPressed: () {
