@@ -241,7 +241,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                             ),
                             trailing: ElevatedButton(
-                                onPressed: () {}, child: Text('Late')),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(14),
+                                      ),
+                                      backgroundColor: ThemeColors.lightColor,
+                                      title: Text(
+                                        'Have you completed this task?',
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge!
+                                            .copyWith(
+                                              color: ThemeColors.titleColor,
+                                            ),
+                                      ),
+                                      actions: [
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          child: const Text('Yes'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          child: const Text('Delete'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          child: const Text('No'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                              child: Text('Late'),
+                            ),
                           );
                         },
                         separatorBuilder: (contex, i) {

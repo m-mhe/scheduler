@@ -13,9 +13,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Scheduler',
       theme: ThemeData(
-        textTheme: TextTheme(
-            titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
-          labelLarge: TextStyle(fontSize: 16),
+        textTheme: const TextTheme(
+            titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700,),
+          bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600,),
+          labelLarge: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,),
           labelSmall: TextStyle(fontSize: 10)
         ),
         inputDecorationTheme: InputDecorationTheme(
