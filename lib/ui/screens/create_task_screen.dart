@@ -102,7 +102,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 10,
               ),
               TextField(
-                maxLines: 6,
+                maxLines: 4,
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!

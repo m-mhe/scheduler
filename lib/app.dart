@@ -35,9 +35,14 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.all(10),
+            textStyle: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w700
+            ),
             backgroundColor: ThemeColors.accentColor,
             foregroundColor: ThemeColors.lightColor,
-            fixedSize: Size.fromWidth(125),
+            fixedSize: const Size.fromWidth(90),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
             )

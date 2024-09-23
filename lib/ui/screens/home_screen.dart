@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: MediaQuery.sizeOf(context).width / 1.7,
                       child: Center(
                         child: Padding(
-                          padding: const EdgeInsets.all(15),
+                          padding: const EdgeInsets.all(10),
                           child: PieChart(
                             PieChartData(
                               pieTouchData: PieTouchData(
@@ -124,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       height: 10,
                                       width: 10,
-                                      color: ThemeColors.titleColor,
+                                      color: ThemeColors.accentColor,
                                     ),
                                     SizedBox(
                                       width: 5,
