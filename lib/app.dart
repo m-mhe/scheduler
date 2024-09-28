@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
             titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700,),
           bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600,),
           labelLarge: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,),
+            labelMedium: TextStyle(fontSize: 12,),
           labelSmall: TextStyle(fontSize: 10)
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -54,9 +55,9 @@ class MyApp extends StatelessWidget {
           foregroundColor: ThemeColors.accentColor,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-            unselectedItemColor: Colors.black87,
+            unselectedItemColor: Colors.black38,
             elevation: 20,
-            selectedItemColor: ThemeColors.accentColor),
+            selectedItemColor: ThemeColors.titleColor),
       ),
       home: CommonBottomNavBar(),
       initialBinding: ControllerBindings(),

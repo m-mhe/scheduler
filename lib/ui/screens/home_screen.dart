@@ -235,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .labelSmall!
+                                  .labelMedium!
                                   .copyWith(
                                     color: ThemeColors.titleColor,
                                   ),
@@ -260,12 +260,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                               color: ThemeColors.titleColor,
                                             ),
                                       ),
-                                      content: Text("If this task is completed then click 'Yes', Otherwise click 'No'. And If you wish to cancel this task then Delete it.", style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall!
-                                          .copyWith(
-                                        color: ThemeColors.titleColor,
-                                      ),),
+                                      content: Text(
+                                        "If this task is completed then click 'Yes', Otherwise click 'No'. You can cancel this task by Deleting it.",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall!
+                                            .copyWith(
+                                              color: ThemeColors.titleColor,
+                                            ),
+                                      ),
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () {},
@@ -333,7 +336,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .labelSmall!
+                                  .labelMedium!
                                   .copyWith(
                                     color: ThemeColors.titleColor,
                                   ),

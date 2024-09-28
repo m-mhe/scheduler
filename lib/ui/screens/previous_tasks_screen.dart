@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../utils/theme_colors.dart';
+import 'package:scheduler/ui/widgets/task_tile.dart';
 
 class PreviousTasks extends StatefulWidget {
   const PreviousTasks({super.key});
@@ -16,31 +15,10 @@ class _PreviousTasksState extends State<PreviousTasks> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: ListView.separated(
             itemBuilder: (context, i) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: ThemeColors.lightColor.withOpacity(0.5),
-                  borderRadius: BorderRadius.circular(7),
-                ),
-                child: ListTile(
-                  title: Text(
-                    'Task Title',
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          color: ThemeColors.titleColor,
-                        ),
-                  ),
-                  subtitle: Text(
-                    '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
-                    style: Theme.of(context).textTheme.labelSmall!.copyWith(
-                          color: ThemeColors.titleColor,
-                        ),
-                  ),
-                  trailing: ElevatedButton(
-                      onPressed: () {}, child: const Text('Completed')),
-                ),
-              );
+              return TaskTile(taskTitle: 'Task Title', subTitle: 'Subtitle', taskState: 'Completed');
             },
             separatorBuilder: (context, i) {
               return const SizedBox(
