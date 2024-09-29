@@ -16,11 +16,13 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _chartTouchedIndex = -1;
-  final DateTime _currentTime = DateTime.now();
+  late DateTime _currentTime;
   final List<Entity> _currentTasks = [];
   List<Entity> _allTasks = [];
 
-  Future<void> fetch() async {
+  Future<void> _fetch() async {
+    _currentTime = DateTime.now();
+    _currentTasks.clear();
     List<Entity> dataList = await DatabaseSetup.fetchFromActiveDB();
     for (Entity data in dataList) {
       if (data.fromTime <= _currentTime.hour ||
@@ -33,10 +35,18 @@ class _HomeScreenState extends State<HomeScreen> {
     _allTasks = dataList;
     setState(() {});
   }
+  Future<void> _refreshScreen() async{
+    bool active = true;
+    while(active){
+      await Future.delayed(const Duration(seconds: 5));
+      await _fetch();
+    }
+  }
 
   @override
   void initState() {
-    fetch();
+    _fetch();
+    _refreshScreen();
     super.initState();
   }
 
