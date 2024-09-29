@@ -14,13 +14,37 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   final DateTime _currentDate = DateTime.now();
   late int _fromTime;
   late int _toTime;
+  late String _fromTime12;
+  late String _toTime12;
   late int _toTimeMin;
+
+  void _aMPMClock() {
+    if (_fromTime < 12) {
+      _fromTime12 = '$_fromTime AM';
+    } else {
+      if (_fromTime == 12) {
+        _fromTime12 = '$_fromTime PM';
+      } else {
+        _fromTime12 = '${_fromTime - 12} PM';
+      }
+    }
+    if (_toTime < 12) {
+      _toTime12 = '$_toTime AM';
+    } else {
+      if (_toTime == 12) {
+        _toTime12 = '$_toTime PM';
+      } else {
+        _toTime12 = '${_toTime - 12} PM';
+      }
+    }
+  }
 
   @override
   void initState() {
     _fromTime = _currentDate.hour;
     _toTime = _currentDate.hour;
     _toTimeMin = _toTime;
+    _aMPMClock();
     super.initState();
   }
 
@@ -37,23 +61,25 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   NumberPicker(
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(color: Colors.black45),
-                      selectedTextStyle: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(color: ThemeColors.titleColor),
-                      minValue: _currentDate.hour,
-                      maxValue: 24,
-                      value: _fromTime,
-                      onChanged: (i) {
-                        _fromTime = i;
-                        _toTimeMin = i;
-                        _toTime = i;
-                        setState(() {});
-                      }),
+                    textStyle: Theme.of(context)
+                        .textTheme
+                        .labelSmall!
+                        .copyWith(color: Colors.black45),
+                    selectedTextStyle: Theme.of(context)
+                        .textTheme
+                        .labelLarge!
+                        .copyWith(color: ThemeColors.titleColor),
+                    minValue: _currentDate.hour,
+                    maxValue: 24,
+                    value: _fromTime,
+                    onChanged: (i) {
+                      _fromTime = i;
+                      _toTimeMin = i;
+                      _toTime = i;
+                      _aMPMClock();
+                      setState(() {});
+                    },
+                  ),
                   Column(
                     children: [
                       Text(
@@ -68,6 +94,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         color: ThemeColors.titleColor,
                         size: 30,
                       ),
+                      Text(
+                        '$_fromTime12 to $_toTime12',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(color: ThemeColors.titleColor),
+                      )
                     ],
                   ),
                   NumberPicker(
@@ -84,6 +117,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       value: _toTime,
                       onChanged: (i) {
                         _toTime = i;
+                        _aMPMClock();
                         setState(() {});
                       }),
                 ],
