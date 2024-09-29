@@ -1,10 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
-
 import '../utils/theme_colors.dart';
+import '../widgets/ask_task_complete_confirmation.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -80,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .copyWith(color: ThemeColors.titleColor),
                                   showTitle: _chartTouchedIndex == 1,
                                   value: 34,
-                                  color: ThemeColors.midColor.withOpacity(0.3),
+                                  color: ThemeColors.midColor.withOpacity(0.4),
                                 ),
                               ],
                             ),
@@ -147,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 10,
                                       width: 10,
                                       color:
-                                          ThemeColors.midColor.withOpacity(0.3),
+                                          ThemeColors.midColor.withOpacity(0.4),
                                     ),
                                     SizedBox(
                                       width: 5,
@@ -208,10 +207,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 250,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: ThemeColors.lightColor.withOpacity(0.5),
+                    color: ThemeColors.lightColor,
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.lightColor.withOpacity(0.3),
+                        color: ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -220,81 +219,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ListView.separated(
-                        itemBuilder: (contex, i) {
-                          return ListTile(
-                            title: Text(
-                              'Task Title',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                    color: ThemeColors.titleColor,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    color: ThemeColors.titleColor,
-                                  ),
-                            ),
-                            trailing: ElevatedButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      backgroundColor: ThemeColors.lightColor,
-                                      title: Text(
-                                        'Have you completed this task?',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                              color: ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      content: Text(
-                                        "If this task is completed then click 'Yes', Otherwise click 'No'. You can cancel this task by Deleting it.",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                              color: ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: const Text('Yes'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {},
-                                          child: Icon(Icons.delete_outline),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                          child: const Text('No'),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              child: Text('Late'),
-                            ),
-                          );
+                        itemBuilder: (context, i) {
+                          return _taskList(
+                              buildContext: context,
+                              taskTitle: 'Task Title',
+                              taskSubTitle: 'Subtitle',
+                              taskState: 'Late');
                         },
-                        separatorBuilder: (contex, i) {
-                          return SizedBox(
+                        separatorBuilder: (context, i) {
+                          return const SizedBox(
                             height: 10,
                           );
                         },
@@ -309,10 +242,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 350,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: ThemeColors.secondColor.withOpacity(0.2),
+                    color: ThemeColors.secondColor.withOpacity(0.4),
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.lightColor.withOpacity(0.3),
+                        color: ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -322,28 +255,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: ListView.separated(
                         itemBuilder: (context, i) {
-                          return ListTile(
-                            title: Text(
-                              'Task Title',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                    color: ThemeColors.titleColor,
-                                  ),
-                            ),
-                            subtitle: Text(
-                              '${_currentDate.hour}:${_currentDate.minute}:${_currentDate.second}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium!
-                                  .copyWith(
-                                    color: ThemeColors.titleColor,
-                                  ),
-                            ),
-                            trailing: ElevatedButton(
-                                onPressed: () {}, child: Text('Due')),
-                          );
+                          return _taskList(
+                              buildContext: context,
+                              taskTitle: 'taskTitle',
+                              taskSubTitle: 'taskSubTitle',
+                              taskState: 'taskState');
                         },
                         separatorBuilder: (context, i) {
                           return const SizedBox(
@@ -362,7 +278,39 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Get.to(const CreateTaskScreen());
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  ListTile _taskList(
+      {required BuildContext buildContext,
+      required String taskTitle,
+      required String taskSubTitle,
+      required taskState}) {
+    return ListTile(
+      title: Text(
+        taskTitle,
+        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: ThemeColors.titleColor,
+            ),
+      ),
+      subtitle: Text(
+        taskSubTitle,
+        style: Theme.of(context).textTheme.labelMedium!.copyWith(
+              color: ThemeColors.titleColor,
+            ),
+      ),
+      trailing: ElevatedButton(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return AskTaskCompleteConfirmation();
+            },
+          );
+        },
+        child: Text(taskState),
       ),
     );
   }

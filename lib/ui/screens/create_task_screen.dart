@@ -63,7 +63,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                             .labelLarge!
                             .copyWith(color: ThemeColors.titleColor),
                       ),
-                      Icon(
+                      const Icon(
                         Icons.arrow_forward_rounded,
                         color: ThemeColors.titleColor,
                         size: 30,

@@ -14,43 +14,58 @@ class MyApp extends StatelessWidget {
       title: 'Scheduler',
       theme: ThemeData(
         textTheme: const TextTheme(
-            titleLarge: TextStyle(fontSize: 22, fontWeight: FontWeight.w700,),
-          bodyLarge: TextStyle(fontSize: 18, fontWeight: FontWeight.w600,),
-          labelLarge: TextStyle(fontSize: 16,fontWeight: FontWeight.w600,),
-            labelMedium: TextStyle(fontSize: 12,),
-          labelSmall: TextStyle(fontSize: 10)
-        ),
+            titleLarge: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+            ),
+            bodyLarge: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+            labelLarge: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+            ),
+            labelMedium: TextStyle(
+              fontSize: 12,
+            ),
+            labelSmall: TextStyle(fontSize: 10)),
         inputDecorationTheme: InputDecorationTheme(
-          hintStyle: Theme.of(context).textTheme.labelLarge!.copyWith(color: ThemeColors.accentColor),
+          hintStyle: Theme.of(context)
+              .textTheme
+              .labelLarge!
+              .copyWith(color: ThemeColors.accentColor),
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: ThemeColors.accentColor,),
+            borderSide: const BorderSide(
+              color: ThemeColors.accentColor,
+            ),
             borderRadius: BorderRadius.circular(7),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: ThemeColors.accentColor,),
+            borderSide: const BorderSide(
+              color: ThemeColors.accentColor,
+            ),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: ThemeColors.titleColor,
           foregroundColor: Colors.white,
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            padding: EdgeInsets.all(10),
-            textStyle: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700
-            ),
+            padding: const EdgeInsets.all(10),
+            textStyle:
+                const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
             backgroundColor: ThemeColors.accentColor,
             foregroundColor: ThemeColors.lightColor,
             fixedSize: const Size.fromWidth(90),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7),
-            )
-          )
+            ),
+          ),
         ),
-        floatingActionButtonTheme: FloatingActionButtonThemeData(
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
           backgroundColor: ThemeColors.lightColor,
           foregroundColor: ThemeColors.accentColor,
         ),

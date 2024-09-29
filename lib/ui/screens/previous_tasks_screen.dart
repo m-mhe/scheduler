@@ -18,11 +18,14 @@ class _PreviousTasksState extends State<PreviousTasks> {
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: ListView.separated(
             itemBuilder: (context, i) {
-              return TaskTile(taskTitle: 'Task Title', subTitle: 'Subtitle', taskState: 'Completed');
+              return TaskTile(
+                  taskTitle: 'Task Title',
+                  subTitle: 'Subtitle',
+                  taskStatus: 'Completed', onTap: () {},);
             },
             separatorBuilder: (context, i) {
               return const SizedBox(
-                height: 20,
+                height: 10,
               );
             },
             itemCount: 20),
