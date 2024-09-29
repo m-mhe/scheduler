@@ -19,9 +19,11 @@ class _PreviousTasksState extends State<PreviousTasks> {
         child: ListView.separated(
             itemBuilder: (context, i) {
               return TaskTile(
-                  taskTitle: 'Task Title',
-                  subTitle: 'Subtitle',
-                  taskStatus: 'Completed', onTap: () {},);
+                taskTitle: 'Task Title',
+                subTitle: 'Subtitle',
+                taskStatus: 'Completed',
+                onTap: () {},
+              );
             },
             separatorBuilder: (context, i) {
               return const SizedBox(

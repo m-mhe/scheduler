@@ -1,6 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
 import '../utils/theme_colors.dart';
 import '../widgets/ask_task_complete_confirmation.dart';
@@ -14,7 +16,29 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _chartTouchedIndex = -1;
-  DateTime _currentDate = DateTime.now();
+  final DateTime _currentTime = DateTime.now();
+  final List<Entity> _currentTasks = [];
+  List<Entity> _allTasks = [];
+
+  Future<void> fetch() async {
+    List<Entity> dataList = await DatabaseSetup.fetchFromActiveDB();
+    for (Entity data in dataList) {
+      if (data.fromTime <= _currentTime.hour ||
+          data.date < _currentTime.day ||
+          data.month < _currentTime.month ||
+          data.year < _currentTime.year) {
+        _currentTasks.add(data);
+      }
+    }
+    _allTasks = dataList;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    fetch();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
                               color: ThemeColors.lightColor,
                               spreadRadius: 1,
@@ -88,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Column(
@@ -100,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                   color: ThemeColors.lightColor,
                                   spreadRadius: 1,
@@ -125,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       width: 10,
                                       color: ThemeColors.accentColor,
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
@@ -148,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color:
                                           ThemeColors.midColor.withOpacity(0.4),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       width: 5,
                                     ),
                                     Text(
@@ -172,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.white,
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: ThemeColors.lightColor,
                                 spreadRadius: 1,
@@ -185,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ((MediaQuery.sizeOf(context).width / 1.7) + 30),
                           child: Center(
                             child: Text(
-                              '${_currentDate.day}/${_currentDate.month}/${_currentDate.year}',
+                              '${_currentTime.day}/${_currentTime.month}/${_currentTime.year}',
                               style: Theme.of(context)
                                   .textTheme
                                   .labelLarge!
@@ -204,7 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(top: 10, bottom: 20),
                 child: Container(
                   width: double.maxFinite,
-                  height: 250,
+                  height: 160,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: ThemeColors.lightColor,
@@ -216,22 +240,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ListView.separated(
-                        itemBuilder: (context, i) {
-                          return _taskList(
-                              buildContext: context,
-                              taskTitle: 'Task Title',
-                              taskSubTitle: 'Subtitle',
-                              taskState: 'Late');
-                        },
-                        separatorBuilder: (context, i) {
-                          return const SizedBox(
-                            height: 10,
-                          );
-                        },
-                        itemCount: 40),
+                  child: Visibility(
+                    visible: _currentTasks.isNotEmpty,
+                    replacement: Center(
+                      child: Text(
+                        'You Have No Current Task',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(color: ThemeColors.accentColor),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListView.separated(
+                          itemBuilder: (context, i) {
+                            return _taskList(
+                                buildContext: context,
+                                taskTitle: _currentTasks[i].title,
+                                taskSubTitle: _currentTasks[i].subTitle,
+                                taskState: _currentTasks[i].taskState);
+                          },
+                          separatorBuilder: (context, i) {
+                            return const SizedBox(
+                              height: 5,
+                            );
+                          },
+                          itemCount: _currentTasks.length),
+                    ),
                   ),
                 ),
               ),
@@ -251,22 +287,34 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: ListView.separated(
-                        itemBuilder: (context, i) {
-                          return _taskList(
-                              buildContext: context,
-                              taskTitle: 'taskTitle',
-                              taskSubTitle: 'taskSubTitle',
-                              taskState: 'taskState');
-                        },
-                        separatorBuilder: (context, i) {
-                          return const SizedBox(
-                            height: 10,
-                          );
-                        },
-                        itemCount: 40),
+                  child: Visibility(
+                    visible: _allTasks.isNotEmpty,
+                    replacement: Center(
+                      child: Text(
+                        'You Have No Task',
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge!
+                            .copyWith(color: ThemeColors.accentColor),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListView.separated(
+                          itemBuilder: (context, i) {
+                            return _taskList(
+                                buildContext: context,
+                                taskTitle: _allTasks[i].title,
+                                taskSubTitle: _allTasks[i].subTitle,
+                                taskState: _allTasks[i].taskState);
+                          },
+                          separatorBuilder: (context, i) {
+                            return const SizedBox(
+                              height: 5,
+                            );
+                          },
+                          itemCount: _allTasks.length),
+                    ),
                   ),
                 ),
               ),
@@ -306,7 +354,7 @@ class _HomeScreenState extends State<HomeScreen> {
           showDialog(
             context: context,
             builder: (context) {
-              return AskTaskCompleteConfirmation();
+              return const AskTaskCompleteConfirmation();
             },
           );
         },

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
+import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
+import 'package:get/get.dart';
 
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key});
@@ -11,7 +15,9 @@ class CreateTaskScreen extends StatefulWidget {
 }
 
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
-  final DateTime _currentDate = DateTime.now();
+  final TextEditingController _titleTEC = TextEditingController();
+  final TextEditingController _subTitleTEC = TextEditingController();
+  final DateTime _currentTime = DateTime.now();
   late int _fromTime;
   late int _toTime;
   late String _fromTime12;
@@ -20,7 +26,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   void _aMPMClock() {
     if (_fromTime < 12) {
-      _fromTime12 = '$_fromTime AM';
+      if (_fromTime == 0) {
+        _fromTime12 = '12 AM';
+      } else {
+        _fromTime12 = '$_fromTime AM';
+      }
     } else {
       if (_fromTime == 12) {
         _fromTime12 = '$_fromTime PM';
@@ -29,7 +39,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       }
     }
     if (_toTime < 12) {
-      _toTime12 = '$_toTime AM';
+      if (_toTime == 0) {
+        _toTime12 = '12 AM';
+      } else {
+        _toTime12 = '$_toTime AM';
+      }
     } else {
       if (_toTime == 12) {
         _toTime12 = '$_toTime PM';
@@ -41,8 +55,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   @override
   void initState() {
-    _fromTime = _currentDate.hour;
-    _toTime = _currentDate.hour;
+    _fromTime = _currentTime.hour;
+    _toTime = _currentTime.hour;
     _toTimeMin = _toTime;
     _aMPMClock();
     super.initState();
@@ -69,7 +83,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         .textTheme
                         .labelLarge!
                         .copyWith(color: ThemeColors.titleColor),
-                    minValue: _currentDate.hour,
+                    minValue: _currentTime.hour,
                     maxValue: 24,
                     value: _fromTime,
                     onChanged: (i) {
@@ -98,7 +112,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         '$_fromTime12 to $_toTime12',
                         style: Theme.of(context)
                             .textTheme
-                            .labelLarge!
+                            .labelMedium!
                             .copyWith(color: ThemeColors.titleColor),
                       )
                     ],
@@ -126,6 +140,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 20,
               ),
               TextField(
+                controller: _titleTEC,
                 maxLength: 20,
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
@@ -138,6 +153,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 10,
               ),
               TextField(
+                controller: _subTitleTEC,
                 maxLines: 4,
                 style: Theme.of(context)
                     .textTheme
@@ -149,9 +165,36 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  if (_titleTEC.text.trim().isNotEmpty &&
+                      _subTitleTEC.text.trim().isNotEmpty) {
+                    Entity dataEntity = Entity(
+                        title: _titleTEC.text,
+                        subTitle: _subTitleTEC.text,
+                        fromTime: _fromTime,
+                        toTime: _toTime,
+                        month: _currentTime.month,
+                        year: _currentTime.year,
+                        taskState: 'Due',
+                        date: _currentTime.day);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      _bottomPopUpMessage(
+                          text: 'Task is successfully created!',
+                          color: Colors.green),
+                    );
+                    await DatabaseSetup.saveTask(dataEntity);
+                    Get.offAll(CommonBottomNavBar());
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      _bottomPopUpMessage(
+                          text: 'Please type a title, subtitle of your task!',
+                          color: Colors.red),
+                    );
+                  }
+                },
                 style: ElevatedButton.styleFrom(
-                    fixedSize: const Size.fromWidth(double.maxFinite)),
+                  fixedSize: const Size.fromWidth(double.maxFinite),
+                ),
                 child: const Text('Create Task'),
               )
             ],
@@ -159,5 +202,22 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
         ),
       ),
     );
+  }
+
+  SnackBar _bottomPopUpMessage({required String text, required Color color}) {
+    return SnackBar(
+      content: Text(
+        text,
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: color,
+    );
+  }
+
+  @override
+  void dispose() {
+    _titleTEC.dispose();
+    _subTitleTEC.dispose();
+    super.dispose();
   }
 }

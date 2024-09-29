@@ -38,6 +38,8 @@ dependencies:
   fl_chart: ^0.69.0
   get: ^4.6.6
   numberpicker: ^2.1.2
+  sqflite: ^2.3.3+2
+  path: ^1.9.0
 
 dev_dependencies:
   flutter_test:

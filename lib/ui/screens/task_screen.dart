@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/ask_task_complete_confirmation.dart';
 import '../widgets/task_tile.dart';
 
@@ -10,7 +12,18 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final DateTime _currentDate = DateTime.now();
+  List<Entity> _allTasks = [];
+
+  Future<void> fetch() async {
+    _allTasks = await DatabaseSetup.fetchFromActiveDB();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    fetch();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +33,9 @@ class _TaskScreenState extends State<TaskScreen> {
         child: ListView.separated(
             itemBuilder: (context, i) {
               return TaskTile(
-                taskTitle: 'Task Title',
-                subTitle: 'Task Subtitle',
-                taskStatus: 'Due',
+                taskTitle: _allTasks[i].title,
+                subTitle: _allTasks[i].subTitle,
+                taskStatus: _allTasks[i].taskState,
                 onTap: () {
                   showDialog(
                     context: context,
@@ -38,7 +51,7 @@ class _TaskScreenState extends State<TaskScreen> {
                 height: 10,
               );
             },
-            itemCount: 20),
+            itemCount: _allTasks.length),
       ),
     );
   }
