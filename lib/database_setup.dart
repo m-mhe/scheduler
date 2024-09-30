@@ -73,16 +73,17 @@ class DatabaseSetup {
     );
     List<Map> data = await connectToDataBase.query('inActive_task');
     for (final {
-    'title': title as String,
-    'subtitle': subtitle as String,
-    'taskState': taskState as String,
-    } in data) {
+          'title': title as String,
+          'subtitle': subtitle as String,
+          'taskState': taskState as String,
+        } in data) {
       taskList.insert(
         0,
         EntityTwo(
-            title: title,
-            subTitle: subtitle,
-            taskState: taskState,),
+          title: title,
+          subTitle: subtitle,
+          taskState: taskState,
+        ),
       );
     }
     await connectToDataBase.close();

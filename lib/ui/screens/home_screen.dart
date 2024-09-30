@@ -42,8 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
         _currentTasks.add(data);
       }
     }
-    await _calculateTask();
     _allTasks = dataList;
+    await _calculateTask();
     setState(() {});
   }
 
@@ -69,12 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
         _totalCanceled++;
       }
     }
-    setState(() {});
   }
 
   @override
   void initState() {
-    _calculateTask();
     _fetch();
     _refreshScreen();
     super.initState();
@@ -118,7 +116,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: PieChart(
+                              swapAnimationDuration: const Duration(seconds: 2),
                               PieChartData(
+                                centerSpaceColor: Colors.white,
                                 pieTouchData: PieTouchData(
                                     touchCallback: (event, response) {
                                   setState(() {
@@ -135,7 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 sections: [
                                   PieChartSectionData(
                                     title:
-                                        '${((_totalCompleted / (_totalCompleted + _totalCanceled)) * 100).toStringAsFixed(2)}%',
+                                        '${((_totalCompleted / (_totalCompleted + _totalCanceled)) * 100).toStringAsFixed(0)}%',
                                     titleStyle: Theme.of(context)
                                         .textTheme
                                         .labelLarge!
