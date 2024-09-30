@@ -26,16 +26,27 @@ class TaskTile extends StatelessWidget {
         title: Text(
           taskTitle,
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: ThemeColors.titleColor,
+                color: taskStatus == 'Completed'||taskStatus == 'Due'
+                    ? ThemeColors.titleColor
+                    : Colors.red,
               ),
         ),
         subtitle: Text(
           subTitle,
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: ThemeColors.titleColor,
+                color: taskStatus == 'Completed'||taskStatus == 'Due'
+                    ? ThemeColors.titleColor
+                    : Colors.red,
               ),
         ),
-        trailing: ElevatedButton(onPressed: onTap, child: Text(taskStatus)),
+        trailing: ElevatedButton(
+          onPressed: onTap,
+          style: ElevatedButton.styleFrom(
+              backgroundColor: taskStatus == 'Completed'||taskStatus == 'Due'
+                  ? ThemeColors.accentColor
+                  : Colors.red),
+          child: Text(taskStatus),
+        ),
       ),
     );
   }
