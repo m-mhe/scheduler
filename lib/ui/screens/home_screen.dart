@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/data/entity_two.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
 import '../utils/theme_colors.dart';
@@ -15,6 +16,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<EntityTwo> _oldTaskList = [];
+  double _totalCanceled = 0;
+  double _totalCompleted = 0;
   int _chartTouchedIndex = -1;
   late DateTime _currentTime;
   final List<Entity> _currentTasks = [];
@@ -29,22 +33,48 @@ class _HomeScreenState extends State<HomeScreen> {
           data.date < _currentTime.day ||
           data.month < _currentTime.month ||
           data.year < _currentTime.year) {
+        if (data.toTime < _currentTime.hour ||
+            data.date < _currentTime.day ||
+            data.month < _currentTime.month ||
+            data.year < _currentTime.year) {
+          data.taskState = 'Late';
+        }
         _currentTasks.add(data);
       }
     }
+    await _calculateTask();
     _allTasks = dataList;
     setState(() {});
   }
-  Future<void> _refreshScreen() async{
+
+  Future<void> _refreshScreen() async {
     bool active = true;
-    while(active){
+    while (active) {
       await Future.delayed(const Duration(seconds: 5));
-      await _fetch();
+      if (DateTime.now().hour != _currentTime.hour) {
+        await _fetch();
+        await Future.delayed(const Duration(minutes: 59));
+      }
     }
+  }
+
+  Future<void> _calculateTask() async {
+    _totalCanceled = 0;
+    _totalCompleted = 0;
+    _oldTaskList = await DatabaseSetup.fetchFromInactiveDB();
+    for (EntityTwo task in _oldTaskList) {
+      if (task.taskState == 'Completed') {
+        _totalCompleted++;
+      } else {
+        _totalCanceled++;
+      }
+    }
+    setState(() {});
   }
 
   @override
   void initState() {
+    _calculateTask();
     _fetch();
     _refreshScreen();
     super.initState();
@@ -77,45 +107,58 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 250,
                       width: MediaQuery.sizeOf(context).width / 1.7,
                       child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(10),
-                          child: PieChart(
-                            PieChartData(
-                              pieTouchData: PieTouchData(
-                                  touchCallback: (event, response) {
-                                setState(() {
-                                  if (!event.isInterestedForInteractions ||
-                                      response == null ||
-                                      response.touchedSection == null) {
-                                    _chartTouchedIndex = -1;
-                                    return;
-                                  }
-                                  _chartTouchedIndex = response
-                                      .touchedSection!.touchedSectionIndex;
-                                });
-                              }),
-                              sections: [
-                                PieChartSectionData(
-                                  title: '66%',
-                                  titleStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .copyWith(color: Colors.white),
-                                  showTitle: true,
-                                  value: 66,
-                                  color: ThemeColors.accentColor,
-                                ),
-                                PieChartSectionData(
-                                  title: '34%',
-                                  titleStyle: Theme.of(context)
-                                      .textTheme
-                                      .labelLarge!
-                                      .copyWith(color: ThemeColors.titleColor),
-                                  showTitle: _chartTouchedIndex == 1,
-                                  value: 34,
-                                  color: ThemeColors.midColor.withOpacity(0.4),
-                                ),
-                              ],
+                        child: Visibility(
+                          visible: _oldTaskList.isNotEmpty,
+                          replacement: const Text(
+                            'Complete a task.',
+                            style: TextStyle(
+                                color: ThemeColors.titleColor,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: PieChart(
+                              PieChartData(
+                                pieTouchData: PieTouchData(
+                                    touchCallback: (event, response) {
+                                  setState(() {
+                                    if (!event.isInterestedForInteractions ||
+                                        response == null ||
+                                        response.touchedSection == null) {
+                                      _chartTouchedIndex = -1;
+                                      return;
+                                    }
+                                    _chartTouchedIndex = response
+                                        .touchedSection!.touchedSectionIndex;
+                                  });
+                                }),
+                                sections: [
+                                  PieChartSectionData(
+                                    title:
+                                        '${((_totalCompleted / (_totalCompleted + _totalCanceled)) * 100).toStringAsFixed(2)}%',
+                                    titleStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(color: Colors.white),
+                                    showTitle: true,
+                                    value: _totalCompleted,
+                                    color: ThemeColors.accentColor,
+                                  ),
+                                  PieChartSectionData(
+                                    title:
+                                        '${((_totalCanceled / (_totalCanceled + _totalCompleted)) * 100).toStringAsFixed(2)}%',
+                                    titleStyle: Theme.of(context)
+                                        .textTheme
+                                        .labelLarge!
+                                        .copyWith(
+                                            color: ThemeColors.titleColor),
+                                    showTitle: _chartTouchedIndex == 1,
+                                    value: _totalCanceled,
+                                    color:
+                                        ThemeColors.midColor.withOpacity(0.4),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
@@ -254,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     visible: _currentTasks.isNotEmpty,
                     replacement: Center(
                       child: Text(
-                        'You Have No Current Task',
+                        'You Have No Current Task.',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -301,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     visible: _allTasks.isNotEmpty,
                     replacement: Center(
                       child: Text(
-                        'You Have No Task',
+                        'You Have No Task.',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -360,13 +403,17 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
       ),
       trailing: ElevatedButton(
-        onPressed: () {
-          showDialog(
+        onPressed: () async {
+          await showDialog(
             context: context,
             builder: (context) {
-              return const AskTaskCompleteConfirmation();
+              return AskTaskCompleteConfirmation(
+                title: taskTitle,
+                subTitle: taskSubTitle,
+              );
             },
           );
+          await _fetch();
         },
         child: Text(taskState),
       ),

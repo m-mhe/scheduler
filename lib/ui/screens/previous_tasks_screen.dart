@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:scheduler/data/entity_two.dart';
+import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/task_tile.dart';
 
 class PreviousTasks extends StatefulWidget {
@@ -9,7 +11,18 @@ class PreviousTasks extends StatefulWidget {
 }
 
 class _PreviousTasksState extends State<PreviousTasks> {
-  final DateTime _currentDate = DateTime.now();
+  List<EntityTwo> _allTasks = [];
+
+  Future<void> _fetch() async{
+    _allTasks = await DatabaseSetup.fetchFromInactiveDB();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    _fetch();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +32,9 @@ class _PreviousTasksState extends State<PreviousTasks> {
         child: ListView.separated(
             itemBuilder: (context, i) {
               return TaskTile(
-                taskTitle: 'Task Title',
-                subTitle: 'Subtitle',
-                taskStatus: 'Completed',
+                taskTitle: _allTasks[i].title,
+                subTitle: _allTasks[i].subTitle,
+                taskStatus: _allTasks[i].taskState,
                 onTap: () {},
               );
             },
@@ -30,7 +43,7 @@ class _PreviousTasksState extends State<PreviousTasks> {
                 height: 10,
               );
             },
-            itemCount: 20),
+            itemCount: _allTasks.length),
       ),
     );
   }

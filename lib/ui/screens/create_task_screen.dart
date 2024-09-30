@@ -170,7 +170,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       _subTitleTEC.text.trim().isNotEmpty) {
                     Entity dataEntity = Entity(
                         title: _titleTEC.text,
-                        subTitle: _subTitleTEC.text,
+                        subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
                         fromTime: _fromTime,
                         toTime: _toTime,
                         month: _currentTime.month,
@@ -182,7 +182,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                           text: 'Task is successfully created!',
                           color: Colors.green),
                     );
-                    await DatabaseSetup.saveTask(dataEntity);
+                    await DatabaseSetup.saveActiveTask(dataEntity);
                     Get.offAll(CommonBottomNavBar());
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -11,7 +11,7 @@ class Entity {
 
   final String title;
   final String subTitle;
-  final String taskState;
+  String taskState;
   final int fromTime;
   final int toTime;
   final int date;

@@ -14,14 +14,24 @@ class TaskScreen extends StatefulWidget {
 class _TaskScreenState extends State<TaskScreen> {
   List<Entity> _allTasks = [];
 
-  Future<void> fetch() async {
-    _allTasks = await DatabaseSetup.fetchFromActiveDB();
+  Future<void> _fetch() async {
+    final DateTime currentTime = DateTime.now();
+    List<Entity> dataList = await DatabaseSetup.fetchFromActiveDB();
+    for(Entity data in dataList){
+      if (data.toTime < currentTime.hour ||
+          data.date < currentTime.day ||
+          data.month < currentTime.month ||
+          data.year < currentTime.year) {
+        data.taskState = 'Late';
+      }
+    }
+    _allTasks = dataList;
     setState(() {});
   }
 
   @override
   void initState() {
-    fetch();
+    _fetch();
     super.initState();
   }
 
@@ -36,13 +46,14 @@ class _TaskScreenState extends State<TaskScreen> {
                 taskTitle: _allTasks[i].title,
                 subTitle: _allTasks[i].subTitle,
                 taskStatus: _allTasks[i].taskState,
-                onTap: () {
-                  showDialog(
+                onTap: () async {
+                  await showDialog(
                     context: context,
                     builder: (context) {
-                      return const AskTaskCompleteConfirmation();
+                      return AskTaskCompleteConfirmation(title: _allTasks[i].title, subTitle: _allTasks[i].subTitle,);
                     },
                   );
+                  await _fetch();
                 },
               );
             },
