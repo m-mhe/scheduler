@@ -297,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     visible: _currentTasks.isNotEmpty,
                     replacement: Center(
                       child: Text(
-                        'You Have No Current Task.',
+                        'You have no current task.',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
@@ -344,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     visible: _allTasks.isNotEmpty,
                     replacement: Center(
                       child: Text(
-                        'You Have No Task.',
+                        'You have no task.',
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
