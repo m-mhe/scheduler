@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
       await Future.delayed(const Duration(seconds: 5));
       if (DateTime.now().hour != _currentTime.hour) {
         await _fetch();
-        await Future.delayed(const Duration(minutes: 59));
       }
     }
   }
@@ -379,7 +378,10 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () {
           Get.to(const CreateTaskScreen());
         },
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          size: 30,
+        ),
       ),
     );
   }
@@ -393,16 +395,20 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(
         taskTitle,
         style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: ThemeColors.titleColor,
+              color: taskState == 'Due' ? ThemeColors.titleColor : Colors.red,
             ),
       ),
       subtitle: Text(
         taskSubTitle,
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: ThemeColors.titleColor,
+              color: taskState == 'Due' ? ThemeColors.titleColor : Colors.red,
             ),
       ),
       trailing: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+              taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
+        ),
         onPressed: () async {
           await showDialog(
             context: context,

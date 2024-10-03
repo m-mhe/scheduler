@@ -159,18 +159,19 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     .textTheme
                     .labelLarge!
                     .copyWith(color: ThemeColors.titleColor),
-                decoration: const InputDecoration(hintText: 'Description:'),
+                decoration:
+                    const InputDecoration(hintText: 'Description (optional):'),
               ),
               const SizedBox(
                 height: 10,
               ),
               ElevatedButton(
                 onPressed: () async {
-                  if (_titleTEC.text.trim().isNotEmpty &&
-                      _subTitleTEC.text.trim().isNotEmpty) {
+                  if (_titleTEC.text.trim().isNotEmpty) {
                     Entity dataEntity = Entity(
                         title: _titleTEC.text,
-                        subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+                        subTitle:
+                            '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
                         fromTime: _fromTime,
                         toTime: _toTime,
                         month: _currentTime.month,
@@ -187,7 +188,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       _bottomPopUpMessage(
-                          text: 'Please type a title, subtitle of your task!',
+                          text: 'Please give a title to your task!',
                           color: Colors.red),
                     );
                   }

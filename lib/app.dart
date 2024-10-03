@@ -65,8 +65,11 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
-        floatingActionButtonTheme: const FloatingActionButtonThemeData(
-          backgroundColor: ThemeColors.lightColor,
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          backgroundColor: Colors.white,
           foregroundColor: ThemeColors.accentColor,
         ),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
