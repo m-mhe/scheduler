@@ -24,7 +24,7 @@ class TaskTile extends StatelessWidget {
       ),
       child: ListTile(
         title: Text(
-          taskTitle,
+          taskTitle.toUpperCase(),
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: taskStatus == 'Completed'||taskStatus == 'Due'
                     ? ThemeColors.titleColor

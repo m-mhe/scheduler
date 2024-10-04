@@ -393,7 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
       required taskState}) {
     return ListTile(
       title: Text(
-        taskTitle,
+        taskTitle.toUpperCase(),
         style: Theme.of(context).textTheme.labelLarge!.copyWith(
               color: taskState == 'Due' ? ThemeColors.titleColor : Colors.red,
             ),
