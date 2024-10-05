@@ -7,7 +7,7 @@ AppBar commonAppBar(BuildContext context) {
     title: Text(
       'Scheduler',
       style:
-          Theme.of(context).textTheme.titleLarge!.copyWith(color: Get.isDarkMode?ThemeColors.accentColor:Colors.white),
+          Theme.of(context).textTheme.titleLarge!.copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:Colors.white),
     ),
     actions: [
       IconButton(

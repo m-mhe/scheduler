@@ -112,30 +112,30 @@ class MyApp extends StatelessWidget {
         hintStyle: Theme.of(context)
             .textTheme
             .labelLarge!
-            .copyWith(color: ThemeColors.accentColor),
+            .copyWith(color: ThemeColors.darkAccent),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: ThemeColors.accentColor,
+            color: ThemeColors.darkAccent,
           ),
           borderRadius: BorderRadius.circular(7),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(
-            color: ThemeColors.accentColor,
+            color: ThemeColors.darkAccent,
           ),
           borderRadius: BorderRadius.circular(10),
         ),
       ),
       appBarTheme: const AppBarTheme(
         backgroundColor: ThemeColors.darkMain,
-        foregroundColor: ThemeColors.accentColor,
+        foregroundColor: ThemeColors.darkAccent,
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.all(10),
           textStyle:
           const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
-          backgroundColor: ThemeColors.accentColor,
+          backgroundColor: ThemeColors.darkAccent,
           foregroundColor: ThemeColors.darkSecond,
           fixedSize: const Size.fromWidth(90),
           shape: RoundedRectangleBorder(
@@ -147,7 +147,7 @@ class MyApp extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-        backgroundColor: ThemeColors.accentColor,
+        backgroundColor: ThemeColors.darkBlue,
         foregroundColor: ThemeColors.darkSecond,
       ),
       bottomNavigationBarTheme:  const BottomNavigationBarThemeData(

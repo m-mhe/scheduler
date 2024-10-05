@@ -28,7 +28,7 @@ class TaskTile extends StatelessWidget {
           taskTitle.toUpperCase(),
           style: Theme.of(context).textTheme.labelLarge!.copyWith(
                 color: taskStatus == 'Completed'||taskStatus == 'Due'
-                    ? ThemeColors.titleColor
+                    ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor
                     : Colors.red,
               ),
         ),
@@ -36,7 +36,7 @@ class TaskTile extends StatelessWidget {
           subTitle,
           style: Theme.of(context).textTheme.labelMedium!.copyWith(
                 color: taskStatus == 'Completed'||taskStatus == 'Due'
-                    ? ThemeColors.titleColor
+                    ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor
                     : Colors.red,
               ),
         ),
@@ -44,7 +44,7 @@ class TaskTile extends StatelessWidget {
           onPressed: onTap,
           style: ElevatedButton.styleFrom(
               backgroundColor: taskStatus == 'Completed'||taskStatus == 'Due'
-                  ? ThemeColors.accentColor
+                  ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.accentColor
                   : Colors.red),
           child: Text(taskStatus),
         ),

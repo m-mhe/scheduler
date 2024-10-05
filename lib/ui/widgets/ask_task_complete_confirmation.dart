@@ -18,18 +18,18 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
-      backgroundColor: ThemeColors.lightColor,
+      backgroundColor: Get.isDarkMode?ThemeColors.darkMain:ThemeColors.lightColor,
       title: Text(
         'Have you completed this task?',
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-              color: ThemeColors.titleColor,
+              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
             ),
       ),
       content: Text(
         "If this task is completed then click 'Yes', Otherwise click 'No'. You can cancel this task by Deleting it.",
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
-              color: ThemeColors.titleColor,
+              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
             ),
       ),
       actions: [

@@ -101,11 +101,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
-                            .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:ThemeColors.titleColor),
+                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                       ),
                       Icon(
                         Icons.arrow_forward_rounded,
-                        color: Get.isDarkMode?ThemeColors.accentColor:ThemeColors.titleColor,
+                        color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
                         size: 30,
                       ),
                       Text(
@@ -146,7 +146,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
-                    .copyWith(color: ThemeColors.titleColor),
+                    .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                 decoration: const InputDecoration(hintText: 'Title:'),
               ),
               const SizedBox(
@@ -158,7 +158,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 style: Theme.of(context)
                     .textTheme
                     .labelLarge!
-                    .copyWith(color: ThemeColors.titleColor),
+                    .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                 decoration:
                     const InputDecoration(hintText: 'Description (optional):'),
               ),

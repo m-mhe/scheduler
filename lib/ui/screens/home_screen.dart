@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .copyWith(color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white),
                                     showTitle: true,
                                     value: _totalCompleted,
-                                    color: Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.9):ThemeColors.accentColor,
+                                    color: Get.isDarkMode?ThemeColors.darkBlue:ThemeColors.accentColor,
                                   ),
                                   PieChartSectionData(
                                     title:
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     showTitle: _chartTouchedIndex == 1,
                                     value: _totalCanceled,
                                     color:
-                                    Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.4):ThemeColors.midColor.withOpacity(0.4),
+                                    Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.7):ThemeColors.midColor.withOpacity(0.4),
                                   ),
                                 ],
                               ),
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       height: 10,
                                       width: 10,
-                                      color: Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.9):ThemeColors.accentColor,
+                                      color: Get.isDarkMode?ThemeColors.darkBlue:ThemeColors.accentColor,
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 10,
                                       width: 10,
                                       color:
-                                      Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.4):ThemeColors.midColor.withOpacity(0.4),
+                                      Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.7):ThemeColors.midColor.withOpacity(0.4),
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -395,19 +395,19 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(
         taskTitle.toUpperCase(),
         style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
+              color: taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
             ),
       ),
       subtitle: Text(
         taskSubTitle,
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
+              color: taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
             ),
       ),
       trailing: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor:
-              taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
+              taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
         ),
         onPressed: () async {
           await showDialog(
