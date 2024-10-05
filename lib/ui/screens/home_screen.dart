@@ -93,10 +93,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.white,
-                        boxShadow: const [
+                        color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                        boxShadow: [
                           BoxShadow(
-                              color: ThemeColors.lightColor,
+                              color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
                               spreadRadius: 1,
                               blurRadius: 7),
                         ],
@@ -106,10 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Center(
                         child: Visibility(
                           visible: _oldTaskList.isNotEmpty,
-                          replacement: const Text(
+                          replacement: Text(
                             'Complete a task.',
                             style: TextStyle(
-                                color: ThemeColors.titleColor,
+                                color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
                                 fontWeight: FontWeight.w600),
                           ),
                           child: Padding(
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: PieChart(
                               swapAnimationDuration: const Duration(seconds: 2),
                               PieChartData(
-                                centerSpaceColor: Colors.white,
+                                centerSpaceColor: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
                                 pieTouchData: PieTouchData(
                                     touchCallback: (event, response) {
                                   setState(() {
@@ -138,10 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                     titleStyle: Theme.of(context)
                                         .textTheme
                                         .labelLarge!
-                                        .copyWith(color: Colors.white),
+                                        .copyWith(color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white),
                                     showTitle: true,
                                     value: _totalCompleted,
-                                    color: ThemeColors.accentColor,
+                                    color: Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.9):ThemeColors.accentColor,
                                   ),
                                   PieChartSectionData(
                                     title:
@@ -150,11 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .textTheme
                                         .labelLarge!
                                         .copyWith(
-                                            color: ThemeColors.titleColor),
+                                            color: Get.isDarkMode?Colors.white70:ThemeColors.titleColor),
                                     showTitle: _chartTouchedIndex == 1,
                                     value: _totalCanceled,
                                     color:
-                                        ThemeColors.midColor.withOpacity(0.4),
+                                    Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.4):ThemeColors.midColor.withOpacity(0.4),
                                   ),
                                 ],
                               ),
@@ -175,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: const [
+                            color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                            boxShadow: [
                               BoxShadow(
-                                  color: ThemeColors.lightColor,
+                                  color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
                                   spreadRadius: 1,
                                   blurRadius: 7),
                             ],
@@ -199,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       height: 10,
                                       width: 10,
-                                      color: ThemeColors.accentColor,
+                                      color: Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.9):ThemeColors.accentColor,
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -210,7 +210,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .textTheme
                                           .labelSmall!
                                           .copyWith(
-                                              color: ThemeColors.titleColor),
+                                              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                                     )
                                   ],
                                 ),
@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       height: 10,
                                       width: 10,
                                       color:
-                                          ThemeColors.midColor.withOpacity(0.4),
+                                      Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.4):ThemeColors.midColor.withOpacity(0.4),
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -233,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .textTheme
                                           .labelSmall!
                                           .copyWith(
-                                              color: ThemeColors.titleColor),
+                                              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                                     )
                                   ],
                                 ),
@@ -247,10 +247,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                            boxShadow: const [
+                            color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                            boxShadow: [
                               BoxShadow(
-                                color: ThemeColors.lightColor,
+                                color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
                                 spreadRadius: 1,
                                 blurRadius: 7,
                               ),
@@ -266,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .textTheme
                                   .labelLarge!
                                   .copyWith(
-                                      color: ThemeColors.titleColor,
+                                      color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
                                       fontSize: 13),
                             ),
                           ),
@@ -283,10 +283,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 160,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: ThemeColors.lightColor,
+                    color: Get.isDarkMode?ThemeColors.darkSecond:ThemeColors.lightColor,
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.lightColor.withOpacity(0.4),
+                        color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -300,7 +300,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
-                            .copyWith(color: ThemeColors.accentColor),
+                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.accentColor),
                       ),
                     ),
                     child: Padding(
@@ -330,10 +330,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 350,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: ThemeColors.secondColor.withOpacity(0.4),
+                    color: Get.isDarkMode?ThemeColors.darkSecond:ThemeColors.secondColor.withOpacity(0.4),
                     boxShadow: [
                       BoxShadow(
-                        color: ThemeColors.lightColor.withOpacity(0.4),
+                        color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
-                            .copyWith(color: ThemeColors.accentColor),
+                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.accentColor),
                       ),
                     ),
                     child: Padding(
@@ -395,13 +395,13 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(
         taskTitle.toUpperCase(),
         style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: taskState == 'Due' ? ThemeColors.titleColor : Colors.red,
+              color: taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
             ),
       ),
       subtitle: Text(
         taskSubTitle,
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: taskState == 'Due' ? ThemeColors.titleColor : Colors.red,
+              color: taskState == 'Due' ? ThemeColors.accentColor : Colors.red,
             ),
       ),
       trailing: ElevatedButton(

@@ -78,11 +78,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     textStyle: Theme.of(context)
                         .textTheme
                         .labelSmall!
-                        .copyWith(color: Colors.black45),
+                        .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:Colors.black45),
                     selectedTextStyle: Theme.of(context)
                         .textTheme
                         .labelLarge!
-                        .copyWith(color: ThemeColors.titleColor),
+                        .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                     minValue: _currentTime.hour,
                     maxValue: 24,
                     value: _fromTime,
@@ -101,11 +101,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelLarge!
-                            .copyWith(color: ThemeColors.titleColor),
+                            .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:ThemeColors.titleColor),
                       ),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_rounded,
-                        color: ThemeColors.titleColor,
+                        color: Get.isDarkMode?ThemeColors.accentColor:ThemeColors.titleColor,
                         size: 30,
                       ),
                       Text(
@@ -113,7 +113,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium!
-                            .copyWith(color: ThemeColors.titleColor),
+                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                       )
                     ],
                   ),
@@ -121,11 +121,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       textStyle: Theme.of(context)
                           .textTheme
                           .labelSmall!
-                          .copyWith(color: Colors.black45),
+                          .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:Colors.black45),
                       selectedTextStyle: Theme.of(context)
                           .textTheme
                           .labelLarge!
-                          .copyWith(color: ThemeColors.titleColor),
+                          .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
                       minValue: _toTimeMin,
                       maxValue: 24,
                       value: _toTime,

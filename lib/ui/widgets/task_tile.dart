@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../utils/theme_colors.dart';
+import 'package:get/get.dart';
 
 class TaskTile extends StatelessWidget {
   const TaskTile({
@@ -19,7 +20,7 @@ class TaskTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ThemeColors.lightColor,
+        color: Get.isDarkMode?ThemeColors.darkSecond:ThemeColors.lightColor,
         borderRadius: BorderRadius.circular(7),
       ),
       child: ListTile(
