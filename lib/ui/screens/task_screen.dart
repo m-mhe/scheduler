@@ -64,7 +64,8 @@ class _TaskScreenState extends State<TaskScreen> {
                       builder: (context) {
                         return AskTaskCompleteConfirmation(
                           title: _allTasks[i].title,
-                          subTitle: _allTasks[i].subTitle,
+                          subTitle:
+                              '[${_allTasks[i].date}/${_allTasks[i].month}/${_allTasks[i].year}] ${_allTasks[i].subTitle}',
                         );
                       },
                     );

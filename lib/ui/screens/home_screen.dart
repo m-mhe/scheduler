@@ -350,7 +350,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 buildContext: context,
                                 taskTitle: _currentTasks[i].title,
                                 taskSubTitle: _currentTasks[i].subTitle,
-                                taskState: _currentTasks[i].taskState);
+                                taskState: _currentTasks[i].taskState,
+                                day: _allTasks[i].date.toString(),
+                                month: _allTasks[i].month.toString(),
+                                year: _allTasks[i].year.toString());
                           },
                           separatorBuilder: (context, i) {
                             return const SizedBox(
@@ -401,7 +404,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 buildContext: context,
                                 taskTitle: _allTasks[i].title,
                                 taskSubTitle: _allTasks[i].subTitle,
-                                taskState: _allTasks[i].taskState);
+                                taskState: _allTasks[i].taskState,
+                                day: _allTasks[i].date.toString(),
+                                month: _allTasks[i].month.toString(),
+                                year: _allTasks[i].year.toString());
                           },
                           separatorBuilder: (context, i) {
                             return const SizedBox(
@@ -433,6 +439,9 @@ class _HomeScreenState extends State<HomeScreen> {
       {required BuildContext buildContext,
       required String taskTitle,
       required String taskSubTitle,
+      required String day,
+      required String month,
+      required String year,
       required taskState}) {
     return ListTile(
       title: Text(
@@ -469,7 +478,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (context) {
               return AskTaskCompleteConfirmation(
                 title: taskTitle,
-                subTitle: taskSubTitle,
+                subTitle: '[$day/$month/$year] $taskSubTitle',
               );
             },
           );
