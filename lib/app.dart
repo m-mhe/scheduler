@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/controller_bindings.dart';
 import 'package:get/get.dart';
+import 'package:scheduler/ui/screens/splash_screen.dart';
 import 'package:scheduler/ui/utils/theme_colors.dart';
-import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: _lightTheme(context),
       darkTheme: _darkTheme(context),
       themeMode: ThemeMode.system,
-      home: CommonBottomNavBar(),
+      home: const SplashScreen(),
       initialBinding: ControllerBindings(),
     );
   }
@@ -64,8 +64,7 @@ class MyApp extends StatelessWidget {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.all(10),
-          textStyle:
-              const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
           backgroundColor: ThemeColors.accentColor,
           foregroundColor: ThemeColors.lightColor,
           fixedSize: const Size.fromWidth(90),
@@ -87,6 +86,7 @@ class MyApp extends StatelessWidget {
           selectedItemColor: ThemeColors.titleColor),
     );
   }
+
   ThemeData _darkTheme(BuildContext context) {
     return ThemeData(
       brightness: Brightness.dark,
@@ -133,8 +133,7 @@ class MyApp extends StatelessWidget {
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           padding: const EdgeInsets.all(10),
-          textStyle:
-          const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          textStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
           backgroundColor: ThemeColors.darkAccent,
           foregroundColor: ThemeColors.darkSecond,
           fixedSize: const Size.fromWidth(90),
@@ -150,7 +149,7 @@ class MyApp extends StatelessWidget {
         backgroundColor: ThemeColors.darkBlue,
         foregroundColor: ThemeColors.darkSecond,
       ),
-      bottomNavigationBarTheme:  const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
           unselectedItemColor: ThemeColors.titleColor,
           elevation: 20,
           selectedItemColor: ThemeColors.darkAccent),

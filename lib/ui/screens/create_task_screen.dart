@@ -75,14 +75,17 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   NumberPicker(
-                    textStyle: Theme.of(context)
-                        .textTheme
-                        .labelSmall!
-                        .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:Colors.black45),
+                    textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        color: Get.isDarkMode
+                            ? ThemeColors.accentColor
+                            : Colors.black45),
                     selectedTextStyle: Theme.of(context)
                         .textTheme
                         .labelLarge!
-                        .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                        .copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.titleColor),
                     minValue: _currentTime.hour,
                     maxValue: 24,
                     value: _fromTime,
@@ -98,14 +101,16 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                     children: [
                       Text(
                         'Time',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.titleColor),
                       ),
                       Icon(
                         Icons.arrow_forward_rounded,
-                        color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
+                        color: Get.isDarkMode
+                            ? ThemeColors.darkAccent
+                            : ThemeColors.titleColor,
                         size: 30,
                       ),
                       Text(
@@ -113,7 +118,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                         style: Theme.of(context)
                             .textTheme
                             .labelMedium!
-                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                            .copyWith(
+                                color: Get.isDarkMode
+                                    ? ThemeColors.darkAccent
+                                    : ThemeColors.titleColor),
                       )
                     ],
                   ),
@@ -121,11 +129,17 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                       textStyle: Theme.of(context)
                           .textTheme
                           .labelSmall!
-                          .copyWith(color: Get.isDarkMode?ThemeColors.accentColor:Colors.black45),
+                          .copyWith(
+                              color: Get.isDarkMode
+                                  ? ThemeColors.accentColor
+                                  : Colors.black45),
                       selectedTextStyle: Theme.of(context)
                           .textTheme
                           .labelLarge!
-                          .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                          .copyWith(
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkAccent
+                                  : ThemeColors.titleColor),
                       minValue: _toTimeMin,
                       maxValue: 24,
                       value: _toTime,
@@ -143,10 +157,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 controller: _titleTEC,
                 maxLength: 20,
                 textAlign: TextAlign.center,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.titleColor),
                 decoration: const InputDecoration(hintText: 'Title:'),
               ),
               const SizedBox(
@@ -155,10 +169,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               TextField(
                 controller: _subTitleTEC,
                 maxLines: 4,
-                style: Theme.of(context)
-                    .textTheme
-                    .labelLarge!
-                    .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                    color: Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.titleColor),
                 decoration:
                     const InputDecoration(hintText: 'Description (optional):'),
               ),

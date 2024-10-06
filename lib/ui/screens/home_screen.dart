@@ -93,10 +93,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                        color: Get.isDarkMode
+                            ? ThemeColors.darkSecond
+                            : Colors.white,
                         boxShadow: [
                           BoxShadow(
-                              color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
+                              color: Get.isDarkMode
+                                  ? Colors.transparent
+                                  : ThemeColors.lightColor,
                               spreadRadius: 1,
                               blurRadius: 7),
                         ],
@@ -109,7 +113,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           replacement: Text(
                             'Complete a task.',
                             style: TextStyle(
-                                color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
+                                color: Get.isDarkMode
+                                    ? ThemeColors.darkAccent
+                                    : ThemeColors.titleColor,
                                 fontWeight: FontWeight.w600),
                           ),
                           child: Padding(
@@ -117,7 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: PieChart(
                               swapAnimationDuration: const Duration(seconds: 2),
                               PieChartData(
-                                centerSpaceColor: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                                centerSpaceColor: Get.isDarkMode
+                                    ? ThemeColors.darkSecond
+                                    : Colors.white,
                                 pieTouchData: PieTouchData(
                                     touchCallback: (event, response) {
                                   setState(() {
@@ -138,10 +146,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                     titleStyle: Theme.of(context)
                                         .textTheme
                                         .labelLarge!
-                                        .copyWith(color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white),
+                                        .copyWith(
+                                            color: Get.isDarkMode
+                                                ? ThemeColors.darkSecond
+                                                : Colors.white),
                                     showTitle: true,
                                     value: _totalCompleted,
-                                    color: Get.isDarkMode?ThemeColors.darkBlue:ThemeColors.accentColor,
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkBlue
+                                        : ThemeColors.accentColor,
                                   ),
                                   PieChartSectionData(
                                     title:
@@ -150,11 +163,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         .textTheme
                                         .labelLarge!
                                         .copyWith(
-                                            color: Get.isDarkMode?Colors.white70:ThemeColors.titleColor),
+                                            color: Get.isDarkMode
+                                                ? Colors.white70
+                                                : ThemeColors.titleColor),
                                     showTitle: _chartTouchedIndex == 1,
                                     value: _totalCanceled,
-                                    color:
-                                    Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.7):ThemeColors.midColor.withOpacity(0.4),
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkBlue.withOpacity(0.7)
+                                        : ThemeColors.midColor.withOpacity(0.4),
                                   ),
                                 ],
                               ),
@@ -175,10 +191,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkSecond
+                                : Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                  color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
+                                  color: Get.isDarkMode
+                                      ? Colors.transparent
+                                      : ThemeColors.lightColor,
                                   spreadRadius: 1,
                                   blurRadius: 7),
                             ],
@@ -199,7 +219,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       height: 10,
                                       width: 10,
-                                      color: Get.isDarkMode?ThemeColors.darkBlue:ThemeColors.accentColor,
+                                      color: Get.isDarkMode
+                                          ? ThemeColors.darkBlue
+                                          : ThemeColors.accentColor,
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -210,7 +232,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .textTheme
                                           .labelSmall!
                                           .copyWith(
-                                              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                                              color: Get.isDarkMode
+                                                  ? ThemeColors.darkAccent
+                                                  : ThemeColors.titleColor),
                                     )
                                   ],
                                 ),
@@ -221,8 +245,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Container(
                                       height: 10,
                                       width: 10,
-                                      color:
-                                      Get.isDarkMode?ThemeColors.darkBlue.withOpacity(0.7):ThemeColors.midColor.withOpacity(0.4),
+                                      color: Get.isDarkMode
+                                          ? ThemeColors.darkBlue
+                                              .withOpacity(0.7)
+                                          : ThemeColors.midColor
+                                              .withOpacity(0.4),
                                     ),
                                     const SizedBox(
                                       width: 5,
@@ -233,7 +260,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .textTheme
                                           .labelSmall!
                                           .copyWith(
-                                              color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor),
+                                              color: Get.isDarkMode
+                                                  ? ThemeColors.darkAccent
+                                                  : ThemeColors.titleColor),
                                     )
                                   ],
                                 ),
@@ -247,10 +276,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Get.isDarkMode?ThemeColors.darkSecond:Colors.white,
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkSecond
+                                : Colors.white,
                             boxShadow: [
                               BoxShadow(
-                                color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor,
+                                color: Get.isDarkMode
+                                    ? Colors.transparent
+                                    : ThemeColors.lightColor,
                                 spreadRadius: 1,
                                 blurRadius: 7,
                               ),
@@ -266,7 +299,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .textTheme
                                   .labelLarge!
                                   .copyWith(
-                                      color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor,
+                                      color: Get.isDarkMode
+                                          ? ThemeColors.darkAccent
+                                          : ThemeColors.titleColor,
                                       fontSize: 13),
                             ),
                           ),
@@ -283,10 +318,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 160,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Get.isDarkMode?ThemeColors.darkSecond:ThemeColors.lightColor,
+                    color: Get.isDarkMode
+                        ? ThemeColors.darkSecond
+                        : ThemeColors.lightColor,
                     boxShadow: [
                       BoxShadow(
-                        color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor.withOpacity(0.4),
+                        color: Get.isDarkMode
+                            ? Colors.transparent
+                            : ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -297,10 +336,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     replacement: Center(
                       child: Text(
                         'You have no current task.',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.accentColor),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.accentColor),
                       ),
                     ),
                     child: Padding(
@@ -330,10 +369,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 350,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Get.isDarkMode?ThemeColors.darkSecond:ThemeColors.secondColor.withOpacity(0.4),
+                    color: Get.isDarkMode
+                        ? ThemeColors.darkSecond
+                        : ThemeColors.secondColor.withOpacity(0.4),
                     boxShadow: [
                       BoxShadow(
-                        color: Get.isDarkMode?Colors.transparent:ThemeColors.lightColor.withOpacity(0.4),
+                        color: Get.isDarkMode
+                            ? Colors.transparent
+                            : ThemeColors.lightColor.withOpacity(0.4),
                         spreadRadius: 1,
                         blurRadius: 7,
                       ),
@@ -344,10 +387,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     replacement: Center(
                       child: Text(
                         'You have no task.',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.accentColor),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.accentColor),
                       ),
                     ),
                     child: Padding(
@@ -395,19 +438,30 @@ class _HomeScreenState extends State<HomeScreen> {
       title: Text(
         taskTitle.toUpperCase(),
         style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
+              color: taskState == 'Due'
+                  ? Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.titleColor
+                  : Colors.red,
             ),
       ),
       subtitle: Text(
         taskSubTitle,
         style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
+              color: taskState == 'Due'
+                  ? Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.titleColor
+                  : Colors.red,
             ),
       ),
       trailing: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              taskState == 'Due' ? Get.isDarkMode?ThemeColors.darkAccent:ThemeColors.titleColor : Colors.red,
+          backgroundColor: taskState == 'Due'
+              ? Get.isDarkMode
+                  ? ThemeColors.darkAccent
+                  : ThemeColors.titleColor
+              : Colors.red,
         ),
         onPressed: () async {
           await showDialog(
