@@ -16,9 +16,9 @@ class CommonBottomNavBar extends StatelessWidget {
         appBar: commonAppBar(context),
         body: screens[controller.currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-            currentIndex: Get.find<NavBarController>().currentIndex,
+            currentIndex: controller.currentIndex,
             onTap: (index) {
-              Get.find<NavBarController>().setCurrentIndex(index);
+              controller.setCurrentIndex(index);
             },
             items: const [
               BottomNavigationBarItem(
