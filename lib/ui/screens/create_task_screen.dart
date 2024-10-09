@@ -154,6 +154,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 20,
               ),
               TextField(
+                onSubmitted: (String text){
+                  _onCompleted();
+                },
                 controller: _titleTEC,
                 maxLength: 20,
                 textAlign: TextAlign.center,
@@ -180,33 +183,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 10,
               ),
               ElevatedButton(
-                onPressed: () async {
-                  if (_titleTEC.text.trim().isNotEmpty) {
-                    TaskDataModel dataEntity = TaskDataModel(
-                        title: _titleTEC.text,
-                        subTitle:
-                            '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-                        fromTime: _fromTime,
-                        toTime: _toTime,
-                        month: _currentTime.month,
-                        year: _currentTime.year,
-                        taskState: 'Due',
-                        date: _currentTime.day);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      _bottomPopUpMessage(
-                          text: 'Task is successfully created!',
-                          color: Colors.green),
-                    );
-                    await DatabaseSetup.saveActiveTask(dataEntity);
-                    Get.offAll(()=>CommonBottomNavBar());
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      _bottomPopUpMessage(
-                          text: 'Please give a title to your task!',
-                          color: Colors.red),
-                    );
-                  }
-                },
+                onPressed: _onCompleted,
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size.fromWidth(double.maxFinite),
                 ),
@@ -221,11 +198,40 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   SnackBar _bottomPopUpMessage({required String text, required Color color}) {
     return SnackBar(
+      duration: const Duration(seconds: 1),
       content: Text(
         text,
         textAlign: TextAlign.center,
       ),
       backgroundColor: color,
     );
+  }
+
+  Future<void> _onCompleted() async {
+    if (_titleTEC.text.trim().isNotEmpty) {
+      TaskDataModel dataEntity = TaskDataModel(
+          title: _titleTEC.text,
+          subTitle:
+          '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+          fromTime: _fromTime,
+          toTime: _toTime,
+          month: _currentTime.month,
+          year: _currentTime.year,
+          taskState: 'Due',
+          date: _currentTime.day);
+      ScaffoldMessenger.of(context).showSnackBar(
+        _bottomPopUpMessage(
+            text: 'Task is successfully created!',
+            color: Colors.green),
+      );
+      await DatabaseSetup.saveActiveTask(dataEntity);
+      Get.offAll(()=>CommonBottomNavBar());
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        _bottomPopUpMessage(
+            text: 'Please give a title to your task!',
+            color: Colors.red),
+      );
+    }
   }
 }
