@@ -1,5 +1,5 @@
-class Entity {
-  Entity(
+class TaskDataModel {
+  TaskDataModel(
       {required this.title,
       required this.subTitle,
       required this.taskState,

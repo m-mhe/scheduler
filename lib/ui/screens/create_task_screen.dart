@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
@@ -182,7 +182,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               ElevatedButton(
                 onPressed: () async {
                   if (_titleTEC.text.trim().isNotEmpty) {
-                    Entity dataEntity = Entity(
+                    TaskDataModel dataEntity = TaskDataModel(
                         title: _titleTEC.text,
                         subTitle:
                             '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',

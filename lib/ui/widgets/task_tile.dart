@@ -40,7 +40,7 @@ class TaskTile extends StatelessWidget {
                 color: taskStatus == 'Completed' || taskStatus == 'Due'
                     ? Get.isDarkMode
                         ? ThemeColors.darkAccent
-                        : ThemeColors.titleColor
+                        : ThemeColors.accentColor
                     : Colors.red,
               ),
         ),

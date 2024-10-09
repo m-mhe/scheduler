@@ -1,10 +1,10 @@
-import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/data/task_data_model.dart';
 import 'package:path/path.dart';
-import 'package:scheduler/data/entity_two.dart';
+import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DatabaseSetup {
-  static Future<void> saveActiveTask(Entity dataEntity) async {
+  static Future<void> saveActiveTask(TaskDataModel dataEntity) async {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
@@ -13,8 +13,8 @@ class DatabaseSetup {
     await connectToDataBase.close();
   }
 
-  static Future<List<Entity>> fetchFromActiveDB() async {
-    List<Entity> taskList = [];
+  static Future<List<TaskDataModel>> fetchFromActiveDB() async {
+    List<TaskDataModel> taskList = [];
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
@@ -30,7 +30,7 @@ class DatabaseSetup {
           'year': year as int
         } in data) {
       taskList.add(
-        Entity(
+        TaskDataModel(
             title: title,
             subTitle: subtitle,
             taskState: taskState,
@@ -57,7 +57,7 @@ class DatabaseSetup {
     await connectToDatabase.close();
   }
 
-  static Future<void> saveInactiveTask(EntityTwo dataEntity) async {
+  static Future<void> saveInactiveTask(OldTaskDataModel dataEntity) async {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
@@ -66,8 +66,8 @@ class DatabaseSetup {
     await connectToDataBase.close();
   }
 
-  static Future<List<EntityTwo>> fetchFromInactiveDB() async {
-    List<EntityTwo> taskList = [];
+  static Future<List<OldTaskDataModel>> fetchFromInactiveDB() async {
+    List<OldTaskDataModel> taskList = [];
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
@@ -79,7 +79,7 @@ class DatabaseSetup {
         } in data) {
       taskList.insert(
         0,
-        EntityTwo(
+        OldTaskDataModel(
           title: title,
           subTitle: subtitle,
           taskState: taskState,

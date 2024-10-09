@@ -1,5 +1,5 @@
-class EntityTwo {
-  EntityTwo(
+class OldTaskDataModel {
+  OldTaskDataModel(
       {required this.title,
         required this.subTitle,
         required this.taskState,});

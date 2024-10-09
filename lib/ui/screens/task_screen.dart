@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scheduler/data/entity.dart';
+import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/ask_task_complete_confirmation.dart';
 import '../utils/theme_colors.dart';
@@ -13,12 +13,12 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<Entity> _allTasks = [];
+  List<TaskDataModel> _allTasks = [];
 
   Future<void> _fetch() async {
     final DateTime currentTime = DateTime.now();
-    List<Entity> dataList = await DatabaseSetup.fetchFromActiveDB();
-    for (Entity data in dataList) {
+    List<TaskDataModel> dataList = await DatabaseSetup.fetchFromActiveDB();
+    for (TaskDataModel data in dataList) {
       if (data.toTime < currentTime.hour ||
           data.date < currentTime.day ||
           data.month < currentTime.month ||

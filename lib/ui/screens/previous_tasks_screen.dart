@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:scheduler/data/entity_two.dart';
+import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/widgets/task_tile.dart';
 import '../utils/theme_colors.dart';
@@ -12,7 +12,7 @@ class PreviousTasks extends StatefulWidget {
 }
 
 class _PreviousTasksState extends State<PreviousTasks> {
-  List<EntityTwo> _allTasks = [];
+  List<OldTaskDataModel> _allTasks = [];
 
   Future<void> _fetch() async {
     _allTasks = await DatabaseSetup.fetchFromInactiveDB();

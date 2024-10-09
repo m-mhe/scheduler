@@ -1,8 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:scheduler/data/entity.dart';
-import 'package:scheduler/data/entity_two.dart';
+import 'package:scheduler/data/task_data_model.dart';
+import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
 import '../utils/theme_colors.dart';
@@ -16,19 +16,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<EntityTwo> _oldTaskList = [];
+  List<OldTaskDataModel> _oldTaskList = [];
   double _totalCanceled = 0;
   double _totalCompleted = 0;
   int _chartTouchedIndex = -1;
   late DateTime _currentTime;
-  final List<Entity> _currentTasks = [];
-  List<Entity> _allTasks = [];
+  final List<TaskDataModel> _currentTasks = [];
+  List<TaskDataModel> _allTasks = [];
 
   Future<void> _fetch() async {
     _currentTime = DateTime.now();
     _currentTasks.clear();
-    List<Entity> dataList = await DatabaseSetup.fetchFromActiveDB();
-    for (Entity data in dataList) {
+    List<TaskDataModel> dataList = await DatabaseSetup.fetchFromActiveDB();
+    for (TaskDataModel data in dataList) {
       if (data.fromTime <= _currentTime.hour ||
           data.date < _currentTime.day ||
           data.month < _currentTime.month ||
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _totalCanceled = 0;
     _totalCompleted = 0;
     _oldTaskList = await DatabaseSetup.fetchFromInactiveDB();
-    for (EntityTwo task in _oldTaskList) {
+    for (OldTaskDataModel task in _oldTaskList) {
       if (task.taskState == 'Completed') {
         _totalCompleted++;
       } else {
@@ -460,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> {
               color: taskState == 'Due'
                   ? Get.isDarkMode
                       ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor
+                      : ThemeColors.accentColor
                   : Colors.red,
             ),
       ),
@@ -469,7 +469,7 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: taskState == 'Due'
               ? Get.isDarkMode
                   ? ThemeColors.darkAccent
-                  : ThemeColors.titleColor
+                  : ThemeColors.accentColor
               : Colors.red,
         ),
         onPressed: () async {
