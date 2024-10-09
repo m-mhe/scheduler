@@ -154,7 +154,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 20,
               ),
               TextField(
-                onSubmitted: (String text){
+                onSubmitted: (String text) {
                   _onCompleted();
                 },
                 controller: _titleTEC,
@@ -211,8 +211,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     if (_titleTEC.text.trim().isNotEmpty) {
       TaskDataModel dataEntity = TaskDataModel(
           title: _titleTEC.text,
-          subTitle:
-          '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+          subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
           fromTime: _fromTime,
           toTime: _toTime,
           month: _currentTime.month,
@@ -221,16 +220,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           date: _currentTime.day);
       ScaffoldMessenger.of(context).showSnackBar(
         _bottomPopUpMessage(
-            text: 'Task is successfully created!',
-            color: Colors.green),
+            text: 'Task is successfully created!', color: Colors.green),
       );
       await DatabaseSetup.saveActiveTask(dataEntity);
-      Get.offAll(()=>CommonBottomNavBar());
+      Get.offAll(() => CommonBottomNavBar());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         _bottomPopUpMessage(
-            text: 'Please give a title to your task!',
-            color: Colors.red),
+            text: 'Please give a title to your task!', color: Colors.red),
       );
     }
   }
