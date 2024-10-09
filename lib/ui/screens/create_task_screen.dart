@@ -198,7 +198,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                           color: Colors.green),
                     );
                     await DatabaseSetup.saveActiveTask(dataEntity);
-                    Get.offAll(CommonBottomNavBar());
+                    Get.offAll(()=>CommonBottomNavBar());
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
                       _bottomPopUpMessage(
@@ -227,12 +227,5 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       ),
       backgroundColor: color,
     );
-  }
-
-  @override
-  void dispose() {
-    _titleTEC.dispose();
-    _subTitleTEC.dispose();
-    super.dispose();
   }
 }
