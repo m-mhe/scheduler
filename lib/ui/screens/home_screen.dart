@@ -275,8 +275,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: InkWell(
-                          onTap: (){
-                            Get.to(()=>const FocusSessionScreen());
+                          onTap: () {
+                            Get.to(() => const FocusSessionScreen());
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -300,7 +300,13 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Stack(
                               alignment: AlignmentDirectional.center,
                               children: [
-                                const Icon(Icons.alarm_on_rounded, color: ThemeColors.darkMain, size: 70,),
+                                Icon(
+                                  Icons.alarm_on_rounded,
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkMain
+                                      : ThemeColors.lightColor,
+                                  size: 70,
+                                ),
                                 Text(
                                   textAlign: TextAlign.center,
                                   'Start\nfocus session',
@@ -436,7 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const CreateTaskScreen());
+          Get.to(() => const CreateTaskScreen());
         },
         child: const Icon(
           Icons.add,
