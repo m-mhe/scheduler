@@ -5,6 +5,7 @@ import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/database_setup.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
+import 'package:scheduler/ui/screens/focus_session_screen.dart';
 import '../utils/theme_colors.dart';
 import '../widgets/ask_task_complete_confirmation.dart';
 
@@ -92,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(7),
                         color: Get.isDarkMode
                             ? ThemeColors.darkSecond
                             : Colors.white,
@@ -190,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.only(top: 10),
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
+                            borderRadius: BorderRadius.circular(7),
                             color: Get.isDarkMode
                                 ? ThemeColors.darkSecond
                                 : Colors.white,
@@ -273,36 +274,46 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Get.isDarkMode
-                                ? ThemeColors.darkSecond
-                                : Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Get.isDarkMode
-                                    ? Colors.transparent
-                                    : ThemeColors.lightColor,
-                                spreadRadius: 1,
-                                blurRadius: 7,
-                              ),
-                            ],
-                          ),
-                          height: 70,
-                          width: MediaQuery.sizeOf(context).width -
-                              ((MediaQuery.sizeOf(context).width / 1.7) + 30),
-                          child: Center(
-                            child: Text(
-                              '${_currentTime.day}/${_currentTime.month}/${_currentTime.year}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelLarge!
-                                  .copyWith(
-                                      color: Get.isDarkMode
-                                          ? ThemeColors.darkAccent
-                                          : ThemeColors.titleColor,
-                                      fontSize: 13),
+                        child: InkWell(
+                          onTap: (){
+                            Get.to(()=>const FocusSessionScreen());
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7),
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkSecond
+                                  : Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Get.isDarkMode
+                                      ? Colors.transparent
+                                      : ThemeColors.lightColor,
+                                  spreadRadius: 1,
+                                  blurRadius: 7,
+                                ),
+                              ],
+                            ),
+                            height: 70,
+                            width: MediaQuery.sizeOf(context).width -
+                                ((MediaQuery.sizeOf(context).width / 1.7) + 30),
+                            child: Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                const Icon(Icons.alarm_on_rounded, color: ThemeColors.darkMain, size: 70,),
+                                Text(
+                                  textAlign: TextAlign.center,
+                                  'Start\nfocus session',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge!
+                                      .copyWith(
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.titleColor,
+                                          fontSize: 13),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -317,7 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.maxFinite,
                   height: 160,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(7),
                     color: Get.isDarkMode
                         ? ThemeColors.darkSecond
                         : ThemeColors.lightColor,
@@ -371,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.maxFinite,
                   height: 350,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(7),
                     color: Get.isDarkMode
                         ? ThemeColors.darkSecond
                         : ThemeColors.secondColor.withOpacity(0.4),
