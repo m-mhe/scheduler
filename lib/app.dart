@@ -73,6 +73,18 @@ class MyApp extends StatelessWidget {
           ),
         ),
       ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: TextStyle(fontSize: 14, color: ThemeColors.accentColor),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: ThemeColors.lightColor)
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: ThemeColors.lightColor)
+          ),
+          constraints: BoxConstraints.tight(Size.fromHeight(50))
+        )
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

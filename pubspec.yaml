@@ -40,6 +40,7 @@ dependencies:
   numberpicker: ^2.1.2
   sqflite: ^2.3.3+2
   path: ^1.9.0
+  sleek_circular_slider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
