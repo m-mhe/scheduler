@@ -5,18 +5,25 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../utils/theme_colors.dart';
 
 class FocusSessionScreen extends StatefulWidget {
-  const FocusSessionScreen({super.key});
+  const FocusSessionScreen(
+      {super.key, required this.endTime, required this.breakEndTime});
+
+  final double endTime;
+  final double breakEndTime;
 
   @override
   State<FocusSessionScreen> createState() => _FocusSessionScreenState();
 }
 
 class _FocusSessionScreenState extends State<FocusSessionScreen> {
+  int _focusSessions = 0;
   bool _focusMode = false;
-  double _startTime = 0;
-  double _endTime = 25;
-  double _completedTime = 5;
+  final double _startTime = 0;
+  double _endTime = 24;
+  double _breakEndTime = 4;
+  double _completedTime = 0;
   int _second = 60;
+  bool _isBreak = false;
   String _currentTaskType = 'Work';
   final List<String> _taskTypes = [
     'Work',
@@ -25,35 +32,13 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
     'Coding',
     'Other',
   ];
-  final List<int> _focusTimes = [
-    5,
-    10,
-    15,
-    20,
-    25,
-    30,
-    35,
-    40,
-    45,
-    50,
-    55,
-    60,
-    65,
-    70,
-    75,
-    80,
-    85,
-    90,
-    95,
-  ];
-  List<int> _breakTimes = [
-    5,
-    10,
-    15,
-    20,
-    25,
-    30,
-  ];
+
+  @override
+  void initState() {
+    _endTime = widget.endTime;
+    _breakEndTime = widget.breakEndTime;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,11 +51,19 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                  padding: const EdgeInsets.only(
+                      top: 20, bottom: 20, left: 10, right: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Text(
+                        'Focus: ${(_endTime + 1).toStringAsFixed(0)} min',
+                        style: const TextStyle(
+                          color: ThemeColors.accentColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                       DropdownMenu(
                           onSelected: (v) {
                             _currentTaskType = _taskTypes[v!];
@@ -93,82 +86,13 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             DropdownMenuEntry(value: 3, label: _taskTypes[3]),
                             DropdownMenuEntry(value: 4, label: _taskTypes[4]),
                           ]),
-                      DropdownMenu(
-                          initialSelection: 4,
-                          menuHeight: 150,
-                          label: Text(
-                            'Focus time',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(color: ThemeColors.titleColor),
-                          ),
-                          width: 102,
-                          dropdownMenuEntries: [
-                            DropdownMenuEntry(
-                                value: 0, label: '${_focusTimes[0]} minute'),
-                            DropdownMenuEntry(
-                                value: 1, label: '${_focusTimes[1]} minute'),
-                            DropdownMenuEntry(
-                                value: 2, label: '${_focusTimes[2]} minute'),
-                            DropdownMenuEntry(
-                                value: 3, label: '${_focusTimes[3]} minute'),
-                            DropdownMenuEntry(
-                                value: 4, label: '${_focusTimes[4]} minute'),
-                            DropdownMenuEntry(
-                                value: 5, label: '${_focusTimes[5]} minute'),
-                            DropdownMenuEntry(
-                                value: 6, label: '${_focusTimes[6]} minute'),
-                            DropdownMenuEntry(
-                                value: 7, label: '${_focusTimes[7]} minute'),
-                            DropdownMenuEntry(
-                                value: 8, label: '${_focusTimes[8]} minute'),
-                            DropdownMenuEntry(
-                                value: 9, label: '${_focusTimes[9]} minute'),
-                            DropdownMenuEntry(
-                                value: 10, label: '${_focusTimes[10]} minute'),
-                            DropdownMenuEntry(
-                                value: 11, label: '${_focusTimes[11]} minute'),
-                            DropdownMenuEntry(
-                                value: 12, label: '${_focusTimes[12]} minute'),
-                            DropdownMenuEntry(
-                                value: 13, label: '${_focusTimes[13]} minute'),
-                            DropdownMenuEntry(
-                                value: 14, label: '${_focusTimes[14]} minute'),
-                            DropdownMenuEntry(
-                                value: 15, label: '${_focusTimes[15]} minute'),
-                            DropdownMenuEntry(
-                                value: 16, label: '${_focusTimes[16]} minute'),
-                            DropdownMenuEntry(
-                                value: 17, label: '${_focusTimes[17]} minute'),
-                            DropdownMenuEntry(
-                                value: 18, label: '${_focusTimes[18]} minute'),
-                          ]),
-                      DropdownMenu(
-                          initialSelection: 0,
-                          menuHeight: 150,
-                          label: Text(
-                            'Break time',
-                            style: Theme.of(context)
-                                .textTheme
-                                .labelLarge!
-                                .copyWith(color: ThemeColors.titleColor),
-                          ),
-                          width: 102,
-                          dropdownMenuEntries: [
-                            DropdownMenuEntry(
-                                value: 0, label: '${_breakTimes[0]} minute'),
-                            DropdownMenuEntry(
-                                value: 1, label: '${_breakTimes[1]} minute'),
-                            DropdownMenuEntry(
-                                value: 2, label: '${_breakTimes[2]} minute'),
-                            DropdownMenuEntry(
-                                value: 3, label: '${_breakTimes[3]} minute'),
-                            DropdownMenuEntry(
-                                value: 4, label: '${_breakTimes[4]} minute'),
-                            DropdownMenuEntry(
-                                value: 5, label: '${_breakTimes[5]} minute'),
-                          ]),
+                      Text(
+                        'Break: ${(_breakEndTime + 1).toStringAsFixed(0)} min',
+                        style: const TextStyle(
+                          color: ThemeColors.accentColor,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -178,12 +102,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     child: SleekCircularSlider(
                       initialValue: _completedTime,
                       min: _startTime,
-                      max: _endTime,
+                      max: _isBreak ? _breakEndTime : _endTime,
                       appearance: CircularSliderAppearance(
                           spinnerMode: false,
                           angleRange: 360,
                           startAngle: 270,
-                          size: MediaQuery.sizeOf(context).width / 1.5,
+                          size: MediaQuery.sizeOf(context).width / 1.4,
                           customWidths: CustomSliderWidths(
                             trackWidth: 15,
                             progressBarWidth: 15,
@@ -192,20 +116,21 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           ),
                           customColors: CustomSliderColors(
                             trackColor: ThemeColors.darkAccent,
-                            progressBarColor: ThemeColors.accentColor,
+                            progressBarColor: Colors.white,
                             shadowColor: ThemeColors.accentColor,
-                            hideShadow: false,
+                            hideShadow: true,
                           ),
                           infoProperties: InfoProperties(
-                              topLabelText: _currentTaskType,
+                              topLabelText:
+                                  _isBreak ? 'Break' : _currentTaskType,
                               topLabelStyle: Theme.of(context)
                                   .textTheme
                                   .labelMedium
                                   ?.copyWith(color: ThemeColors.accentColor),
                               modifier: (v) {
-                                return '${v.toStringAsFixed(0)}:$_second';
+                                return '${(_endTime - v).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
                               },
-                              bottomLabelText: 'Paused',
+                              bottomLabelText: _focusMode ? null : 'Paused',
                               mainLabelStyle: TextStyle(
                                   fontSize: 46, color: ThemeColors.accentColor),
                               bottomLabelStyle: Theme.of(context)
@@ -230,9 +155,48 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     IconButton(
                       style: IconButton.styleFrom(
                           backgroundColor: ThemeColors.accentColor),
-                      onPressed: () {
+                      onPressed: () async {
                         _focusMode = !_focusMode;
                         setState(() {});
+                        bool skip = false;
+                        while (_focusMode) {
+                          await Future.delayed(const Duration(seconds: 1));
+                          if (_isBreak) {
+                            if (_second != 1) {
+                              _second--;
+                            } else {
+                              if (_completedTime == _breakEndTime) {
+                                _completedTime = 0;
+                                _isBreak = false;
+                                skip = true;
+                              }
+                              if (skip) {
+                                skip = false;
+                              } else {
+                                _completedTime++;
+                              }
+                              _second = 60;
+                            }
+                          } else {
+                            if (_second != 1) {
+                              _second--;
+                            } else {
+                              if (_completedTime == _endTime) {
+                                _completedTime = 0;
+                                _focusSessions++;
+                                _isBreak = true;
+                                skip = true;
+                              }
+                              if (skip) {
+                                skip = false;
+                              } else {
+                                _completedTime++;
+                              }
+                              _second = 60;
+                            }
+                          }
+                          setState(() {});
+                        }
                       },
                       icon: _focusMode
                           ? const Icon(Icons.pause)
@@ -262,7 +226,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     topLeft: Radius.circular(30))),
             child: Center(
                 child: Text(
-              'Total session time: 60 min',
+              'Total session time: ${(_focusSessions*(_endTime+1)).toStringAsFixed(0)} min',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme

@@ -276,7 +276,152 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         child: InkWell(
                           onTap: () {
-                            Get.to(() => const FocusSessionScreen());
+                            double endTime = 24;
+                            double breakEndTime = 4;
+                            final List<int> focusTimes = [
+                              5,
+                              10,
+                              15,
+                              20,
+                              25,
+                              30,
+                              35,
+                              40,
+                              45,
+                              50,
+                              55,
+                              60,
+                              65,
+                              70,
+                              75,
+                              80,
+                              85,
+                              90,
+                              95,
+                            ];
+                            final List<int> breakTimes = [
+                              5,
+                              10,
+                              15,
+                              20,
+                              25,
+                              30,
+                            ];
+                            showDialog(context: context, builder: (context){
+                              return  AlertDialog(
+                                actionsAlignment: MainAxisAlignment.center,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(14),
+                                ),
+                                backgroundColor:
+                                Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.lightColor,
+                                title: Text(
+                                  'Set time',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.titleColor,
+                                  ),
+                                ),
+                                content: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    DropdownMenu(
+                                        onSelected: (v) {
+                                          endTime = (focusTimes[v!] - 1).toDouble();
+                                        },
+                                        initialSelection: 4,
+                                        menuHeight: 150,
+                                        label: Text(
+                                          'Focus time',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .copyWith(color: ThemeColors.titleColor),
+                                        ),
+                                        width: 102,
+                                        dropdownMenuEntries: [
+                                          DropdownMenuEntry(
+                                              value: 0, label: '${focusTimes[0]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 1, label: '${focusTimes[1]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 2, label: '${focusTimes[2]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 3, label: '${focusTimes[3]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 4, label: '${focusTimes[4]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 5, label: '${focusTimes[5]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 6, label: '${focusTimes[6]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 7, label: '${focusTimes[7]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 8, label: '${focusTimes[8]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 9, label: '${focusTimes[9]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 10, label: '${focusTimes[10]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 11, label: '${focusTimes[11]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 12, label: '${focusTimes[12]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 13, label: '${focusTimes[13]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 14, label: '${focusTimes[14]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 15, label: '${focusTimes[15]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 16, label: '${focusTimes[16]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 17, label: '${focusTimes[17]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 18, label: '${focusTimes[18]} minute'),
+                                        ]),
+                                    DropdownMenu(
+                                        onSelected: (v) {
+                                          breakEndTime = (breakTimes[v!] - 1).toDouble();
+                                        },
+                                        initialSelection: 0,
+                                        menuHeight: 150,
+                                        label: Text(
+                                          'Break time',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .labelLarge!
+                                              .copyWith(color: ThemeColors.titleColor),
+                                        ),
+                                        width: 102,
+                                        dropdownMenuEntries: [
+                                          DropdownMenuEntry(
+                                              value: 0, label: '${breakTimes[0]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 1, label: '${breakTimes[1]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 2, label: '${breakTimes[2]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 3, label: '${breakTimes[3]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 4, label: '${breakTimes[4]} minute'),
+                                          DropdownMenuEntry(
+                                              value: 5, label: '${breakTimes[5]} minute'),
+                                        ]),
+                                  ],
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Get.back();
+                                      Get.to(()=> FocusSessionScreen(endTime: endTime, breakEndTime: breakEndTime,));
+                                    },
+                                    child: const Text('Start'),
+                                  ),
+                                ],
+                              );
+                            });
                           },
                           child: Container(
                             decoration: BoxDecoration(
