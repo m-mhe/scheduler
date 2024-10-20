@@ -108,16 +108,16 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           startAngle: 270,
                           size: MediaQuery.sizeOf(context).width / 1.4,
                           customWidths: CustomSliderWidths(
-                            trackWidth: 10,
-                            progressBarWidth: 10,
-                            shadowWidth: 17,
+                            trackWidth: 7,
+                            progressBarWidth: 7,
+                            shadowWidth: 12,
                             handlerSize: 0,
                           ),
                           customColors: CustomSliderColors(
                             trackColor: ThemeColors.darkAccent,
                             progressBarColor: ThemeColors.accentColor,
                             shadowColor: ThemeColors.accentColor,
-                            hideShadow: true,
+                            hideShadow: false,
                           ),
                           infoProperties: InfoProperties(
                               topLabelText:
