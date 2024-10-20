@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
 import '../utils/theme_colors.dart';
 
 class FocusSessionScreen extends StatefulWidget {
@@ -102,21 +101,21 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     child: SleekCircularSlider(
                       initialValue: _completedTime,
                       min: _startTime,
-                      max: _isBreak ? _breakEndTime : _endTime,
+                      max: _isBreak ? (_breakEndTime + 1) : (_endTime + 1),
                       appearance: CircularSliderAppearance(
                           spinnerMode: false,
                           angleRange: 360,
                           startAngle: 270,
                           size: MediaQuery.sizeOf(context).width / 1.4,
                           customWidths: CustomSliderWidths(
-                            trackWidth: 15,
-                            progressBarWidth: 15,
-                            shadowWidth: 20,
+                            trackWidth: 10,
+                            progressBarWidth: 10,
+                            shadowWidth: 17,
                             handlerSize: 0,
                           ),
                           customColors: CustomSliderColors(
                             trackColor: ThemeColors.darkAccent,
-                            progressBarColor: Colors.white,
+                            progressBarColor: ThemeColors.accentColor,
                             shadowColor: ThemeColors.accentColor,
                             hideShadow: true,
                           ),
@@ -128,10 +127,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                   .labelMedium
                                   ?.copyWith(color: ThemeColors.accentColor),
                               modifier: (v) {
-                                return '${(_endTime - v).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
+                                return '${(_endTime - v.toInt()).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
                               },
                               bottomLabelText: _focusMode ? null : 'Paused',
-                              mainLabelStyle: TextStyle(
+                              mainLabelStyle: const TextStyle(
                                   fontSize: 46, color: ThemeColors.accentColor),
                               bottomLabelStyle: Theme.of(context)
                                   .textTheme
@@ -146,10 +145,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   children: [
                     IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.my_library_music_rounded),
+                      icon: const Icon(Icons.my_library_music_rounded),
                       color: ThemeColors.accentColor,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     IconButton(
@@ -164,8 +163,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           if (_isBreak) {
                             if (_second != 1) {
                               _second--;
+                              _completedTime =
+                                  _completedTime + 0.0166666666666667;
                             } else {
-                              if (_completedTime == _breakEndTime) {
+                              if (_completedTime >= _breakEndTime) {
                                 _completedTime = 0;
                                 _isBreak = false;
                                 skip = true;
@@ -173,15 +174,18 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               if (skip) {
                                 skip = false;
                               } else {
-                                _completedTime++;
+                                _completedTime =
+                                    _completedTime + 0.0166666666666667;
                               }
                               _second = 60;
                             }
                           } else {
                             if (_second != 1) {
                               _second--;
+                              _completedTime =
+                                  _completedTime + 0.0166666666666667;
                             } else {
-                              if (_completedTime == _endTime) {
+                              if (_completedTime >= _endTime) {
                                 _completedTime = 0;
                                 _focusSessions++;
                                 _isBreak = true;
@@ -190,7 +194,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               if (skip) {
                                 skip = false;
                               } else {
-                                _completedTime++;
+                                _completedTime =
+                                    _completedTime + 0.0166666666666667;
                               }
                               _second = 60;
                             }
@@ -203,7 +208,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           : const Icon(Icons.play_arrow_rounded),
                       color: ThemeColors.lightColor,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     IconButton(
@@ -226,7 +231,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     topLeft: Radius.circular(30))),
             child: Center(
                 child: Text(
-              'Total session time: ${(_focusSessions*(_endTime+1)).toStringAsFixed(0)} min',
+              'Total session time: ${(_focusSessions * (_endTime + 1)).toStringAsFixed(0)} min',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
