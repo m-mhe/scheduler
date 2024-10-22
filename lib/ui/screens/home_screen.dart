@@ -449,7 +449,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 color: Get.isDarkMode
                                     ? ThemeColors.darkMain
                                     : ThemeColors.lightColor,
-                                size: 70,
+                                size: 60,
                               ),
                               Text(
                                 textAlign: TextAlign.center,
