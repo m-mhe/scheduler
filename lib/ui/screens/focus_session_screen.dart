@@ -186,7 +186,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                   children: [
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           Get.back();
                                         },
                                         icon: const Icon(
@@ -195,7 +195,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/clock.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -207,7 +207,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/owls.mp3'),
                                             volume: 0.7,
@@ -221,7 +221,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/fire.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -233,7 +233,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/piano_one.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -245,7 +245,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/water.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -257,7 +257,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/memory.mp3'),
                                             volume: 0.5,
@@ -271,7 +271,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/stream_one.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -283,7 +283,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/cheel.mp3'),
                                             volume: 0.5,
@@ -297,7 +297,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/stream_two.mp3'),
                                             volume: 0.5,
@@ -311,7 +311,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/time.mp3'),
                                             volume: 0.5,
@@ -325,7 +325,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/rain.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -337,10 +337,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/eddy.mp3'),
-                                            volume: 0.7,
+                                            volume: 0.5,
                                           );
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
                                           Get.back();
@@ -351,7 +351,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         )),
                                     IconButton(
                                         onPressed: () async {
-                                          await _audioPlayer.stop();
+                                          await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/thunderstorm.mp3'));
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
@@ -401,10 +401,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               if (_completedTime >= _breakEndTime) {
                                 _completedTime = 0;
                                 skip = true;
-                                await _audioPlayer.stop();
-                                _audioPlayer.play(
+                                await _audioPlayer.release();
+                                await _audioPlayer.play(
                                   AssetSource('audio/ringtone_on_complete.mp3'),
                                 );
+                                await _audioPlayer.setReleaseMode(ReleaseMode.release);
                                 await showDialog(
                                   context: context,
                                   builder: ((context) {
@@ -443,7 +444,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () async {
-                                            await _audioPlayer.stop();
+                                            await _audioPlayer.release();
                                             _isBreak = false;
                                             Get.back();
                                           },
@@ -451,7 +452,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () async {
-                                            await _audioPlayer.stop();
+                                            await _audioPlayer.release();
                                             _isBreak = true;
                                             Get.back();
                                           },
@@ -480,10 +481,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                 _completedTime = 0;
                                 _focusSessions++;
                                 skip = true;
-                                await _audioPlayer.stop();
-                                _audioPlayer.play(
+                                await _audioPlayer.release();
+                                await _audioPlayer.play(
                                   AssetSource('audio/ringtone_on_complete.mp3'),
                                 );
+                                await _audioPlayer.setReleaseMode(ReleaseMode.release);
                                 await showDialog(
                                   context: context,
                                   builder: ((context) {
@@ -522,7 +524,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () async {
-                                            await _audioPlayer.stop();
+                                            await _audioPlayer.release();
                                             _isBreak = true;
                                             Get.back();
                                           },
@@ -530,7 +532,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         ),
                                         ElevatedButton(
                                           onPressed: () async {
-                                            await _audioPlayer.stop();
+                                            await _audioPlayer.release();
                                             _isBreak = false;
                                             Get.back();
                                           },
