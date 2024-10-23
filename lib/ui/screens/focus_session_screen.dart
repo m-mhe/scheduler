@@ -50,8 +50,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, bottom: 20, left: 10, right: 10),
+                  padding:  EdgeInsets.only(
+                      top: 15, bottom: MediaQuery.of(context).size.height/15, left: 10, right: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +97,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                 ),
                 Center(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 25),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: SleekCircularSlider(
                       initialValue: _completedTime,
                       min: _startTime,

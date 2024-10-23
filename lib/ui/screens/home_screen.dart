@@ -308,6 +308,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ];
                           showDialog(context: context, builder: (context){
                             return  AlertDialog(
+                              contentPadding: const EdgeInsets.all(10),
                               actionsAlignment: MainAxisAlignment.center,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(14),
