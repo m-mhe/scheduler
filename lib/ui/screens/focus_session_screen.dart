@@ -260,7 +260,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.stop();
                                           await _audioPlayer.play(
                                             AssetSource('audio/memory.mp3'),
-                                            volume: 0.9,
+                                            volume: 0.5,
                                           );
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
                                           Get.back();
@@ -300,7 +300,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.stop();
                                           await _audioPlayer.play(
                                             AssetSource('audio/stream_two.mp3'),
-                                            volume: 0.8,
+                                            volume: 0.5,
                                           );
                                           await _audioPlayer.setReleaseMode(ReleaseMode.loop);
                                           Get.back();
