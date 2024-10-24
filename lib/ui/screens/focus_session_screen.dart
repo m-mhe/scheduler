@@ -175,7 +175,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                     ),
                               ),
                               content: SizedBox(
-                                height: 100,
+                                height: 150,
                                 width: double.maxFinite,
                                 child: GridView(
                                   gridDelegate:
@@ -192,18 +192,21 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                         icon: const Icon(
                                           Icons.music_off_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/clock.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.watch_later_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
@@ -212,48 +215,56 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                             AssetSource('audio/owls.mp3'),
                                             volume: 0.7,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.nights_stay_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/fire.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.local_fire_department_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/piano_one.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.piano_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/water.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.water_drop_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
@@ -262,24 +273,28 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                             AssetSource('audio/memory.mp3'),
                                             volume: 0.5,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.donut_small,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/stream_one.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.water_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
@@ -288,26 +303,29 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                             AssetSource('audio/cheel.mp3'),
                                             volume: 0.5,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.lens_blur_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/stream_two.mp3'),
-                                            volume: 0.5,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.water_sharp,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
@@ -316,24 +334,28 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                             AssetSource('audio/time.mp3'),
                                             volume: 0.5,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.av_timer_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                               AssetSource('audio/rain.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.water_drop_outlined,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
@@ -342,33 +364,61 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                             AssetSource('audio/eddy.mp3'),
                                             volume: 0.5,
                                           );
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.earbuds,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
                                         onPressed: () async {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(AssetSource(
                                               'audio/thunderstorm.mp3'));
-                                          await _audioPlayer.setReleaseMode(ReleaseMode.loop);
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
                                         icon: const Icon(
                                           Icons.thunderstorm_rounded,
                                           color: ThemeColors.accentColor,
+                                          size: 30,
                                         )),
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await _audioPlayer.release();
+                                          await _audioPlayer.play(
+                                            AssetSource('audio/lofi_rain.mp3'),
+                                            volume: 0.9,
+                                          );
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
+                                          Get.back();
+                                        },
                                         icon: const Icon(
-                                            Icons.music_off_rounded)),
+                                          Icons.music_note_rounded,
+                                          color: ThemeColors.accentColor,
+                                          size: 30,
+                                        )),
                                     IconButton(
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          await _audioPlayer.release();
+                                          await _audioPlayer.play(
+                                            AssetSource(
+                                                'audio/forest_rain.mp3'),
+                                          );
+                                          await _audioPlayer
+                                              .setReleaseMode(ReleaseMode.loop);
+                                          Get.back();
+                                        },
                                         icon: const Icon(
-                                            Icons.music_off_rounded)),
+                                          Icons.forest_sharp,
+                                          color: ThemeColors.accentColor,
+                                          size: 30,
+                                        )),
                                   ],
                                 ),
                               ),
@@ -405,7 +455,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                 await _audioPlayer.play(
                                   AssetSource('audio/ringtone_on_complete.mp3'),
                                 );
-                                await _audioPlayer.setReleaseMode(ReleaseMode.release);
+                                await _audioPlayer
+                                    .setReleaseMode(ReleaseMode.release);
                                 await showDialog(
                                   context: context,
                                   builder: ((context) {
@@ -485,7 +536,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                 await _audioPlayer.play(
                                   AssetSource('audio/ringtone_on_complete.mp3'),
                                 );
-                                await _audioPlayer.setReleaseMode(ReleaseMode.release);
+                                await _audioPlayer
+                                    .setReleaseMode(ReleaseMode.release);
                                 await showDialog(
                                   context: context,
                                   builder: ((context) {
