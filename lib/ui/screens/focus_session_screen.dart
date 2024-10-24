@@ -1,6 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scheduler/ui/screens/focus_session_statics_screen.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../utils/theme_colors.dart';
@@ -646,7 +647,9 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Get.to(const FocusSessionStaticsScreen());
+        },
         child: const Icon(
           Icons.analytics_rounded,
           size: 34,
