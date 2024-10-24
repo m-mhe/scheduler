@@ -17,7 +17,7 @@ AppBar commonAppBar(BuildContext context) {
           },
           icon: Get.isDarkMode
               ? const Icon(Icons.dark_mode_rounded)
-              : const Icon(Icons.wb_twilight_rounded))
+              : const Icon(Icons.dark_mode_outlined))
     ],
   );
 }
