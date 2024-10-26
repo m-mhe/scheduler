@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:scheduler/data/task_data_model.dart';
-import 'package:scheduler/database_setup.dart';
+import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
@@ -222,7 +222,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
         _bottomPopUpMessage(
             text: 'Task is successfully created!', color: Colors.green),
       );
-      await DatabaseSetup.saveActiveTask(dataEntity);
+      await LocalDatabase.saveActiveTask(dataEntity);
       Get.offAll(() => CommonBottomNavBar());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(

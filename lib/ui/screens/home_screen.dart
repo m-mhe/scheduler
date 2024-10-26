@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
-import 'package:scheduler/database_setup.dart';
+import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
 import 'package:scheduler/ui/screens/focus_session_screen.dart';
 import '../utils/theme_colors.dart';
@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _fetch() async {
     _currentTime = DateTime.now();
     _currentTasks.clear();
-    List<TaskDataModel> dataList = await DatabaseSetup.fetchFromActiveDB();
+    List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
     for (TaskDataModel data in dataList) {
       if (data.fromTime <= _currentTime.hour ||
           data.date < _currentTime.day ||
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _calculateTask() async {
     _totalCanceled = 0;
     _totalCompleted = 0;
-    _oldTaskList = await DatabaseSetup.fetchFromInactiveDB();
+    _oldTaskList = await LocalDatabase.fetchFromInactiveDB();
     for (OldTaskDataModel task in _oldTaskList) {
       if (task.taskState == 'Completed') {
         _totalCompleted++;

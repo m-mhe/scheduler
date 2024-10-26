@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
-import 'package:scheduler/database_setup.dart';
+import 'package:scheduler/local_database.dart';
 import '../utils/theme_colors.dart';
 
 class AskTaskCompleteConfirmation extends StatelessWidget {
@@ -39,18 +39,18 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
       actions: [
         ElevatedButton(
           onPressed: () async {
-            await DatabaseSetup.saveInactiveTask(OldTaskDataModel(
+            await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Completed'));
-            await DatabaseSetup.deleteFromActiveDB(title);
+            await LocalDatabase.deleteFromActiveDB(title);
             Get.back();
           },
           child: const Text('Yes'),
         ),
         ElevatedButton(
           onPressed: () async {
-            await DatabaseSetup.saveInactiveTask(OldTaskDataModel(
+            await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Canceled'));
-            await DatabaseSetup.deleteFromActiveDB(title);
+            await LocalDatabase.deleteFromActiveDB(title);
             Get.back();
           },
           child: const Icon(Icons.delete_outline),

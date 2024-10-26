@@ -11,6 +11,8 @@ Future<void> main() async {
         'CREATE TABLE IF NOT EXISTS active_task(title TEXT, subtitle TEXT, taskState TEXT, fromTime INTEGER, toTime INTEGER, date INTEGER, month INTEGER, year INTEGER)');
     await db.execute(
         'CREATE TABLE IF NOT EXISTS inActive_task(title TEXT, subtitle TEXT, taskState TEXT)');
+    await db.execute(
+        'CREATE TABLE IF NOT EXISTS focus_sessions(minutes INTEGER, dateTime TEXT, taskType TEXT)');
   }, version: 1);
   runApp(const MyApp());
 }

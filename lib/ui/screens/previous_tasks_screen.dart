@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
-import 'package:scheduler/database_setup.dart';
+import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/task_tile.dart';
 import '../utils/theme_colors.dart';
 
@@ -15,7 +15,7 @@ class _PreviousTasksState extends State<PreviousTasks> {
   List<OldTaskDataModel> _allTasks = [];
 
   Future<void> _fetch() async {
-    _allTasks = await DatabaseSetup.fetchFromInactiveDB();
+    _allTasks = await LocalDatabase.fetchFromInactiveDB();
     setState(() {});
   }
 

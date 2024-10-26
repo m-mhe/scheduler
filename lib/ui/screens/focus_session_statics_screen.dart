@@ -1,8 +1,11 @@
+import 'dart:math';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scheduler/data/focus_session_data_model.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
-
+import 'package:scheduler/local_database.dart';
 import '../utils/theme_colors.dart';
 
 class FocusSessionStaticsScreen extends StatefulWidget {
@@ -14,13 +17,91 @@ class FocusSessionStaticsScreen extends StatefulWidget {
 }
 
 class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
+  List<FocusSessionDataModel> _sessions = [];
+  final DateTime _currentDateTime = DateTime.now();
+  double _todayTotalHour = 0.0;
+  int _workTask = 0;
+  int _codingTask = 0;
+  int _studyTask = 0;
+  int _exerciseTask = 0;
+  int _otherTask = 0;
+  int _totalTask = 0;
+  int _firstDay = 0;
+  int _secondDay = 0;
+  int _thirdDay = 0;
+  int _fourthDay = 0;
+  int _fifthDay = 0;
+  int _sixthDay = 0;
+  int _seventhDay = 0;
+  double _theLargestNumberInTrends = 0;
+
+  Future<void> _fetch() async {
+    _sessions = await LocalDatabase.fetchFromFocusSessionDB();
+    for (FocusSessionDataModel session in _sessions) {
+      if (session.dateTime.day == _currentDateTime.day) {
+        _firstDay = _firstDay + session.minutes;
+      } else if (session.dateTime.difference(_currentDateTime).inDays == 1 ||
+          session.dateTime.difference(_currentDateTime).inDays == 0) {
+        _secondDay = _secondDay + session.minutes;
+      } else if (session.dateTime.difference(_currentDateTime).inDays == 2) {
+        _thirdDay = _thirdDay + session.minutes;
+      } else if (session.dateTime.difference(_currentDateTime).inDays == 3) {
+        _fourthDay = _fourthDay + session.minutes;
+      } else if (session.dateTime.difference(_currentDateTime).inDays == 4) {
+        _fifthDay = _fifthDay + session.minutes;
+      } else if (session.dateTime.difference(_currentDateTime).inDays == 5) {
+        _sixthDay = _sixthDay + session.minutes;
+      } else {
+        _seventhDay = _seventhDay + session.minutes;
+      }
+      if (session.taskType == 'Work') {
+        _workTask++;
+      } else if (session.taskType == 'Study') {
+        _studyTask++;
+      } else if (session.taskType == 'Exercise') {
+        _exerciseTask++;
+      } else if (session.taskType == 'Coding') {
+        _codingTask++;
+      } else {
+        _otherTask++;
+      }
+      if (session.dateTime.day == _currentDateTime.day &&
+          session.dateTime.month == _currentDateTime.month &&
+          session.dateTime.year == _currentDateTime.year) {
+        _todayTotalHour = _todayTotalHour + (session.minutes / 60);
+      }
+    }
+    _theLargestNumberInTrends = ([
+      _firstDay,
+      _secondDay,
+      _thirdDay,
+      _fourthDay,
+      _fifthDay,
+      _sixthDay,
+      _seventhDay
+    ].reduce(max))
+        .toDouble();
+    if (_todayTotalHour > 3) {
+      _todayTotalHour = 3;
+    }
+    _totalTask =
+        _workTask + _studyTask + _codingTask + _exerciseTask + _otherTask;
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    _fetch();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ThemeColors.secondThemeSecond,
       appBar: AppBar(
         title: Text(
-          'Focus Statics',
+          'Focus Stats',
           style: Theme.of(context)
               .textTheme
               .titleLarge!
@@ -63,7 +144,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                 ),
                 child: Center(
                   child: SleekCircularSlider(
-                    initialValue: 2,
+                    initialValue: _todayTotalHour,
                     min: 0,
                     max: 3,
                     appearance: CircularSliderAppearance(
@@ -95,7 +176,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                             color: ThemeColors.secondThemeMain,
                             fontSize: 28,
                           ),
-                          bottomLabelText: '1 hours left',
+                          bottomLabelText:
+                              '${(3 - _todayTotalHour).toStringAsFixed(1)} hours left',
                           bottomLabelStyle:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
                                     color: ThemeColors.secondThemeMain,
@@ -128,37 +210,37 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(20),
                       child: PieChart(
                         PieChartData(centerSpaceColor: Colors.white, sections: [
                           PieChartSectionData(
                             showTitle: false,
-                            title: '50%',
-                            value: 7,
+                            title: 'Work',
+                            value: _workTask.toDouble(),
                             color: ThemeColors.secondThemeMain,
                           ),
                           PieChartSectionData(
                             showTitle: false,
-                            title: '25%',
-                            value: 10,
+                            title: 'Study',
+                            value: _studyTask.toDouble(),
                             color: ThemeColors.secondThemeAccent,
                           ),
                           PieChartSectionData(
                             showTitle: false,
-                            title: '5%',
-                            value: 10,
+                            title: 'Exercise',
+                            value: _exerciseTask.toDouble(),
                             color: ThemeColors.secondColor,
                           ),
                           PieChartSectionData(
                             showTitle: false,
-                            title: '5%',
-                            value: 5,
+                            title: 'Coding',
+                            value: _codingTask.toDouble(),
                             color: ThemeColors.secondColor.withOpacity(0.6),
                           ),
                           PieChartSectionData(
                             showTitle: false,
-                            title: '20%',
-                            value: 5,
+                            title: 'Other',
+                            value: _otherTask.toDouble(),
                             color: ThemeColors.secondThemeSecond,
                           ),
                         ]),
@@ -204,7 +286,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Work(50%)',
+                                'Work(${((_workTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -230,7 +312,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Study(20%)',
+                                'Study(${((_studyTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -256,7 +338,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Exercise(55%)',
+                                'Exercise(${((_exerciseTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -282,7 +364,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Coding(15%)',
+                                'Coding(${((_codingTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -308,7 +390,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Other(10%)',
+                                'Other(${((_otherTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
                                     .labelSmall!
@@ -362,7 +444,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         child: LineChart(
                           LineChartData(
                               borderData: FlBorderData(
-                                  show: !true,
+                                  show: false,
                                   border: Border.all(
                                     color: ThemeColors.secondThemeAccent,
                                     width: 2.0,
@@ -370,23 +452,24 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                               minX: 1,
                               maxX: 7,
                               minY: 0,
-                              maxY: 9,
+                              maxY: _theLargestNumberInTrends,
                               lineBarsData: [
                                 LineChartBarData(
                                     color: ThemeColors.secondThemeMain,
                                     isCurved: true,
+                                    preventCurveOverShooting: true,
                                     belowBarData: BarAreaData(
                                         color: ThemeColors.secondColor
                                             .withOpacity(0.7),
                                         show: true),
                                     spots: [
-                                      FlSpot(1, 0),
-                                      FlSpot(2, 2),
-                                      FlSpot(3, 3),
-                                      FlSpot(4, 2),
-                                      FlSpot(5, 4),
-                                      FlSpot(6, 2),
-                                      FlSpot(7, 1),
+                                      FlSpot(1, _seventhDay.toDouble()),
+                                      FlSpot(2, _sixthDay.toDouble()),
+                                      FlSpot(3, _fifthDay.toDouble()),
+                                      FlSpot(4, _fourthDay.toDouble()),
+                                      FlSpot(5, _thirdDay.toDouble()),
+                                      FlSpot(6, _secondDay.toDouble()),
+                                      FlSpot(7, _firstDay.toDouble()),
                                     ]),
                               ],
                               titlesData: FlTitlesData(
@@ -406,7 +489,9 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                     getTitlesWidget: (double dayNumber,
                                         TitleMeta titleMeta) {
                                       return Text(
-                                        dayNumber.toStringAsFixed(0),
+                                        (dayNumber - 8)
+                                            .toStringAsFixed(0)
+                                            .split('')[1],
                                         style: TextStyle(
                                             color: ThemeColors.secondThemeMain),
                                       );

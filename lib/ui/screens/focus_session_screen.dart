@@ -1,6 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:scheduler/data/focus_session_data_model.dart';
+import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/screens/focus_session_statics_screen.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
@@ -539,6 +541,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                 );
                                 await _audioPlayer
                                     .setReleaseMode(ReleaseMode.release);
+                                await LocalDatabase.saveFocusSessions(
+                                    FocusSessionDataModel(
+                                        minutes: ((widget.endTime) + 1).toInt(),
+                                        dateTime: DateTime.now(),
+                                        taskType: _currentTaskType));
                                 await showDialog(
                                   context: context,
                                   builder: ((context) {
@@ -617,7 +624,14 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       width: 10,
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () async{
+                        _focusMode=false;
+                        _completedTime=0;
+                        _second=60;
+                        _isBreak=false;
+                        await _audioPlayer.release();
+                        setState((){});
+                      },
                       icon: const Icon(Icons.stop_circle_rounded),
                       color: ThemeColors.accentColor,
                     ),
@@ -648,7 +662,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(const FocusSessionStaticsScreen());
+          Get.to(()=>const FocusSessionStaticsScreen());
         },
         child: const Icon(
           Icons.analytics_rounded,

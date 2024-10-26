@@ -1,9 +1,10 @@
+import 'package:scheduler/data/focus_session_data_model.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:path/path.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:sqflite/sqflite.dart';
 
-class DatabaseSetup {
+class LocalDatabase {
   static Future<void> saveActiveTask(TaskDataModel dataEntity) async {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
@@ -88,5 +89,39 @@ class DatabaseSetup {
     }
     await connectToDataBase.close();
     return taskList;
+  }
+
+  static Future<void> saveFocusSessions(
+      FocusSessionDataModel dataEntity) async {
+    final connectToDataBase = await openDatabase(
+      join(await getDatabasesPath(), 'scheduler.db'),
+    );
+    await connectToDataBase.insert('focus_sessions', dataEntity.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace);
+    await connectToDataBase.close();
+  }
+
+  static Future<List<FocusSessionDataModel>> fetchFromFocusSessionDB() async {
+    List<FocusSessionDataModel> sessions = [];
+    final connectToDataBase = await openDatabase(
+      join(await getDatabasesPath(), 'scheduler.db'),
+    );
+    List<Map> data = await connectToDataBase.query('focus_sessions');
+    for (final {
+          'minutes': minutes as int,
+          'dateTime': dateTime as String,
+          'taskType': taskType as String,
+        } in data) {
+      sessions.insert(
+        0,
+        FocusSessionDataModel(
+          minutes: minutes,
+          dateTime: DateTime.parse(dateTime),
+          taskType: taskType,
+        ),
+      );
+    }
+    await connectToDataBase.close();
+    return sessions;
   }
 }
