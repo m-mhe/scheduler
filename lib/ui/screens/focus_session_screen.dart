@@ -624,13 +624,13 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       width: 10,
                     ),
                     IconButton(
-                      onPressed: () async{
-                        _focusMode=false;
-                        _completedTime=0;
-                        _second=60;
-                        _isBreak=false;
+                      onPressed: () async {
+                        _focusMode = false;
+                        _completedTime = 0;
+                        _second = 60;
+                        _isBreak = false;
                         await _audioPlayer.release();
-                        setState((){});
+                        setState(() {});
                       },
                       icon: const Icon(Icons.stop_circle_rounded),
                       color: ThemeColors.accentColor,
@@ -662,7 +662,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(()=>const FocusSessionStaticsScreen());
+          Get.to(() => const FocusSessionStaticsScreen());
         },
         child: const Icon(
           Icons.analytics_rounded,
