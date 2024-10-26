@@ -10,4 +10,7 @@ class ThemeColors {
   static const Color darkAccent = Color(0XFFFFC68C);
   static const Color darkSecond = Color(0XFF2F2F2F);
   static const Color darkBlue = Color(0XFF83DEC4);
+  static const Color secondThemeMain = Color(0XFF5F6F52);
+  static const Color secondThemeAccent = Color(0XFFA9B388);
+  static const Color secondThemeSecond = Color(0XFFE9EED9);
 }
