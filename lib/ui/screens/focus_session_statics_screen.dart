@@ -38,20 +38,20 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   Future<void> _fetch() async {
     _sessions = await LocalDatabase.fetchFromFocusSessionDB();
     for (FocusSessionDataModel session in _sessions) {
-      if (session.dateTime.day == _currentDateTime.day) {
+      if (session.dateTime.difference(_currentDateTime).inDays == 0) {
+        _todayTotalHour = _todayTotalHour + (session.minutes / 60);
         _firstDay = _firstDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == 1 ||
-          session.dateTime.difference(_currentDateTime).inDays == 0) {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -1) {
         _secondDay = _secondDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == 2) {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -2) {
         _thirdDay = _thirdDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == 3) {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -3) {
         _fourthDay = _fourthDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == 4) {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -4) {
         _fifthDay = _fifthDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == 5) {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -5) {
         _sixthDay = _sixthDay + session.minutes;
-      } else {
+      } else if (session.dateTime.difference(_currentDateTime).inDays == -6) {
         _seventhDay = _seventhDay + session.minutes;
       }
       if (session.taskType == 'Work') {
@@ -64,11 +64,6 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
         _codingTask++;
       } else {
         _otherTask++;
-      }
-      if (session.dateTime.day == _currentDateTime.day &&
-          session.dateTime.month == _currentDateTime.month &&
-          session.dateTime.year == _currentDateTime.year) {
-        _todayTotalHour = _todayTotalHour + (session.minutes / 60);
       }
     }
     _theLargestNumberInTrends = ([
@@ -412,7 +407,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               ),
               Container(
                 width: double.maxFinite,
-                height: (MediaQuery.sizeOf(context).width / 1.9),
+                height: (MediaQuery.sizeOf(context).width / 1.8),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
@@ -460,7 +455,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                     preventCurveOverShooting: true,
                                     belowBarData: BarAreaData(
                                         color: ThemeColors.secondColor
-                                            .withOpacity(0.7),
+                                            .withOpacity(0.9),
                                         show: true),
                                     spots: [
                                       FlSpot(1, _seventhDay.toDouble()),
