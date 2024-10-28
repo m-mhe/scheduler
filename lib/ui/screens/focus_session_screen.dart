@@ -6,7 +6,6 @@ import 'package:scheduler/data/focus_session_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/screens/focus_session_statics_screen.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
-import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import '../utils/theme_colors.dart';
 
 class FocusSessionScreen extends StatefulWidget {
@@ -22,11 +21,9 @@ class FocusSessionScreen extends StatefulWidget {
 
 class _FocusSessionScreenState extends State<FocusSessionScreen> {
   Timer? _timer;
-  bool _isTimerOn=false;
+  bool _isTimerOn = false;
   final AudioPlayer _audioPlayer = AudioPlayer();
   int _focusSessions = 0;
-  bool _focusMode = false;
-  final double _startTime = 0;
   double _endTime = 24;
   double _breakEndTime = 4;
   double _completedTime = 0;
@@ -41,32 +38,30 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
     'Other',
   ];
 
-  void _timeCountdown(){
+  void _timeCountdown() {
     bool skip = false;
-    _timer = Timer.periodic( const Duration(milliseconds: 997), (Timer timer)async{
+    _timer =
+        Timer.periodic(const Duration(milliseconds: 997), (Timer timer) async {
       if (_isBreak) {
         if (_second != 1) {
           _second--;
-          _completedTime =
-              _completedTime + 0.0166666666666667;
+          _completedTime = _completedTime + 0.0166666666666667;
         } else {
           if (_completedTime >= _breakEndTime) {
             _completedTime = 0;
             skip = true;
             timer.cancel();
-            _isTimerOn=false;
+            _isTimerOn = false;
             await _audioPlayer.release();
             await _audioPlayer.play(
               AssetSource('audio/ringtone_on_complete.mp3'),
             );
-            await _audioPlayer
-                .setReleaseMode(ReleaseMode.stop);
+            await _audioPlayer.setReleaseMode(ReleaseMode.stop);
             await showDialog(
               context: context,
               builder: ((context) {
                 return AlertDialog(
-                  actionsAlignment:
-                  MainAxisAlignment.spaceBetween,
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -76,25 +71,19 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   title: Text(
                     'Break over',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.titleColor,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.titleColor,
+                        ),
                   ),
                   content: Text(
                     'Time to refocus and continue your progress! Let\'s dive back into the next session.',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.titleColor,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.titleColor,
+                        ),
                   ),
                   actions: [
                     ElevatedButton(
@@ -125,40 +114,35 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           if (skip) {
             skip = false;
           } else {
-            _completedTime =
-                _completedTime + 0.0166666666666667;
+            _completedTime = _completedTime + 0.0166666666666667;
           }
           _second = 60;
         }
       } else {
         if (_second != 1) {
           _second--;
-          _completedTime =
-              _completedTime + 0.0166666666666667;
+          _completedTime = _completedTime + 0.0166666666666667;
         } else {
           if (_completedTime >= _endTime) {
             _completedTime = 0;
             _focusSessions++;
             skip = true;
             timer.cancel();
-            _isTimerOn=false;
+            _isTimerOn = false;
             await _audioPlayer.release();
             await _audioPlayer.play(
               AssetSource('audio/ringtone_on_complete.mp3'),
             );
-            await _audioPlayer
-                .setReleaseMode(ReleaseMode.stop);
-            await LocalDatabase.saveFocusSessions(
-                FocusSessionDataModel(
-                    minutes: ((widget.endTime) + 1).toInt(),
-                    dateTime: DateTime.now(),
-                    taskType: _currentTaskType));
+            await _audioPlayer.setReleaseMode(ReleaseMode.stop);
+            await LocalDatabase.saveFocusSessions(FocusSessionDataModel(
+                minutes: ((widget.endTime) + 1).toInt(),
+                dateTime: DateTime.now(),
+                taskType: _currentTaskType));
             await showDialog(
               context: context,
               builder: ((context) {
                 return AlertDialog(
-                  actionsAlignment:
-                  MainAxisAlignment.spaceBetween,
+                  actionsAlignment: MainAxisAlignment.spaceBetween,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(14),
                   ),
@@ -168,25 +152,19 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   title: Text(
                     'Take a short break',
                     textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.titleColor,
-                    ),
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.titleColor,
+                        ),
                   ),
                   content: Text(
                     'Great job! You have completed a ${widget.endTime + 1} minutes focus, do you wanna take a short break to recharge?',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleSmall!
-                        .copyWith(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.titleColor,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.titleColor,
+                        ),
                   ),
                   actions: [
                     ElevatedButton(
@@ -217,8 +195,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           if (skip) {
             skip = false;
           } else {
-            _completedTime =
-                _completedTime + 0.0166666666666667;
+            _completedTime = _completedTime + 0.0166666666666667;
           }
           _second = 60;
         }
@@ -247,7 +224,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                 Padding(
                   padding: EdgeInsets.only(
                       top: 15,
-                      bottom: MediaQuery.of(context).size.height / 15,
+                      bottom: MediaQuery.of(context).size.height / 6,
                       left: 10,
                       right: 10),
                   child: Row(
@@ -292,49 +269,78 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ],
                   ),
                 ),
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 10),
-                    child: SleekCircularSlider(
-                      initialValue: _completedTime,
-                      min: _startTime,
-                      max: _isBreak ? (_breakEndTime + 1) : (_endTime + 1),
-                      appearance: CircularSliderAppearance(
-                          spinnerMode: false,
-                          angleRange: 360,
-                          startAngle: 270,
-                          size: MediaQuery.sizeOf(context).width / 1.4,
-                          customWidths: CustomSliderWidths(
-                            trackWidth: 7,
-                            progressBarWidth: 7,
-                            shadowWidth: 12,
-                            handlerSize: 0,
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.width / 2.2,
+                        width: MediaQuery.of(context).size.width / 3.3,
+                        decoration: BoxDecoration(
+                            color: ThemeColors.accentColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                            child: Text(
+                                ((_isBreak ? _breakEndTime : _endTime) -
+                                        _completedTime.toInt())
+                                    .toStringAsFixed(0)
+                                    .padLeft(2, '0'),
+                              style: const TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.w700,
+                                color: ThemeColors.lightColor,),)),
+                      ),
+                       Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
+                            child: CircleAvatar(
+                              backgroundColor: _second.isEven? ThemeColors.accentColor:ThemeColors.accentColor.withOpacity(0.5),
+                              radius: 5,
+                            ),
                           ),
-                          customColors: CustomSliderColors(
-                            trackColor: ThemeColors.darkAccent,
-                            progressBarColor: ThemeColors.accentColor,
-                            shadowColor: ThemeColors.accentColor,
-                            hideShadow: false,
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: 10,
+                              right: 10,
+                            ),
+                            child: CircleAvatar(
+                              backgroundColor: _second.isEven? ThemeColors.accentColor:ThemeColors.accentColor.withOpacity(0.5),
+                              radius: 5,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.width / 2.2,
+                        width: MediaQuery.of(context).size.width / 3.3,
+                        decoration: BoxDecoration(
+                            color: ThemeColors.accentColor,
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: Text(
+                            _second.toString().padLeft(2, '0'),
+                            style: const TextStyle(
+                                fontSize: 48,
+                                fontWeight: FontWeight.w700,
+                                color: ThemeColors.lightColor,),
                           ),
-                          infoProperties: InfoProperties(
-                              topLabelText:
-                                  _isBreak ? 'Break' : _currentTaskType,
-                              topLabelStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(color: ThemeColors.accentColor),
-                              modifier: (v) {
-                                return '${((_isBreak?_breakEndTime:_endTime) - v.toInt()).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
-                              },
-                              bottomLabelText: _focusMode ? null : 'Paused',
-                              mainLabelStyle: const TextStyle(
-                                  fontSize: 46, color: ThemeColors.accentColor),
-                              bottomLabelStyle: Theme.of(context)
-                                  .textTheme
-                                  .labelMedium
-                                  ?.copyWith(color: ThemeColors.accentColor))),
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Text(_isBreak?'Break':_currentTaskType,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: ThemeColors.accentColor,),),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -405,7 +411,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/owls.mp3'),
-                                            volume: 0.7,
+                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -463,7 +469,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/memory.mp3'),
-                                            volume: 0.5,
+                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -493,7 +499,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/cheel.mp3'),
-                                            volume: 0.5,
+                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -524,7 +530,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/time.mp3'),
-                                            volume: 0.5,
+                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -554,7 +560,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/eddy.mp3'),
-                                            volume: 0.5,
+                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -584,7 +590,6 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           await _audioPlayer.play(
                                             AssetSource('audio/lofi_rain.mp3'),
-                                            volume: 0.9,
                                           );
                                           await _audioPlayer
                                               .setReleaseMode(ReleaseMode.loop);
@@ -628,17 +633,16 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       style: IconButton.styleFrom(
                           backgroundColor: ThemeColors.accentColor),
                       onPressed: () {
-                        _focusMode = !_focusMode;
                         setState(() {});
-                        if(_isTimerOn){
+                        if (_isTimerOn) {
                           _timer!.cancel();
-                          _isTimerOn=false;
-                        }else{
+                          _isTimerOn = false;
+                        } else {
                           _timeCountdown();
                           _isTimerOn = true;
                         }
                       },
-                      icon: _focusMode
+                      icon: _isTimerOn
                           ? const Icon(Icons.pause)
                           : const Icon(Icons.play_arrow_rounded),
                       color: ThemeColors.lightColor,
@@ -648,11 +652,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ),
                     IconButton(
                       onPressed: () async {
-                        _focusMode = false;
                         _completedTime = 0;
                         _second = 60;
                         _isBreak = false;
                         _timer?.cancel();
+                        _isTimerOn = false;
                         await _audioPlayer.release();
                         setState(() {});
                       },
