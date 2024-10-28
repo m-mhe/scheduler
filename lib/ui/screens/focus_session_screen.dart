@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,8 @@ class FocusSessionScreen extends StatefulWidget {
 }
 
 class _FocusSessionScreenState extends State<FocusSessionScreen> {
+  Timer? _timer;
+  bool _isTimerOn=false;
   final AudioPlayer _audioPlayer = AudioPlayer();
   int _focusSessions = 0;
   bool _focusMode = false;
@@ -37,6 +40,192 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
     'Coding',
     'Other',
   ];
+
+  void _timeCountdown(){
+    bool skip = false;
+    _timer = Timer.periodic( const Duration(milliseconds: 997), (Timer timer)async{
+      if (_isBreak) {
+        if (_second != 1) {
+          _second--;
+          _completedTime =
+              _completedTime + 0.0166666666666667;
+        } else {
+          if (_completedTime >= _breakEndTime) {
+            _completedTime = 0;
+            skip = true;
+            timer.cancel();
+            _isTimerOn=false;
+            await _audioPlayer.release();
+            await _audioPlayer.play(
+              AssetSource('audio/ringtone_on_complete.mp3'),
+            );
+            await _audioPlayer
+                .setReleaseMode(ReleaseMode.stop);
+            await showDialog(
+              context: context,
+              builder: ((context) {
+                return AlertDialog(
+                  actionsAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  backgroundColor: Get.isDarkMode
+                      ? ThemeColors.darkMain
+                      : ThemeColors.lightColor,
+                  title: Text(
+                    'Break over',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.titleColor,
+                    ),
+                  ),
+                  content: Text(
+                    'Time to refocus and continue your progress! Let\'s dive back into the next session.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.titleColor,
+                    ),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await _audioPlayer.release();
+                        _isBreak = false;
+                        _timeCountdown();
+                        _isTimerOn = true;
+                        Get.back();
+                      },
+                      child: const Text('Yes'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await _audioPlayer.release();
+                        _isBreak = true;
+                        _timeCountdown();
+                        _isTimerOn = true;
+                        Get.back();
+                      },
+                      child: const Text('No'),
+                    ),
+                  ],
+                );
+              }),
+            );
+          }
+          if (skip) {
+            skip = false;
+          } else {
+            _completedTime =
+                _completedTime + 0.0166666666666667;
+          }
+          _second = 60;
+        }
+      } else {
+        if (_second != 1) {
+          _second--;
+          _completedTime =
+              _completedTime + 0.0166666666666667;
+        } else {
+          if (_completedTime >= _endTime) {
+            _completedTime = 0;
+            _focusSessions++;
+            skip = true;
+            timer.cancel();
+            _isTimerOn=false;
+            await _audioPlayer.release();
+            await _audioPlayer.play(
+              AssetSource('audio/ringtone_on_complete.mp3'),
+            );
+            await _audioPlayer
+                .setReleaseMode(ReleaseMode.stop);
+            await LocalDatabase.saveFocusSessions(
+                FocusSessionDataModel(
+                    minutes: ((widget.endTime) + 1).toInt(),
+                    dateTime: DateTime.now(),
+                    taskType: _currentTaskType));
+            await showDialog(
+              context: context,
+              builder: ((context) {
+                return AlertDialog(
+                  actionsAlignment:
+                  MainAxisAlignment.spaceBetween,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  backgroundColor: Get.isDarkMode
+                      ? ThemeColors.darkMain
+                      : ThemeColors.lightColor,
+                  title: Text(
+                    'Take a short break',
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.titleColor,
+                    ),
+                  ),
+                  content: Text(
+                    'Great job! You have completed a ${widget.endTime + 1} minutes focus, do you wanna take a short break to recharge?',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleSmall!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.titleColor,
+                    ),
+                  ),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        await _audioPlayer.release();
+                        _isBreak = true;
+                        _timeCountdown();
+                        _isTimerOn = true;
+                        Get.back();
+                      },
+                      child: const Text('Yes'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        await _audioPlayer.release();
+                        _isBreak = false;
+                        _timeCountdown();
+                        _isTimerOn = true;
+                        Get.back();
+                      },
+                      child: const Text('No'),
+                    ),
+                  ],
+                );
+              }),
+            );
+          }
+          if (skip) {
+            skip = false;
+          } else {
+            _completedTime =
+                _completedTime + 0.0166666666666667;
+          }
+          _second = 60;
+        }
+      }
+      setState(() {});
+    });
+  }
 
   @override
   void initState() {
@@ -135,7 +324,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                   .labelMedium
                                   ?.copyWith(color: ThemeColors.accentColor),
                               modifier: (v) {
-                                return '${(_endTime - v.toInt()).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
+                                return '${((_isBreak?_breakEndTime:_endTime) - v.toInt()).toStringAsFixed(0).padLeft(2, '0')}:${_second.toString().padLeft(2, '0')}';
                               },
                               bottomLabelText: _focusMode ? null : 'Paused',
                               mainLabelStyle: const TextStyle(
@@ -438,181 +627,15 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     IconButton(
                       style: IconButton.styleFrom(
                           backgroundColor: ThemeColors.accentColor),
-                      onPressed: () async {
+                      onPressed: () {
                         _focusMode = !_focusMode;
                         setState(() {});
-                        bool skip = false;
-                        while (_focusMode) {
-                          await Future.delayed(
-                              const Duration(milliseconds: 997));
-                          if (_isBreak) {
-                            if (_second != 1) {
-                              _second--;
-                              _completedTime =
-                                  _completedTime + 0.0166666666666667;
-                            } else {
-                              if (_completedTime >= _breakEndTime) {
-                                _completedTime = 0;
-                                skip = true;
-                                await _audioPlayer.release();
-                                await _audioPlayer.play(
-                                  AssetSource('audio/ringtone_on_complete.mp3'),
-                                );
-                                await _audioPlayer
-                                    .setReleaseMode(ReleaseMode.release);
-                                await showDialog(
-                                  context: context,
-                                  builder: ((context) {
-                                    return AlertDialog(
-                                      actionsAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      backgroundColor: Get.isDarkMode
-                                          ? ThemeColors.darkMain
-                                          : ThemeColors.lightColor,
-                                      title: Text(
-                                        'Break over',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                              color: Get.isDarkMode
-                                                  ? ThemeColors.darkAccent
-                                                  : ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      content: Text(
-                                        'Time to refocus and continue your progress! Let\'s dive back into the next session.',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                              color: Get.isDarkMode
-                                                  ? ThemeColors.darkAccent
-                                                  : ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await _audioPlayer.release();
-                                            _isBreak = false;
-                                            Get.back();
-                                          },
-                                          child: const Text('Yes'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await _audioPlayer.release();
-                                            _isBreak = true;
-                                            Get.back();
-                                          },
-                                          child: const Text('No'),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                );
-                              }
-                              if (skip) {
-                                skip = false;
-                              } else {
-                                _completedTime =
-                                    _completedTime + 0.0166666666666667;
-                              }
-                              _second = 60;
-                            }
-                          } else {
-                            if (_second != 1) {
-                              _second--;
-                              _completedTime =
-                                  _completedTime + 0.0166666666666667;
-                            } else {
-                              if (_completedTime >= _endTime) {
-                                _completedTime = 0;
-                                _focusSessions++;
-                                skip = true;
-                                await _audioPlayer.release();
-                                await _audioPlayer.play(
-                                  AssetSource('audio/ringtone_on_complete.mp3'),
-                                );
-                                await _audioPlayer
-                                    .setReleaseMode(ReleaseMode.release);
-                                await LocalDatabase.saveFocusSessions(
-                                    FocusSessionDataModel(
-                                        minutes: ((widget.endTime) + 1).toInt(),
-                                        dateTime: DateTime.now(),
-                                        taskType: _currentTaskType));
-                                await showDialog(
-                                  context: context,
-                                  builder: ((context) {
-                                    return AlertDialog(
-                                      actionsAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(14),
-                                      ),
-                                      backgroundColor: Get.isDarkMode
-                                          ? ThemeColors.darkMain
-                                          : ThemeColors.lightColor,
-                                      title: Text(
-                                        'Take a short break',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge!
-                                            .copyWith(
-                                              color: Get.isDarkMode
-                                                  ? ThemeColors.darkAccent
-                                                  : ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      content: Text(
-                                        'Great job! You have completed a ${widget.endTime + 1} minutes focus, do you wanna take a short break to recharge?',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .titleSmall!
-                                            .copyWith(
-                                              color: Get.isDarkMode
-                                                  ? ThemeColors.darkAccent
-                                                  : ThemeColors.titleColor,
-                                            ),
-                                      ),
-                                      actions: [
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await _audioPlayer.release();
-                                            _isBreak = true;
-                                            Get.back();
-                                          },
-                                          child: const Text('Yes'),
-                                        ),
-                                        ElevatedButton(
-                                          onPressed: () async {
-                                            await _audioPlayer.release();
-                                            _isBreak = false;
-                                            Get.back();
-                                          },
-                                          child: const Text('No'),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                );
-                              }
-                              if (skip) {
-                                skip = false;
-                              } else {
-                                _completedTime =
-                                    _completedTime + 0.0166666666666667;
-                              }
-                              _second = 60;
-                            }
-                          }
-                          setState(() {});
+                        if(_isTimerOn){
+                          _timer!.cancel();
+                          _isTimerOn=false;
+                        }else{
+                          _timeCountdown();
+                          _isTimerOn = true;
                         }
                       },
                       icon: _focusMode
@@ -629,6 +652,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         _completedTime = 0;
                         _second = 60;
                         _isBreak = false;
+                        _timer?.cancel();
                         await _audioPlayer.release();
                         setState(() {});
                       },
@@ -674,6 +698,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
 
   @override
   void dispose() {
+    _timer?.cancel();
     _audioPlayer.dispose();
     super.dispose();
   }
