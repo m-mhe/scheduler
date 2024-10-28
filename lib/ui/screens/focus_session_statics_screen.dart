@@ -33,7 +33,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   int _fifthDay = 0;
   int _sixthDay = 0;
   int _seventhDay = 0;
-  double _theLargestNumberInTrends = 0;
+  int _theLargestNumberInTrends = 0;
 
   Future<void> _fetch() async {
     _sessions = await LocalDatabase.fetchFromFocusSessionDB();
@@ -74,8 +74,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
       _fifthDay,
       _sixthDay,
       _seventhDay
-    ].reduce(max))
-        .toDouble();
+    ].reduce(max));
     if (_todayTotalHour > 3) {
       _todayTotalHour = 3;
     }
@@ -447,7 +446,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                               minX: 1,
                               maxX: 7,
                               minY: 0,
-                              maxY: _theLargestNumberInTrends,
+                              maxY: (_theLargestNumberInTrends +
+                                  (_theLargestNumberInTrends / 10)),
                               lineBarsData: [
                                 LineChartBarData(
                                     color: ThemeColors.secondThemeMain,
