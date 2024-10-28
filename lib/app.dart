@@ -74,15 +74,16 @@ class MyApp extends StatelessWidget {
         ),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
-          textStyle: TextStyle(fontSize: 14, color: ThemeColors.accentColor),
+          textStyle:
+              const TextStyle(fontSize: 14, color: ThemeColors.accentColor),
           inputDecorationTheme: InputDecorationTheme(
-              enabledBorder: OutlineInputBorder(
+              enabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: ThemeColors.lightColor)),
-              disabledBorder: OutlineInputBorder(
+              disabledBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: ThemeColors.lightColor)),
-              focusedBorder: OutlineInputBorder(
+              focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: ThemeColors.lightColor)),
-              constraints: BoxConstraints.tight(Size.fromHeight(50)))),
+              constraints: BoxConstraints.tight(const Size.fromHeight(50)))),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),

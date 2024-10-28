@@ -273,25 +273,28 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        height: MediaQuery.of(context).size.width / 2.2,
+                        height: MediaQuery.of(context).size.width / 2.3,
                         width: MediaQuery.of(context).size.width / 3.3,
                         decoration: BoxDecoration(
                             color: ThemeColors.accentColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Text(
-                                ((_isBreak ? _breakEndTime : _endTime) -
-                                        _completedTime.toInt())
-                                    .toStringAsFixed(0)
-                                    .padLeft(2, '0'),
-                              style: const TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.w700,
-                                color: ThemeColors.lightColor,),)),
+                          ((_isBreak ? _breakEndTime : _endTime) -
+                                  _completedTime.toInt())
+                              .toStringAsFixed(0)
+                              .padLeft(2, '0'),
+                          style: const TextStyle(
+                            fontSize: 48,
+                            fontWeight: FontWeight.w700,
+                            color: ThemeColors.lightColor,
+                          ),
+                        )),
                       ),
-                       Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -299,7 +302,9 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 10),
                             child: CircleAvatar(
-                              backgroundColor: _second.isEven? ThemeColors.accentColor:ThemeColors.accentColor.withOpacity(0.5),
+                              backgroundColor: _second.isEven
+                                  ? ThemeColors.accentColor
+                                  : ThemeColors.accentColor.withOpacity(0.5),
                               radius: 5,
                             ),
                           ),
@@ -309,14 +314,16 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               right: 10,
                             ),
                             child: CircleAvatar(
-                              backgroundColor: _second.isEven? ThemeColors.accentColor:ThemeColors.accentColor.withOpacity(0.5),
+                              backgroundColor: _second.isEven
+                                  ? ThemeColors.accentColor
+                                  : ThemeColors.accentColor.withOpacity(0.5),
                               radius: 5,
                             ),
                           )
                         ],
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.width / 2.2,
+                        height: MediaQuery.of(context).size.width / 2.3,
                         width: MediaQuery.of(context).size.width / 3.3,
                         decoration: BoxDecoration(
                             color: ThemeColors.accentColor,
@@ -325,9 +332,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           child: Text(
                             _second.toString().padLeft(2, '0'),
                             style: const TextStyle(
-                                fontSize: 48,
-                                fontWeight: FontWeight.w700,
-                                color: ThemeColors.lightColor,),
+                              fontSize: 48,
+                              fontWeight: FontWeight.w700,
+                              color: ThemeColors.lightColor,
+                            ),
                           ),
                         ),
                       ),
@@ -336,11 +344,14 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10),
-                  child: Text(_isBreak?'Break':_currentTaskType,
+                  child: Text(
+                    _isBreak ? 'Break' : _currentTaskType,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: ThemeColors.accentColor,),),
+                      color: ThemeColors.accentColor,
+                    ),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

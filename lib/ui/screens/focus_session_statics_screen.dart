@@ -55,15 +55,15 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
         _seventhDay = _seventhDay + session.minutes;
       }
       if (session.taskType == 'Work') {
-        _workTask++;
+        _workTask = _workTask + session.minutes;
       } else if (session.taskType == 'Study') {
-        _studyTask++;
+        _studyTask = _studyTask + session.minutes;
       } else if (session.taskType == 'Exercise') {
-        _exerciseTask++;
+        _exerciseTask = _exerciseTask + session.minutes;
       } else if (session.taskType == 'Coding') {
-        _codingTask++;
+        _codingTask = _codingTask + session.minutes;
       } else {
-        _otherTask++;
+        _otherTask = _otherTask + session.minutes;
       }
     }
     _theLargestNumberInTrends = ([
@@ -118,7 +118,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -180,7 +180,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(
@@ -401,7 +401,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(
@@ -468,13 +468,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                     ]),
                               ],
                               titlesData: FlTitlesData(
-                                  leftTitles: AxisTitles(
+                                  leftTitles: const AxisTitles(
                                     axisNameWidget: null,
                                   ),
-                                  rightTitles: AxisTitles(
+                                  rightTitles: const AxisTitles(
                                     axisNameWidget: null,
                                   ),
-                                  topTitles: AxisTitles(
+                                  topTitles: const AxisTitles(
                                     axisNameWidget: null,
                                   ),
                                   bottomTitles: AxisTitles(
@@ -487,19 +487,19 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                         (dayNumber - 8)
                                             .toStringAsFixed(0)
                                             .split('')[1],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: ThemeColors.secondThemeMain),
                                       );
                                     },
                                   ))),
-                              gridData: FlGridData(show: false)),
+                              gridData: const FlGridData(show: false)),
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
             ],
