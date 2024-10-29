@@ -158,11 +158,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
-        textStyle: TextStyle(
+        textStyle: const TextStyle(
             fontSize: 14,
-            color: Get.isDarkMode
-                ? ThemeColors.darkAccent
-                : ThemeColors.accentColor),
+            color: ThemeColors.darkAccent),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
