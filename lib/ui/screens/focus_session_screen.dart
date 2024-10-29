@@ -41,7 +41,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
   void _timeCountdown() {
     bool skip = false;
     _timer =
-        Timer.periodic(const Duration(milliseconds: 997), (Timer timer) async {
+        Timer.periodic(const Duration(seconds: 1), (Timer timer) async {
       if (_isBreak) {
         if (_second != 1) {
           _second--;
