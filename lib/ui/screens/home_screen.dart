@@ -345,10 +345,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .textTheme
                                                 .labelLarge!
                                                 .copyWith(
-                                                    color:
-                                                        ThemeColors.titleColor),
+                                                    color: Get.isDarkMode
+                                                        ? ThemeColors.darkAccent
+                                                        : ThemeColors
+                                                            .titleColor),
                                           ),
-                                          width: 102,
+                                          width: 115,
                                           dropdownMenuEntries: [
                                             DropdownMenuEntry(
                                                 value: 0,
@@ -440,10 +442,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .textTheme
                                                 .labelLarge!
                                                 .copyWith(
-                                                    color:
-                                                        ThemeColors.titleColor),
+                                                    color: Get.isDarkMode
+                                                        ? ThemeColors.darkAccent
+                                                        : ThemeColors
+                                                            .titleColor),
                                           ),
-                                          width: 102,
+                                          width: 107,
                                           dropdownMenuEntries: [
                                             DropdownMenuEntry(
                                                 value: 0,

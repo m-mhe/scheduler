@@ -74,16 +74,20 @@ class MyApp extends StatelessWidget {
         ),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
-          textStyle:
-              const TextStyle(fontSize: 14, color: ThemeColors.accentColor),
-          inputDecorationTheme: InputDecorationTheme(
-              enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ThemeColors.lightColor)),
-              disabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ThemeColors.lightColor)),
-              focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: ThemeColors.lightColor)),
-              constraints: BoxConstraints.tight(const Size.fromHeight(50)))),
+        textStyle:
+            const TextStyle(fontSize: 14, color: ThemeColors.accentColor),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: ThemeColors.lightColor)),
+          disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: ThemeColors.lightColor)),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: ThemeColors.lightColor)),
+          constraints: BoxConstraints.tight(
+            const Size.fromHeight(50),
+          ),
+        ),
+      ),
       floatingActionButtonTheme: FloatingActionButtonThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
@@ -150,6 +154,30 @@ class MyApp extends StatelessWidget {
           fixedSize: const Size.fromWidth(90),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7),
+          ),
+        ),
+      ),
+      dropdownMenuTheme: DropdownMenuThemeData(
+        textStyle: TextStyle(
+            fontSize: 14,
+            color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.accentColor),
+        inputDecorationTheme: InputDecorationTheme(
+          enabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+            color: Colors.transparent,
+          )),
+          disabledBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+            color: Colors.transparent,
+          )),
+          focusedBorder: const OutlineInputBorder(
+              borderSide: BorderSide(
+            color: Colors.transparent,
+          )),
+          constraints: BoxConstraints.tight(
+            const Size.fromHeight(50),
           ),
         ),
       ),

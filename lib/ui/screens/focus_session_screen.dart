@@ -29,10 +29,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
   double _completedTime = 0;
   int _second = 60;
   bool _isBreak = false;
-  String _currentTaskType = 'Work';
+  String _currentTaskType = 'Study';
   final List<String> _taskTypes = [
-    'Work',
     'Study',
+    'Work',
     'Exercise',
     'Coding',
     'Other',
@@ -212,7 +212,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeColors.lightColor,
+      backgroundColor:
+          Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.lightColor,
       appBar: commonAppBar(context),
       body: Column(
         children: [
@@ -231,8 +232,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     children: [
                       Text(
                         'Focus: ${(_endTime + 1).toStringAsFixed(0)} min',
-                        style: const TextStyle(
-                          color: ThemeColors.accentColor,
+                        style: TextStyle(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.accentColor,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -247,9 +250,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
-                                .copyWith(color: ThemeColors.titleColor),
+                                .copyWith(
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.accentColor),
                           ),
-                          width: 102,
+                          width: 127,
                           dropdownMenuEntries: [
                             DropdownMenuEntry(value: 0, label: _taskTypes[0]),
                             DropdownMenuEntry(value: 1, label: _taskTypes[1]),
@@ -259,8 +265,10 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           ]),
                       Text(
                         'Break: ${(_breakEndTime + 1).toStringAsFixed(0)} min',
-                        style: const TextStyle(
-                          color: ThemeColors.accentColor,
+                        style: TextStyle(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.accentColor,
                           fontWeight: FontWeight.w700,
                         ),
                       ),
@@ -277,7 +285,9 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         height: MediaQuery.of(context).size.width / 2.3,
                         width: MediaQuery.of(context).size.width / 3.3,
                         decoration: BoxDecoration(
-                            color: ThemeColors.accentColor,
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkSecond
+                                : ThemeColors.accentColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                             child: Text(
@@ -285,10 +295,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                   _completedTime.toInt())
                               .toStringAsFixed(0)
                               .padLeft(2, '0'),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 48,
                             fontWeight: FontWeight.w700,
-                            color: ThemeColors.lightColor,
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.lightColor,
                           ),
                         )),
                       ),
@@ -300,9 +312,14 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             padding: const EdgeInsets.only(
                                 left: 10, right: 10, bottom: 10),
                             child: CircleAvatar(
-                              backgroundColor: _second.isEven
-                                  ? ThemeColors.accentColor
-                                  : ThemeColors.accentColor.withOpacity(0.5),
+                              backgroundColor: Get.isDarkMode
+                                  ? _second.isEven
+                                      ? ThemeColors.darkAccent
+                                      : ThemeColors.darkSecond
+                                  : _second.isEven
+                                      ? ThemeColors.accentColor
+                                      : ThemeColors.accentColor
+                                          .withOpacity(0.5),
                               radius: 5,
                             ),
                           ),
@@ -312,9 +329,14 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               right: 10,
                             ),
                             child: CircleAvatar(
-                              backgroundColor: _second.isEven
-                                  ? ThemeColors.accentColor
-                                  : ThemeColors.accentColor.withOpacity(0.5),
+                              backgroundColor: Get.isDarkMode
+                                  ? _second.isEven
+                                      ? ThemeColors.darkAccent
+                                      : ThemeColors.darkSecond
+                                  : _second.isEven
+                                      ? ThemeColors.accentColor
+                                      : ThemeColors.accentColor
+                                          .withOpacity(0.5),
                               radius: 5,
                             ),
                           )
@@ -324,15 +346,19 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         height: MediaQuery.of(context).size.width / 2.3,
                         width: MediaQuery.of(context).size.width / 3.3,
                         decoration: BoxDecoration(
-                            color: ThemeColors.accentColor,
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkSecond
+                                : ThemeColors.accentColor,
                             borderRadius: BorderRadius.circular(10)),
                         child: Center(
                           child: Text(
                             _second.toString().padLeft(2, '0'),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 48,
                               fontWeight: FontWeight.w700,
-                              color: ThemeColors.lightColor,
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkAccent
+                                  : ThemeColors.lightColor,
                             ),
                           ),
                         ),
@@ -344,10 +370,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   padding: const EdgeInsets.only(bottom: 10),
                   child: Text(
                     _isBreak ? 'Break' : _currentTaskType,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
-                      color: ThemeColors.accentColor,
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
                     ),
                   ),
                 ),
@@ -396,9 +424,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                           await _audioPlayer.release();
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.music_off_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -410,9 +440,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.watch_later_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -426,9 +458,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.nights_stay_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -440,9 +474,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.local_fire_department_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -454,9 +490,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.piano_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -468,9 +506,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.water_drop_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -484,9 +524,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.donut_small,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -498,9 +540,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.water_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -514,9 +558,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.lens_blur_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -529,9 +575,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.water_sharp,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -545,9 +593,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.av_timer_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -559,9 +609,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.water_drop_outlined,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -575,9 +627,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.earbuds,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -589,9 +643,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.thunderstorm_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -604,9 +660,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.music_note_rounded,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                     IconButton(
@@ -620,9 +678,11 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                                               .setReleaseMode(ReleaseMode.loop);
                                           Get.back();
                                         },
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.forest_sharp,
-                                          color: ThemeColors.accentColor,
+                                          color: Get.isDarkMode
+                                              ? ThemeColors.darkAccent
+                                              : ThemeColors.accentColor,
                                           size: 30,
                                         )),
                                   ],
@@ -633,14 +693,18 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         );
                       },
                       icon: const Icon(Icons.my_library_music_rounded),
-                      color: ThemeColors.accentColor,
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
                     ),
                     const SizedBox(
                       width: 10,
                     ),
                     IconButton(
                       style: IconButton.styleFrom(
-                          backgroundColor: ThemeColors.accentColor),
+                          backgroundColor: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.accentColor),
                       onPressed: () {
                         setState(() {});
                         if (_isTimerOn) {
@@ -654,7 +718,9 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       icon: _isTimerOn
                           ? const Icon(Icons.pause)
                           : const Icon(Icons.play_arrow_rounded),
-                      color: ThemeColors.lightColor,
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkMain
+                          : ThemeColors.lightColor,
                     ),
                     const SizedBox(
                       width: 10,
@@ -670,7 +736,9 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         setState(() {});
                       },
                       icon: const Icon(Icons.stop_circle_rounded),
-                      color: ThemeColors.accentColor,
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
                     ),
                   ],
                 )
@@ -680,19 +748,21 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           Container(
             height: MediaQuery.of(context).size.height / 10,
             width: double.maxFinite,
-            decoration: const BoxDecoration(
-                color: ThemeColors.accentColor,
-                borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+                color: Get.isDarkMode
+                    ? ThemeColors.darkSecond
+                    : ThemeColors.accentColor,
+                borderRadius: const BorderRadius.only(
                     topRight: Radius.circular(30),
                     topLeft: Radius.circular(30))),
             child: Center(
                 child: Text(
               'Total focus time: ${(_focusSessions * (_endTime + 1)).toStringAsFixed(0)} min',
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .labelLarge!
-                  .copyWith(color: ThemeColors.lightColor),
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.lightColor),
             )),
           )
         ],
@@ -702,7 +772,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           Get.to(() => const FocusSessionStaticsScreen());
         },
         child: const Icon(
-          Icons.analytics_rounded,
+          Icons.insert_chart,
           size: 34,
         ),
       ),

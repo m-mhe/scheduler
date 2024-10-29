@@ -40,7 +40,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
     for (FocusSessionDataModel session in _sessions) {
       if (session.dateTime.difference(_currentDateTime).inDays == 0) {
         _firstDay = _firstDay + session.minutes;
-        if(session.dateTime.day==_currentDateTime.day){
+        if (session.dateTime.day == _currentDateTime.day) {
           _todayTotalHour = _todayTotalHour + (session.minutes / 60);
         }
       } else if (session.dateTime.difference(_currentDateTime).inDays == -1) {
@@ -94,16 +94,16 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeColors.secondThemeSecond,
+      backgroundColor:
+          Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeSecond,
       appBar: AppBar(
         title: Text(
           'Focus Stats',
-          style: Theme.of(context)
-              .textTheme
-              .titleLarge!
-              .copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white),
         ),
-        backgroundColor: ThemeColors.secondThemeMain,
+        backgroundColor:
+            Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeMain,
         actions: [
           IconButton(
               onPressed: () {
@@ -155,28 +155,38 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                           handlerSize: 0,
                         ),
                         customColors: CustomSliderColors(
-                          trackColor: ThemeColors.secondColor,
-                          progressBarColor: ThemeColors.secondThemeMain,
+                          trackColor: Get.isDarkMode
+                              ? ThemeColors.darkMain
+                              : ThemeColors.secondColor,
+                          progressBarColor: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.secondThemeMain,
                           hideShadow: true,
                         ),
                         infoProperties: InfoProperties(
                           topLabelText: 'Daily Goal',
                           topLabelStyle:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    color: ThemeColors.secondThemeMain,
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.secondThemeMain,
                                   ),
                           modifier: (v) {
                             return '${v.toStringAsFixed(1)} h';
                           },
-                          mainLabelStyle: const TextStyle(
-                            color: ThemeColors.secondThemeMain,
+                          mainLabelStyle: TextStyle(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.secondThemeMain,
                             fontSize: 28,
                           ),
                           bottomLabelText:
                               '${(3 - _todayTotalHour).toStringAsFixed(1)} hours left',
                           bottomLabelStyle:
                               Theme.of(context).textTheme.labelMedium!.copyWith(
-                                    color: ThemeColors.secondThemeMain,
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.secondThemeMain,
                                   ),
                         )),
                   ),
@@ -208,7 +218,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                     child: Padding(
                       padding: const EdgeInsets.all(20),
                       child: Visibility(
-                        visible: !(_totalTask==0),
+                        visible: !(_totalTask == 0),
                         replacement: Center(
                           child: Text(
                             'No Data',
@@ -220,38 +230,53 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                           ),
                         ),
                         child: PieChart(
-                          PieChartData(centerSpaceColor: Colors.white, sections: [
-                            PieChartSectionData(
-                              showTitle: false,
-                              title: 'Work',
-                              value: _workTask.toDouble(),
-                              color: ThemeColors.secondThemeMain,
-                            ),
-                            PieChartSectionData(
-                              showTitle: false,
-                              title: 'Study',
-                              value: _studyTask.toDouble(),
-                              color: ThemeColors.secondThemeAccent,
-                            ),
-                            PieChartSectionData(
-                              showTitle: false,
-                              title: 'Exercise',
-                              value: _exerciseTask.toDouble(),
-                              color: ThemeColors.secondColor,
-                            ),
-                            PieChartSectionData(
-                              showTitle: false,
-                              title: 'Coding',
-                              value: _codingTask.toDouble(),
-                              color: ThemeColors.secondColor.withOpacity(0.6),
-                            ),
-                            PieChartSectionData(
-                              showTitle: false,
-                              title: 'Other',
-                              value: _otherTask.toDouble(),
-                              color: ThemeColors.secondThemeSecond,
-                            ),
-                          ]),
+                          PieChartData(
+                              centerSpaceColor: Get.isDarkMode
+                                  ? ThemeColors.darkSecond
+                                  : Colors.white,
+                              sections: [
+                                PieChartSectionData(
+                                  showTitle: false,
+                                  title: 'Study',
+                                  value: _studyTask.toDouble(),
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkBlue
+                                      : ThemeColors.secondThemeMain,
+                                ),
+                                PieChartSectionData(
+                                  showTitle: false,
+                                  title: 'Work',
+                                  value: _workTask.toDouble(),
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkBlue.withOpacity(0.8)
+                                      : ThemeColors.secondThemeAccent,
+                                ),
+                                PieChartSectionData(
+                                  showTitle: false,
+                                  title: 'Exercise',
+                                  value: _exerciseTask.toDouble(),
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkBlue.withOpacity(0.6)
+                                      : ThemeColors.secondColor,
+                                ),
+                                PieChartSectionData(
+                                  showTitle: false,
+                                  title: 'Coding',
+                                  value: _codingTask.toDouble(),
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkBlue.withOpacity(0.4)
+                                      : ThemeColors.secondColor
+                                          .withOpacity(0.6),
+                                ),
+                                PieChartSectionData(
+                                  showTitle: false,
+                                  title: 'Other',
+                                  value: _otherTask.toDouble(),
+                                  color: Get.isDarkMode
+                                      ? ThemeColors.darkBlue.withOpacity(0.3)
+                                      : ThemeColors.secondThemeSecond,
+                                ),
+                              ]),
                         ),
                       ),
                     ),
@@ -295,32 +320,6 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 width: 5,
                               ),
                               Text(
-                                'Work(${((_workTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelSmall!
-                                    .copyWith(
-                                        color: Get.isDarkMode
-                                            ? ThemeColors.darkAccent
-                                            : ThemeColors.secondThemeMain),
-                              )
-                            ],
-                          ),
-                          Wrap(
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            children: [
-                              Container(
-                                height: 10,
-                                width: 10,
-                                color: Get.isDarkMode
-                                    ? ThemeColors.darkBlue.withOpacity(0.7)
-                                    : ThemeColors.secondThemeAccent,
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
                                 'Study(${((_studyTask / _totalTask) * 100).toStringAsFixed(0)}%)',
                                 style: Theme.of(context)
                                     .textTheme
@@ -340,7 +339,33 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 height: 10,
                                 width: 10,
                                 color: Get.isDarkMode
-                                    ? ThemeColors.darkBlue
+                                    ? ThemeColors.darkBlue.withOpacity(0.8)
+                                    : ThemeColors.secondThemeAccent,
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Work(${((_workTask / _totalTask) * 100).toStringAsFixed(0)}%)',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelSmall!
+                                    .copyWith(
+                                        color: Get.isDarkMode
+                                            ? ThemeColors.darkAccent
+                                            : ThemeColors.secondThemeMain),
+                              )
+                            ],
+                          ),
+                          Wrap(
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: [
+                              Container(
+                                height: 10,
+                                width: 10,
+                                color: Get.isDarkMode
+                                    ? ThemeColors.darkBlue.withOpacity(0.6)
                                     : ThemeColors.secondColor,
                               ),
                               const SizedBox(
@@ -366,7 +391,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 height: 10,
                                 width: 10,
                                 color: Get.isDarkMode
-                                    ? ThemeColors.darkBlue
+                                    ? ThemeColors.darkBlue.withOpacity(0.4)
                                     : ThemeColors.secondColor.withOpacity(0.6),
                               ),
                               const SizedBox(
@@ -392,7 +417,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                 height: 10,
                                 width: 10,
                                 color: Get.isDarkMode
-                                    ? ThemeColors.darkBlue
+                                    ? ThemeColors.darkBlue.withOpacity(0.3)
                                     : ThemeColors.secondThemeSecond,
                               ),
                               const SizedBox(
@@ -440,10 +465,10 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       padding: const EdgeInsets.only(top: 10, bottom: 5),
                       child: Text(
                         'Trends in past 7 days',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelLarge!
-                            .copyWith(color: ThemeColors.secondThemeMain),
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.secondThemeMain),
                       ),
                     ),
                     Expanded(
@@ -465,12 +490,17 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                   (_theLargestNumberInTrends / 10)),
                               lineBarsData: [
                                 LineChartBarData(
-                                    color: ThemeColors.secondThemeMain,
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.secondThemeMain,
                                     isCurved: true,
                                     preventCurveOverShooting: true,
                                     belowBarData: BarAreaData(
-                                        color: ThemeColors.secondColor
-                                            .withOpacity(0.9),
+                                        color: Get.isDarkMode
+                                            ? ThemeColors.darkAccent
+                                                .withOpacity(0.2)
+                                            : ThemeColors.secondColor
+                                                .withOpacity(0.9),
                                         show: true),
                                     spots: [
                                       FlSpot(1, _seventhDay.toDouble()),
@@ -498,12 +528,18 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                     interval: 1,
                                     getTitlesWidget: (double dayNumber,
                                         TitleMeta titleMeta) {
-                                      return Text(
-                                        (dayNumber - 8)
-                                            .toStringAsFixed(0)
-                                            .split('')[1],
-                                        style: const TextStyle(
-                                            color: ThemeColors.secondThemeMain),
+                                      return Padding(
+                                        padding: const EdgeInsets.all(3),
+                                        child: Text(
+                                          (dayNumber - 8)
+                                              .toStringAsFixed(0)
+                                              .split('')[1],
+                                          style: TextStyle(
+                                              color: Get.isDarkMode
+                                                  ? ThemeColors.darkAccent
+                                                  : ThemeColors
+                                                      .secondThemeMain),
+                                        ),
                                       );
                                     },
                                   ))),
