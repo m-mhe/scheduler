@@ -39,8 +39,10 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
     _sessions = await LocalDatabase.fetchFromFocusSessionDB();
     for (FocusSessionDataModel session in _sessions) {
       if (session.dateTime.difference(_currentDateTime).inDays == 0) {
-        _todayTotalHour = _todayTotalHour + (session.minutes / 60);
         _firstDay = _firstDay + session.minutes;
+        if(session.dateTime.day==_currentDateTime.day){
+          _todayTotalHour = _todayTotalHour + (session.minutes / 60);
+        }
       } else if (session.dateTime.difference(_currentDateTime).inDays == -1) {
         _secondDay = _secondDay + session.minutes;
       } else if (session.dateTime.difference(_currentDateTime).inDays == -2) {
@@ -205,39 +207,52 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(20),
-                      child: PieChart(
-                        PieChartData(centerSpaceColor: Colors.white, sections: [
-                          PieChartSectionData(
-                            showTitle: false,
-                            title: 'Work',
-                            value: _workTask.toDouble(),
-                            color: ThemeColors.secondThemeMain,
+                      child: Visibility(
+                        visible: !(_totalTask==0),
+                        replacement: Center(
+                          child: Text(
+                            'No Data',
+                            style: TextStyle(
+                                color: Get.isDarkMode
+                                    ? ThemeColors.darkAccent
+                                    : ThemeColors.secondThemeMain,
+                                fontWeight: FontWeight.w600),
                           ),
-                          PieChartSectionData(
-                            showTitle: false,
-                            title: 'Study',
-                            value: _studyTask.toDouble(),
-                            color: ThemeColors.secondThemeAccent,
-                          ),
-                          PieChartSectionData(
-                            showTitle: false,
-                            title: 'Exercise',
-                            value: _exerciseTask.toDouble(),
-                            color: ThemeColors.secondColor,
-                          ),
-                          PieChartSectionData(
-                            showTitle: false,
-                            title: 'Coding',
-                            value: _codingTask.toDouble(),
-                            color: ThemeColors.secondColor.withOpacity(0.6),
-                          ),
-                          PieChartSectionData(
-                            showTitle: false,
-                            title: 'Other',
-                            value: _otherTask.toDouble(),
-                            color: ThemeColors.secondThemeSecond,
-                          ),
-                        ]),
+                        ),
+                        child: PieChart(
+                          PieChartData(centerSpaceColor: Colors.white, sections: [
+                            PieChartSectionData(
+                              showTitle: false,
+                              title: 'Work',
+                              value: _workTask.toDouble(),
+                              color: ThemeColors.secondThemeMain,
+                            ),
+                            PieChartSectionData(
+                              showTitle: false,
+                              title: 'Study',
+                              value: _studyTask.toDouble(),
+                              color: ThemeColors.secondThemeAccent,
+                            ),
+                            PieChartSectionData(
+                              showTitle: false,
+                              title: 'Exercise',
+                              value: _exerciseTask.toDouble(),
+                              color: ThemeColors.secondColor,
+                            ),
+                            PieChartSectionData(
+                              showTitle: false,
+                              title: 'Coding',
+                              value: _codingTask.toDouble(),
+                              color: ThemeColors.secondColor.withOpacity(0.6),
+                            ),
+                            PieChartSectionData(
+                              showTitle: false,
+                              title: 'Other',
+                              value: _otherTask.toDouble(),
+                              color: ThemeColors.secondThemeSecond,
+                            ),
+                          ]),
+                        ),
                       ),
                     ),
                   ),

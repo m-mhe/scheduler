@@ -45,9 +45,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
       if (_isBreak) {
         if (_second != 1) {
           _second--;
-          _completedTime = _completedTime + 0.0166666666666667;
         } else {
-          if (_completedTime >= _breakEndTime) {
+          if (_completedTime == _breakEndTime) {
             _completedTime = 0;
             skip = true;
             timer.cancel();
@@ -114,16 +113,15 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           if (skip) {
             skip = false;
           } else {
-            _completedTime = _completedTime + 0.0166666666666667;
+            _completedTime++;
           }
           _second = 60;
         }
       } else {
         if (_second != 1) {
           _second--;
-          _completedTime = _completedTime + 0.0166666666666667;
         } else {
-          if (_completedTime >= _endTime) {
+          if (_completedTime == _endTime) {
             _completedTime = 0;
             _focusSessions++;
             skip = true;
@@ -195,7 +193,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
           if (skip) {
             skip = false;
           } else {
-            _completedTime = _completedTime + 0.0166666666666667;
+            _completedTime++;
           }
           _second = 60;
         }
@@ -689,7 +687,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     topLeft: Radius.circular(30))),
             child: Center(
                 child: Text(
-              'Total session time: ${(_focusSessions * (_endTime + 1)).toStringAsFixed(0)} min',
+              'Total focus time: ${(_focusSessions * (_endTime + 1)).toStringAsFixed(0)} min',
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
