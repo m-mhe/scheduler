@@ -52,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const bool active = true;
     while (active) {
       int minuteToWait = (60-DateTime.now().minute);
-      await Future.delayed(Duration(minutes: minuteToWait));
+      int secondToMinus = (DateTime.now().second);
+      int totalSecondToWait = ((minuteToWait*60)-secondToMinus);
+      await Future.delayed(Duration(seconds: totalSecondToWait));
       if (DateTime.now().hour != _currentTime.hour) {
         await _fetch();
       }
