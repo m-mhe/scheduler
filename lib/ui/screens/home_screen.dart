@@ -51,9 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _refreshScreen() async {
     const bool active = true;
     while (active) {
-      int minuteToWait = (60-DateTime.now().minute);
-      int secondToMinus = (DateTime.now().second);
-      int totalSecondToWait = ((minuteToWait*60)-secondToMinus);
+      final DateTime remainingTime= DateTime.now();
+      final int minuteToWait = (60-remainingTime.minute);
+      final int secondToMinus = (remainingTime.second);
+      final int totalSecondToWait = ((minuteToWait*60)-secondToMinus);
       await Future.delayed(Duration(seconds: totalSecondToWait));
       if (DateTime.now().hour != _currentTime.hour) {
         await _fetch();
