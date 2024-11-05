@@ -3,6 +3,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/focus_session_data_model.dart';
+import 'package:scheduler/local_cache.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 import 'package:scheduler/local_database.dart';
 import '../utils/theme_colors.dart';
@@ -57,8 +58,9 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
 
   //----------------------------------------------Variables----------------------------------------------
   List<FocusSessionDataModel> _sessions = [];
-  final DateTime _currentDateTime = DateTime.now();
+  DateTime _currentDateTime = DateTime.now();
   double _todayTotalHour = 0.0;
+  int _dailyGoal = 3;
   int _workTask = 0;
   int _codingTask = 0;
   int _studyTask = 0;
@@ -76,6 +78,21 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
 
   //----------------------------------------------Function----------------------------------------------
   Future<void> _fetch() async {
+    _currentDateTime = DateTime.now();
+    _todayTotalHour = 0.0;
+    _workTask = 0;
+    _codingTask = 0;
+    _studyTask = 0;
+    _exerciseTask = 0;
+    _otherTask = 0;
+    _totalTask = 0;
+    _firstDay = 0;
+    _secondDay = 0;
+    _thirdDay = 0;
+    _fourthDay = 0;
+    _fifthDay = 0;
+    _sixthDay = 0;
+    _seventhDay = 0;
     _sessions = await LocalDatabase.fetchFromFocusSessionDB();
     for (FocusSessionDataModel session in _sessions) {
       if (session.dateTime.difference(_currentDateTime).inDays == 0) {
@@ -108,6 +125,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
         _otherTask = _otherTask + session.minutes;
       }
     }
+    _dailyGoal = await LocalCache.getDailyHourGoal() ?? 3;
     _theLargestNumberInTrends = ([
       _firstDay,
       _secondDay,
@@ -117,8 +135,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
       _sixthDay,
       _seventhDay
     ].reduce(max));
-    if (_todayTotalHour > 3) {
-      _todayTotalHour = 3;
+    if (_todayTotalHour > _dailyGoal) {
+      _todayTotalHour = _dailyGoal.toDouble();
     }
     _totalTask =
         _workTask + _studyTask + _codingTask + _exerciseTask + _otherTask;
@@ -471,58 +489,123 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               blurRadius: 7),
         ],
       ),
-      child: Center(
-        child: SleekCircularSlider(
-          initialValue: _todayTotalHour,
-          min: 0,
-          max: 3,
-          appearance: CircularSliderAppearance(
-              animDurationMultiplier: 2.5,
-              spinnerMode: false,
-              size: MediaQuery.sizeOf(context).width / 1.6,
-              angleRange: 360,
-              startAngle: 270,
-              customWidths: CustomSliderWidths(
-                trackWidth: 15,
-                progressBarWidth: 15,
-                handlerSize: 0,
-              ),
-              customColors: CustomSliderColors(
-                trackColor: Get.isDarkMode
-                    ? ThemeColors.darkMain
-                    : ThemeColors.secondColor,
-                progressBarColor: Get.isDarkMode
+      child: Stack(
+        alignment: AlignmentDirectional.topEnd,
+        children: [
+          Center(
+            child: SleekCircularSlider(
+              initialValue: _todayTotalHour,
+              min: 0,
+              max: _dailyGoal.toDouble(),
+              appearance: CircularSliderAppearance(
+                  animDurationMultiplier: 2.5,
+                  spinnerMode: false,
+                  size: MediaQuery.sizeOf(context).width / 1.6,
+                  angleRange: 360,
+                  startAngle: 270,
+                  customWidths: CustomSliderWidths(
+                    trackWidth: 15,
+                    progressBarWidth: 15,
+                    handlerSize: 0,
+                  ),
+                  customColors: CustomSliderColors(
+                    trackColor: Get.isDarkMode
+                        ? ThemeColors.darkMain
+                        : ThemeColors.secondColor,
+                    progressBarColor: Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.secondThemeMain,
+                    hideShadow: true,
+                  ),
+                  infoProperties: InfoProperties(
+                    topLabelText: 'Daily Goal',
+                    topLabelStyle:
+                        Theme.of(context).textTheme.labelMedium!.copyWith(
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkAccent
+                                  : ThemeColors.secondThemeMain,
+                            ),
+                    modifier: (v) {
+                      return '${v.toStringAsFixed(1)} h';
+                    },
+                    mainLabelStyle: TextStyle(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.secondThemeMain,
+                      fontSize: 28,
+                    ),
+                    bottomLabelText:
+                        '${(_dailyGoal - _todayTotalHour).toStringAsFixed(1)} hours left',
+                    bottomLabelStyle:
+                        Theme.of(context).textTheme.labelMedium!.copyWith(
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkAccent
+                                  : ThemeColors.secondThemeMain,
+                            ),
+                  )),
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                final TextEditingController dailyGoalTEC =
+                    TextEditingController();
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        actionsAlignment: MainAxisAlignment.spaceBetween,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(14),
+                        ),
+                        backgroundColor: Get.isDarkMode
+                            ? ThemeColors.darkMain
+                            : ThemeColors.lightColor,
+                        title: Text(
+                          'Set your daily goal',
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.bodyLarge!.copyWith(
+                                    color: Get.isDarkMode
+                                        ? ThemeColors.darkAccent
+                                        : ThemeColors.titleColor,
+                                  ),
+                        ),
+                        content: TextField(
+                          controller: dailyGoalTEC,
+                          keyboardType: TextInputType.number,
+                          decoration: const InputDecoration(
+                              hintText: 'Daily Goal:', suffixText: 'hour'),
+                        ),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: const Text('Cancel')),
+                          ElevatedButton(
+                              onPressed: () async {
+                                int? data =
+                                int.tryParse(dailyGoalTEC.text.trim());
+                                if (data != null && data > 0) {
+                                  await LocalCache.saveDailyHourGoal(data);
+                                  await _fetch();
+                                  Get.back();
+                                } else {
+                                  Get.back();
+                                }
+                              },
+                              child: const Text('Save')),
+                        ],
+                      );
+                    });
+              },
+              icon: Icon(
+                Icons.edit,
+                color: Get.isDarkMode
                     ? ThemeColors.darkAccent
                     : ThemeColors.secondThemeMain,
-                hideShadow: true,
-              ),
-              infoProperties: InfoProperties(
-                topLabelText: 'Daily Goal',
-                topLabelStyle:
-                    Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Get.isDarkMode
-                              ? ThemeColors.darkAccent
-                              : ThemeColors.secondThemeMain,
-                        ),
-                modifier: (v) {
-                  return '${v.toStringAsFixed(1)} h';
-                },
-                mainLabelStyle: TextStyle(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.secondThemeMain,
-                  fontSize: 28,
-                ),
-                bottomLabelText:
-                    '${(3 - _todayTotalHour).toStringAsFixed(1)} hours left',
-                bottomLabelStyle:
-                    Theme.of(context).textTheme.labelMedium!.copyWith(
-                          color: Get.isDarkMode
-                              ? ThemeColors.darkAccent
-                              : ThemeColors.secondThemeMain,
-                        ),
-              )),
-        ),
+              ))
+        ],
       ),
     );
   }
