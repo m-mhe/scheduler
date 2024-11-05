@@ -15,6 +15,52 @@ class CreateTaskScreen extends StatefulWidget {
 }
 
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
+  @override
+  void initState() {
+    _fromTime = _currentTime.hour;
+    _toTime = _currentTime.hour;
+    _toTimeMin = _toTime;
+    _aMPMClock();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: commonAppBar(context),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          child: Column(
+            children: [
+              _timeSelector(context),
+              const SizedBox(
+                height: 10,
+              ),
+              _titleTextField(context),
+              const SizedBox(
+                height: 10,
+              ),
+              _descriptionTextField(context),
+              const SizedBox(
+                height: 10,
+              ),
+              _createTaskButton()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _titleTEC.dispose();
+    _subTitleTEC.dispose();
+    super.dispose();
+  }
+
+  //---------------------------------------Variables---------------------------------------
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _subTitleTEC = TextEditingController();
   final DateTime _currentTime = DateTime.now();
@@ -24,6 +70,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   late String _toTime12;
   late int _toTimeMin;
 
+  //---------------------------------------Functions---------------------------------------
   void _aMPMClock() {
     if (_fromTime < 12) {
       if (_fromTime == 0) {
@@ -53,160 +100,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     }
   }
 
-  @override
-  void initState() {
-    _fromTime = _currentTime.hour;
-    _toTime = _currentTime.hour;
-    _toTimeMin = _toTime;
-    _aMPMClock();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: commonAppBar(context),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  NumberPicker(
-                    textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                        color: Get.isDarkMode
-                            ? ThemeColors.accentColor
-                            : Colors.black45),
-                    selectedTextStyle: Theme.of(context)
-                        .textTheme
-                        .labelLarge!
-                        .copyWith(
-                            color: Get.isDarkMode
-                                ? ThemeColors.darkAccent
-                                : ThemeColors.titleColor),
-                    minValue: _currentTime.hour,
-                    maxValue: 24,
-                    value: _fromTime,
-                    onChanged: (i) {
-                      _fromTime = i;
-                      _toTimeMin = i;
-                      _toTime = i;
-                      _aMPMClock();
-                      setState(() {});
-                    },
-                  ),
-                  Column(
-                    children: [
-                      Text(
-                        'Time',
-                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                            color: Get.isDarkMode
-                                ? ThemeColors.darkAccent
-                                : ThemeColors.titleColor),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_rounded,
-                        color: Get.isDarkMode
-                            ? ThemeColors.darkAccent
-                            : ThemeColors.titleColor,
-                        size: 30,
-                      ),
-                      Text(
-                        '$_fromTime12 to $_toTime12',
-                        style: Theme.of(context)
-                            .textTheme
-                            .labelMedium!
-                            .copyWith(
-                                color: Get.isDarkMode
-                                    ? ThemeColors.darkAccent
-                                    : ThemeColors.titleColor),
-                      )
-                    ],
-                  ),
-                  NumberPicker(
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .labelSmall!
-                          .copyWith(
-                              color: Get.isDarkMode
-                                  ? ThemeColors.accentColor
-                                  : Colors.black45),
-                      selectedTextStyle: Theme.of(context)
-                          .textTheme
-                          .labelLarge!
-                          .copyWith(
-                              color: Get.isDarkMode
-                                  ? ThemeColors.darkAccent
-                                  : ThemeColors.titleColor),
-                      minValue: _toTimeMin,
-                      maxValue: 24,
-                      value: _toTime,
-                      onChanged: (i) {
-                        _toTime = i;
-                        _aMPMClock();
-                        setState(() {});
-                      }),
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextField(
-                onSubmitted: (String text) {
-                  _onCompleted();
-                },
-                controller: _titleTEC,
-                maxLength: 20,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    color: Get.isDarkMode
-                        ? ThemeColors.darkAccent
-                        : ThemeColors.titleColor),
-                decoration: const InputDecoration(hintText: 'Title:'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextField(
-                controller: _subTitleTEC,
-                maxLines: 4,
-                style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                    color: Get.isDarkMode
-                        ? ThemeColors.darkAccent
-                        : ThemeColors.titleColor),
-                decoration:
-                    const InputDecoration(hintText: 'Description (optional):'),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              ElevatedButton(
-                onPressed: _onCompleted,
-                style: ElevatedButton.styleFrom(
-                  fixedSize: const Size.fromWidth(double.maxFinite),
-                ),
-                child: const Text('Create Task'),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  SnackBar _bottomPopUpMessage({required String text, required Color color}) {
-    return SnackBar(
-      duration: const Duration(seconds: 1),
-      content: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
-      backgroundColor: color,
-    );
-  }
-
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       TaskDataModel dataEntity = TaskDataModel(
@@ -230,5 +123,118 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             text: 'Please give a title to your task!', color: Colors.red),
       );
     }
+  }
+
+  SnackBar _bottomPopUpMessage({required String text, required Color color}) {
+    return SnackBar(
+      duration: const Duration(seconds: 1),
+      content: Text(
+        text,
+        textAlign: TextAlign.center,
+      ),
+      backgroundColor: color,
+    );
+  }
+
+  //---------------------------------------Widgets---------------------------------------
+  ElevatedButton _createTaskButton() {
+    return ElevatedButton(
+      onPressed: _onCompleted,
+      style: ElevatedButton.styleFrom(
+        fixedSize: const Size.fromWidth(double.maxFinite),
+      ),
+      child: const Text('Create Task'),
+    );
+  }
+
+  TextField _descriptionTextField(BuildContext context) {
+    return TextField(
+      controller: _subTitleTEC,
+      maxLines: 5,
+      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+          color:
+              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+      decoration: const InputDecoration(hintText: 'Description (optional):'),
+    );
+  }
+
+  TextField _titleTextField(BuildContext context) {
+    return TextField(
+      controller: _titleTEC,
+      textInputAction: TextInputAction.next,
+      maxLength: 20,
+      textAlign: TextAlign.center,
+      style: Theme.of(context).textTheme.labelLarge!.copyWith(
+          color:
+              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+      decoration: const InputDecoration(hintText: 'Title:'),
+    );
+  }
+
+  Row _timeSelector(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        NumberPicker(
+          textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+              color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
+          selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+              color: Get.isDarkMode
+                  ? ThemeColors.darkAccent
+                  : ThemeColors.titleColor),
+          minValue: _currentTime.hour,
+          maxValue: 24,
+          value: _fromTime,
+          onChanged: (i) {
+            _fromTime = i;
+            _toTimeMin = i;
+            _toTime = i;
+            _aMPMClock();
+            setState(() {});
+          },
+        ),
+        Column(
+          children: [
+            Text(
+              'Time',
+              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.titleColor),
+            ),
+            Icon(
+              Icons.arrow_forward_rounded,
+              color: Get.isDarkMode
+                  ? ThemeColors.darkAccent
+                  : ThemeColors.titleColor,
+              size: 30,
+            ),
+            Text(
+              '$_fromTime12 to $_toTime12',
+              style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.titleColor),
+            )
+          ],
+        ),
+        NumberPicker(
+            textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+                color:
+                    Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
+            selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.titleColor),
+            minValue: _toTimeMin,
+            maxValue: 24,
+            value: _toTime,
+            onChanged: (i) {
+              _toTime = i;
+              _aMPMClock();
+              setState(() {});
+            }),
+      ],
+    );
   }
 }
