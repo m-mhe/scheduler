@@ -95,7 +95,7 @@ class MyApp extends StatelessWidget {
         foregroundColor: ThemeColors.accentColor,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          unselectedItemColor: Colors.black38,
+          unselectedItemColor: Colors.black45,
           elevation: 20,
           selectedItemColor: ThemeColors.titleColor),
     );
@@ -186,7 +186,7 @@ class MyApp extends StatelessWidget {
         foregroundColor: ThemeColors.darkSecond,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          unselectedItemColor: ThemeColors.titleColor,
+          unselectedItemColor: ThemeColors.accentColor,
           elevation: 20,
           selectedItemColor: ThemeColors.darkAccent),
     );

@@ -8,7 +8,9 @@ import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
 class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key});
+  const CreateTaskScreen({super.key, required this.taskTime});
+
+  final DateTime taskTime;
 
   @override
   State<CreateTaskScreen> createState() => _CreateTaskScreenState();
@@ -17,8 +19,9 @@ class CreateTaskScreen extends StatefulWidget {
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   void initState() {
-    _fromTime = _currentTime.hour;
-    _toTime = _currentTime.hour;
+    _taskTime = widget.taskTime;
+    _fromTime = _taskTime.hour;
+    _toTime = _taskTime.hour;
     _toTimeMin = _toTime;
     _aMPMClock();
     super.initState();
@@ -63,7 +66,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   //---------------------------------------Variables---------------------------------------
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _subTitleTEC = TextEditingController();
-  final DateTime _currentTime = DateTime.now();
+  late final DateTime _taskTime;
   late int _fromTime;
   late int _toTime;
   late String _fromTime12;
@@ -107,10 +110,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
           fromTime: _fromTime,
           toTime: _toTime,
-          month: _currentTime.month,
-          year: _currentTime.year,
+          month: _taskTime.month,
+          year: _taskTime.year,
           taskState: 'Due',
-          date: _currentTime.day);
+          date: _taskTime.day);
       ScaffoldMessenger.of(context).showSnackBar(
         _bottomPopUpMessage(
             text: 'Task is successfully created!', color: Colors.green),
@@ -182,7 +185,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               color: Get.isDarkMode
                   ? ThemeColors.darkAccent
                   : ThemeColors.titleColor),
-          minValue: _currentTime.hour,
+          minValue: _taskTime.hour,
           maxValue: 24,
           value: _fromTime,
           onChanged: (i) {

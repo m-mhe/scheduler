@@ -30,8 +30,8 @@ class CommonBottomNavBar extends StatelessWidget {
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.task_outlined),
-                label: 'Tasks',
+                icon: Icon(Icons.calendar_today_outlined),
+                label: 'Calendar',
               )
             ]),
       );

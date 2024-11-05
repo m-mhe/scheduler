@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/ask_task_complete_confirmation.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../utils/theme_colors.dart';
 import '../widgets/task_tile.dart';
+import 'create_task_screen.dart';
+import 'package:get/get.dart';
 
 class TaskScreen extends StatefulWidget {
   const TaskScreen({super.key});
@@ -13,20 +16,24 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  List<TaskDataModel> _allTasks = [];
+  final List<TaskDataModel> _allTasks = [];
+  DateTime _currentSelectedDateTime = DateTime.now();
 
   Future<void> _fetch() async {
     final DateTime currentTime = DateTime.now();
+    _allTasks.clear();
     List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
     for (TaskDataModel data in dataList) {
-      if (data.toTime < currentTime.hour ||
-          data.date < currentTime.day ||
-          data.month < currentTime.month ||
-          data.year < currentTime.year) {
-        data.taskState = 'Late';
+      if (data.date == _currentSelectedDateTime.day &&
+          data.month == _currentSelectedDateTime.month &&
+          data.year == _currentSelectedDateTime.year) {
+        if (currentTime.isAfter(
+            DateTime(data.year, data.month, data.date, (data.toTime + 1)))) {
+          data.taskState = 'Late';
+        }
+        _allTasks.add(data);
       }
     }
-    _allTasks = dataList;
     setState(() {});
   }
 
@@ -39,46 +46,103 @@ class _TaskScreenState extends State<TaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Visibility(
-        visible: _allTasks.isNotEmpty,
-        replacement: Center(
-          child: Text(
-            'Empty',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: ThemeColors.accentColor),
+      body: Column(
+        children: [
+          TableCalendar(
+            onDaySelected: (DateTime selectedDate, DateTime focusDate) {
+              _currentSelectedDateTime = selectedDate;
+              _fetch();
+            },
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkBlue
+                      : ThemeColors.accentColor,
+                  shape: BoxShape.circle),
+              todayTextStyle: TextStyle(
+                color: Get.isDarkMode
+                    ? ThemeColors.darkMain
+                    : ThemeColors.lightColor,
+              ),
+              disabledTextStyle: TextStyle(
+                color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.black26,
+              ),
+            ),
+            firstDay: DateTime.now(),
+            lastDay: DateTime(3024, 11, 5),
+            focusedDay: _currentSelectedDateTime,
+            currentDay: _currentSelectedDateTime,
           ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: ListView.separated(
-              itemBuilder: (context, i) {
-                return TaskTile(
-                  taskTitle: _allTasks[i].title,
-                  subTitle: _allTasks[i].subTitle,
-                  taskStatus: _allTasks[i].taskState,
-                  onTap: () async {
-                    await showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AskTaskCompleteConfirmation(
-                          title: _allTasks[i].title,
-                          subTitle:
-                              '[${_allTasks[i].date}/${_allTasks[i].month}/${_allTasks[i].year}] ${_allTasks[i].subTitle}',
-                        );
-                      },
-                    );
-                    await _fetch();
-                  },
-                );
-              },
-              separatorBuilder: (context, i) {
-                return const SizedBox(
-                  height: 10,
-                );
-              },
-              itemCount: _allTasks.length),
+          Expanded(
+            child: Visibility(
+              visible: _allTasks.isNotEmpty,
+              replacement: Center(
+                child: Text(
+                  textAlign: TextAlign.center,
+                  'No task for the day.\nClick + to create a task',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge!
+                      .copyWith(color: ThemeColors.accentColor),
+                ),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: ListView.separated(
+                    itemBuilder: (context, i) {
+                      return TaskTile(
+                        taskTitle: _allTasks[i].title,
+                        subTitle: _allTasks[i].subTitle,
+                        taskStatus: _allTasks[i].taskState,
+                        onTap: () async {
+                          await showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AskTaskCompleteConfirmation(
+                                title: _allTasks[i].title,
+                                subTitle:
+                                    '[${_allTasks[i].date}/${_allTasks[i].month}/${_allTasks[i].year}] ${_allTasks[i].subTitle}',
+                              );
+                            },
+                          );
+                          await _fetch();
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, i) {
+                      return const SizedBox(
+                        height: 10,
+                      );
+                    },
+                    itemCount: _allTasks.length),
+              ),
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor:
+            Get.isDarkMode ? ThemeColors.darkBlue : ThemeColors.accentColor,
+        foregroundColor:
+            Get.isDarkMode ? ThemeColors.darkSecond : ThemeColors.lightColor,
+        onPressed: () {
+          final DateTime currentTime = DateTime.now();
+          if (currentTime.day == _currentSelectedDateTime.day &&
+              currentTime.month == _currentSelectedDateTime.month &&
+              currentTime.year == _currentSelectedDateTime.year) {
+            Get.to(() => CreateTaskScreen(
+                  taskTime: currentTime,
+                ));
+          } else {
+            Get.to(() => CreateTaskScreen(
+                  taskTime: _currentSelectedDateTime,
+                ));
+          }
+        },
+        child: const Icon(
+          Icons.add,
+          size: 30,
         ),
       ),
     );

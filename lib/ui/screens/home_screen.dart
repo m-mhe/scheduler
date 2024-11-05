@@ -39,7 +39,9 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.to(() => const CreateTaskScreen());
+          Get.to(() => CreateTaskScreen(
+                taskTime: DateTime.now(),
+              ));
         },
         child: const Icon(
           Icons.add,
@@ -64,14 +66,10 @@ class _HomeScreenState extends State<HomeScreen> {
     _currentTasks.clear();
     List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
     for (TaskDataModel data in dataList) {
-      if (data.fromTime <= _currentTime.hour ||
-          data.date < _currentTime.day ||
-          data.month < _currentTime.month ||
-          data.year < _currentTime.year) {
-        if (data.toTime < _currentTime.hour ||
-            data.date < _currentTime.day ||
-            data.month < _currentTime.month ||
-            data.year < _currentTime.year) {
+      if (_currentTime.isAfter(
+          DateTime(data.year, data.month, data.date, (data.fromTime)))) {
+        if (_currentTime.isAfter(
+            DateTime(data.year, data.month, data.date, (data.toTime + 1)))) {
           data.taskState = 'Late';
         }
         _currentTasks.add(data);
@@ -347,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
           visible: _currentTasks.isNotEmpty,
           replacement: Center(
             child: Text(
-              'You have no current task.\nClick + to create a task.',
+              'You have no current task.\nClick + to create a task',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: Get.isDarkMode
