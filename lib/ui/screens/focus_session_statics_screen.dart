@@ -572,6 +572,9 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         ),
                         content: TextField(
                           controller: dailyGoalTEC,
+                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              color:
+                              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               hintText: 'Daily Goal:', suffixText: 'hour'),

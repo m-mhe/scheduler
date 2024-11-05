@@ -38,13 +38,10 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
       ),
       actions: [
         ElevatedButton(
-          onPressed: () async {
-            await LocalDatabase.saveInactiveTask(OldTaskDataModel(
-                title: title, subTitle: subTitle, taskState: 'Completed'));
-            await LocalDatabase.deleteFromActiveDB(title);
+          onPressed: () {
             Get.back();
           },
-          child: const Text('Yes'),
+          child: const Text('No'),
         ),
         ElevatedButton(
           onPressed: () async {
@@ -56,10 +53,13 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
           child: const Icon(Icons.delete_outline),
         ),
         ElevatedButton(
-          onPressed: () {
+          onPressed: () async {
+            await LocalDatabase.saveInactiveTask(OldTaskDataModel(
+                title: title, subTitle: subTitle, taskState: 'Completed'));
+            await LocalDatabase.deleteFromActiveDB(title);
             Get.back();
           },
-          child: const Text('No'),
+          child: const Text('Yes'),
         ),
       ],
     );
