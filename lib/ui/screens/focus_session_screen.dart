@@ -36,13 +36,15 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
       body: Column(
         children: [
           Expanded(
-            child: Column(
-              children: [
-                _focusSessionDetails(context),
-                _timeView(context),
-                _taskLevel(),
-                _focusSessionController(context)
-              ],
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  _focusSessionDetails(context),
+                  _timeView(context),
+                  _taskLevel(),
+                  _focusSessionController(context)
+                ],
+              ),
             ),
           ),
           _totalTime(context)

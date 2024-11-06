@@ -58,12 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int _chartTouchedIndex = -1;
   late DateTime _currentTime;
   final List<TaskDataModel> _currentTasks = [];
-  List<TaskDataModel> _allTasks = [];
+  final List<TaskDataModel> _allTasks = [];
 
   //-------------------------------Functions-------------------------------
   Future<void> _fetch() async {
     _currentTime = DateTime.now();
     _currentTasks.clear();
+    _allTasks.clear();
     List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
     for (TaskDataModel data in dataList) {
       if (_currentTime.isAfter(
@@ -74,8 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         _currentTasks.add(data);
       }
+      if(data.date == _currentTime.day &&
+          data.month == _currentTime.month &&
+          data.year == _currentTime.year){
+        _allTasks.add(data);
+      }
     }
-    _allTasks = dataList;
     await _calculateTask();
     setState(() {});
   }
@@ -87,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final int minuteToWait = (60 - remainingTimeFrom.minute);
       final int secondToMinus = (remainingTimeFrom.second);
       final int totalSecondToWait = ((minuteToWait * 60) - secondToMinus);
-      await Future.delayed(Duration(seconds: totalSecondToWait));
+      await Future.delayed(Duration(seconds: (totalSecondToWait+1)));
       if (DateTime.now().hour != _currentTime.hour) {
         await _fetch();
       }
@@ -288,7 +293,7 @@ class _HomeScreenState extends State<HomeScreen> {
             visible: _allTasks.isNotEmpty,
             replacement: Center(
               child: Text(
-                'You have no task.',
+                'No task for the day.',
                 style: Theme.of(context).textTheme.labelLarge!.copyWith(
                     color: Get.isDarkMode
                         ? ThemeColors.darkAccent

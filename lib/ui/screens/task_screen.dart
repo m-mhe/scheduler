@@ -65,7 +65,7 @@ class _TaskScreenState extends State<TaskScreen> {
                     : ThemeColors.lightColor,
               ),
               disabledTextStyle: TextStyle(
-                color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.black26,
+                color: Get.isDarkMode ? Colors.white30 : Colors.black26,
               ),
             ),
             firstDay: DateTime.now(),
@@ -83,7 +83,9 @@ class _TaskScreenState extends State<TaskScreen> {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge!
-                      .copyWith(color: ThemeColors.accentColor),
+                      .copyWith(color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.accentColor),
                 ),
               ),
               child: Padding(

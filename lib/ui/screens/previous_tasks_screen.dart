@@ -3,6 +3,7 @@ import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/task_tile.dart';
 import '../utils/theme_colors.dart';
+import 'package:get/get.dart';
 
 class PreviousTasks extends StatefulWidget {
   const PreviousTasks({super.key});
@@ -36,7 +37,9 @@ class _PreviousTasksState extends State<PreviousTasks> {
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
-                .copyWith(color: ThemeColors.accentColor),
+                .copyWith(color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.accentColor),
           ),
         ),
         child: Padding(
