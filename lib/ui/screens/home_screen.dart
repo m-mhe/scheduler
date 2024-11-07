@@ -75,9 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         _currentTasks.add(data);
       }
-      if(data.date == _currentTime.day &&
+      if (data.date == _currentTime.day &&
           data.month == _currentTime.month &&
-          data.year == _currentTime.year){
+          data.year == _currentTime.year) {
         _allTasks.add(data);
       }
     }
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final int minuteToWait = (60 - remainingTimeFrom.minute);
       final int secondToMinus = (remainingTimeFrom.second);
       final int totalSecondToWait = ((minuteToWait * 60) - secondToMinus);
-      await Future.delayed(Duration(seconds: (totalSecondToWait+1)));
+      await Future.delayed(Duration(seconds: (totalSecondToWait + 1)));
       if (DateTime.now().hour != _currentTime.hour) {
         await _fetch();
       }
@@ -315,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   separatorBuilder: (context, i) {
                     return const SizedBox(
-                      height: 5,
+                      height: 0,
                     );
                   },
                   itemCount: _allTasks.length),
@@ -367,13 +367,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       taskTitle: _currentTasks[i].title,
                       taskSubTitle: _currentTasks[i].subTitle,
                       taskState: _currentTasks[i].taskState,
-                      day: _allTasks[i].date.toString(),
-                      month: _allTasks[i].month.toString(),
-                      year: _allTasks[i].year.toString());
+                      day: _currentTasks[i].date.toString(),
+                      month: _currentTasks[i].month.toString(),
+                      year: _currentTasks[i].year.toString());
                 },
                 separatorBuilder: (context, i) {
                   return const SizedBox(
-                    height: 5,
+                    height: 0,
                   );
                 },
                 itemCount: _currentTasks.length),
@@ -660,6 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return AskTaskCompleteConfirmation(
                 title: taskTitle,
                 subTitle: '[$day/$month/$year] $taskSubTitle',
+                year: int.parse(year),
               );
             },
           );

@@ -80,12 +80,10 @@ class _TaskScreenState extends State<TaskScreen> {
                 child: Text(
                   textAlign: TextAlign.center,
                   'No task for the day.\nClick + to create a task',
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor),
                 ),
               ),
               child: Padding(
@@ -105,6 +103,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                 title: _allTasks[i].title,
                                 subTitle:
                                     '[${_allTasks[i].date}/${_allTasks[i].month}/${_allTasks[i].year}] ${_allTasks[i].subTitle}',
+                                year: _allTasks[i].year,
                               );
                             },
                           );

@@ -9,8 +9,7 @@ class LocalDatabase {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
-    await connectToDataBase.insert('active_task', dataEntity.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await connectToDataBase.insert('active_task', dataEntity.toMap());
     await connectToDataBase.close();
   }
 
@@ -46,14 +45,14 @@ class LocalDatabase {
     return taskList;
   }
 
-  static Future<void> deleteFromActiveDB(String title) async {
+  static Future<void> deleteFromActiveDB(String title, int year) async {
     final connectToDatabase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
     await connectToDatabase.delete(
       'active_task',
-      where: 'title = ?',
-      whereArgs: [title],
+      where: 'title = ? AND year = ?',
+      whereArgs: [title, year],
     );
     await connectToDatabase.close();
   }

@@ -46,7 +46,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               ),
               _descriptionTextField(context),
               const SizedBox(
-                height: 10,
+                height: 15,
+              ),
+              _yearRepeatButton(),
+              const SizedBox(
+                height: 11,
               ),
               _createTaskButton()
             ],
@@ -72,6 +76,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   late String _fromTime12;
   late String _toTime12;
   late int _toTimeMin;
+  bool _isYearlyRepeatOn = false;
 
   //---------------------------------------Functions---------------------------------------
   void _aMPMClock() {
@@ -105,21 +110,41 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
-      TaskDataModel dataEntity = TaskDataModel(
-          title: _titleTEC.text,
-          subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-          fromTime: _fromTime,
-          toTime: _toTime,
-          month: _taskTime.month,
-          year: _taskTime.year,
-          taskState: 'Due',
-          date: _taskTime.day);
-      ScaffoldMessenger.of(context).showSnackBar(
-        _bottomPopUpMessage(
-            text: 'Task is successfully created!', color: Colors.green),
-      );
-      await LocalDatabase.saveActiveTask(dataEntity);
-      Get.offAll(() => CommonBottomNavBar());
+      if (_isYearlyRepeatOn) {
+        for (int i = 0; i < 20; i++) {
+          TaskDataModel dataEntity = TaskDataModel(
+              title: _titleTEC.text,
+              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+              fromTime: _fromTime,
+              toTime: _toTime,
+              month: _taskTime.month,
+              year: (_taskTime.year + i),
+              taskState: 'Due',
+              date: _taskTime.day);
+          await LocalDatabase.saveActiveTask(dataEntity);
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          _bottomPopUpMessage(
+              text: 'Task is successfully created!', color: Colors.green),
+        );
+        Get.offAll(() => CommonBottomNavBar());
+      } else {
+        TaskDataModel dataEntity = TaskDataModel(
+            title: _titleTEC.text,
+            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+            fromTime: _fromTime,
+            toTime: _toTime,
+            month: _taskTime.month,
+            year: _taskTime.year,
+            taskState: 'Due',
+            date: _taskTime.day);
+        ScaffoldMessenger.of(context).showSnackBar(
+          _bottomPopUpMessage(
+              text: 'Task is successfully created!', color: Colors.green),
+        );
+        await LocalDatabase.saveActiveTask(dataEntity);
+        Get.offAll(() => CommonBottomNavBar());
+      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         _bottomPopUpMessage(
@@ -238,6 +263,53 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               setState(() {});
             }),
       ],
+    );
+  }
+
+  InkWell _yearRepeatButton() {
+    return InkWell(
+      onTap: () {
+        if (_isYearlyRepeatOn) {
+          _isYearlyRepeatOn = false;
+        } else {
+          _isYearlyRepeatOn = true;
+        }
+        setState(() {});
+      },
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 15,
+            width: 15,
+            decoration: BoxDecoration(
+                color: Get.isDarkMode
+                    ? _isYearlyRepeatOn
+                        ? ThemeColors.darkAccent
+                        : Colors.transparent
+                    : _isYearlyRepeatOn
+                        ? ThemeColors.accentColor
+                        : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                    color: Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.accentColor,
+                    width: 2)),
+          ),
+          const SizedBox(
+            width: 7.5,
+          ),
+          Text(
+            'Repeat in every year',
+            style: TextStyle(
+                fontWeight: FontWeight.w600,
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.accentColor),
+          )
+        ],
+      ),
     );
   }
 }

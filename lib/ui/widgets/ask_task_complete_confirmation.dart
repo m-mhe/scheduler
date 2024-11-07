@@ -6,10 +6,14 @@ import '../utils/theme_colors.dart';
 
 class AskTaskCompleteConfirmation extends StatelessWidget {
   const AskTaskCompleteConfirmation(
-      {super.key, required this.title, required this.subTitle});
+      {super.key,
+      required this.title,
+      required this.subTitle,
+      required this.year});
 
   final String title;
   final String subTitle;
+  final int year;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +51,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
           onPressed: () async {
             await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Canceled'));
-            await LocalDatabase.deleteFromActiveDB(title);
+            await LocalDatabase.deleteFromActiveDB(title, year);
             Get.back();
           },
           child: const Icon(Icons.delete_outline),
@@ -56,7 +60,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
           onPressed: () async {
             await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Completed'));
-            await LocalDatabase.deleteFromActiveDB(title);
+            await LocalDatabase.deleteFromActiveDB(title, year);
             Get.back();
           },
           child: const Text('Yes'),
