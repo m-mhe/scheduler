@@ -111,7 +111,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       if (_isYearlyRepeatOn) {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 60; i++) {
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,
               subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',

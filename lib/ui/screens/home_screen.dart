@@ -660,7 +660,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return AskTaskCompleteConfirmation(
                 title: taskTitle,
                 subTitle: '[$day/$month/$year] $taskSubTitle',
-                year: int.parse(year),
+                year: int.parse(year), month: int.parse(month), day: int.parse(day),
               );
             },
           );

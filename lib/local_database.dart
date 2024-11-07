@@ -45,14 +45,15 @@ class LocalDatabase {
     return taskList;
   }
 
-  static Future<void> deleteFromActiveDB(String title, int year) async {
+  static Future<void> deleteFromActiveDB(
+      {required String title, required int year, required int month, required int day}) async {
     final connectToDatabase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
     await connectToDatabase.delete(
       'active_task',
-      where: 'title = ? AND year = ?',
-      whereArgs: [title, year],
+      where: 'title = ? AND year = ? AND month = ? AND date = ?',
+      whereArgs: [title, year, month, day],
     );
     await connectToDatabase.close();
   }
