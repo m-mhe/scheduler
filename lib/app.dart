@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/controller_bindings.dart';
 import 'package:get/get.dart';
-import 'package:scheduler/ui/screens/splash_screen.dart';
 import 'package:scheduler/ui/utils/theme_colors.dart';
+import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: _lightTheme(context),
       darkTheme: _darkTheme(context),
       themeMode: ThemeMode.system,
-      home: const SplashScreen(),
+      home: CommonBottomNavBar(),
       initialBinding: ControllerBindings(),
     );
   }
@@ -157,9 +157,7 @@ class MyApp extends StatelessWidget {
         ),
       ),
       dropdownMenuTheme: DropdownMenuThemeData(
-        textStyle: const TextStyle(
-            fontSize: 14,
-            color: ThemeColors.darkAccent),
+        textStyle: const TextStyle(fontSize: 14, color: ThemeColors.darkAccent),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: const OutlineInputBorder(
               borderSide: BorderSide(
