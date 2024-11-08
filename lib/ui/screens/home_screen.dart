@@ -24,7 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _refreshScreen();
     _audioPlayer.play(
       AssetSource('audio/clock.mp3'),
-      volume: 0.1,
+      volume: 0,
     );
     _audioPlayer.setReleaseMode(ReleaseMode.loop);
     super.initState();
