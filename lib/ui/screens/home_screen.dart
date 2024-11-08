@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _fetch();
     _refreshScreen();
+    _audioPlayer.play(
+      AssetSource('audio/clock.mp3'),
+      volume: 0.1,
+    );
+    _audioPlayer.setReleaseMode(ReleaseMode.loop);
     super.initState();
   }
 
@@ -51,6 +57,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  @override
+  dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
+  }
+
   //-------------------------------Variables-------------------------------
   List<OldTaskDataModel> _oldTaskList = [];
   double _totalCanceled = 0;
@@ -59,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
   late DateTime _currentTime;
   final List<TaskDataModel> _currentTasks = [];
   final List<TaskDataModel> _allTasks = [];
+  final AudioPlayer _audioPlayer = AudioPlayer();
 
   //-------------------------------Functions-------------------------------
   Future<void> _fetch() async {
@@ -350,7 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
           visible: _currentTasks.isNotEmpty,
           replacement: Center(
             child: Text(
-              'You have no current task.\nClick + to create a task',
+              'Your current tasks will be shown here.\nClick + to create a task',
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: Get.isDarkMode
@@ -660,7 +673,9 @@ class _HomeScreenState extends State<HomeScreen> {
               return AskTaskCompleteConfirmation(
                 title: taskTitle,
                 subTitle: '[$day/$month/$year] $taskSubTitle',
-                year: int.parse(year), month: int.parse(month), day: int.parse(day),
+                year: int.parse(year),
+                month: int.parse(month),
+                day: int.parse(day),
               );
             },
           );
