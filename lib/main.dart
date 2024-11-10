@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/app.dart';
+import 'package:scheduler/local_cache.dart';
+import 'package:scheduler/ui/utils/theme_controller.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -14,5 +16,6 @@ Future<void> main() async {
     await db.execute(
         'CREATE TABLE IF NOT EXISTS focus_sessions(minutes INTEGER, dateTime TEXT, taskType TEXT)');
   }, version: 1);
+  ThemeController.changeTheme(isDark: await LocalCache.fetchTheme());
   runApp(const MyApp());
 }

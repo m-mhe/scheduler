@@ -9,4 +9,13 @@ class LocalCache{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     return sharedPreferences.getInt('dailyFocusGoal');
   }
+
+  static Future<void> saveTheme({required final bool isDark}) async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setBool('theme', isDark);
+  }
+  static Future<bool?> fetchTheme() async{
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    return sharedPreferences.getBool('theme');
+  }
 }

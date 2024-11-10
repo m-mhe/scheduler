@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:scheduler/controller_bindings.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/ui/utils/theme_colors.dart';
+import 'package:scheduler/ui/utils/theme_controller.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 
 class MyApp extends StatelessWidget {
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Scheduler',
       theme: _lightTheme(context),
       darkTheme: _darkTheme(context),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeController.currentTheme,
       home: CommonBottomNavBar(),
       initialBinding: ControllerBindings(),
     );
