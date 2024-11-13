@@ -20,6 +20,7 @@ class LocalDatabase {
     );
     List<Map> data = await connectToDataBase.query('active_task');
     for (final {
+          'ID': iD as int,
           'title': title as String,
           'subtitle': subtitle as String,
           'taskState': taskState as String,
@@ -31,6 +32,7 @@ class LocalDatabase {
         } in data) {
       taskList.add(
         TaskDataModel(
+            iD: iD,
             title: title,
             subTitle: subtitle,
             taskState: taskState,
@@ -45,15 +47,14 @@ class LocalDatabase {
     return taskList;
   }
 
-  static Future<void> deleteFromActiveDB(
-      {required String title, required int year, required int month, required int day}) async {
+  static Future<void> deleteFromActiveDB({required int iD}) async {
     final connectToDatabase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
     await connectToDatabase.delete(
       'active_task',
-      where: 'title = ? AND year = ? AND month = ? AND date = ?',
-      whereArgs: [title, year, month, day],
+      where: 'ID = ?',
+      whereArgs: [iD],
     );
     await connectToDatabase.close();
   }

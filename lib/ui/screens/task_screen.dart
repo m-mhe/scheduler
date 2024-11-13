@@ -103,7 +103,7 @@ class _TaskScreenState extends State<TaskScreen> {
                                 title: _allTasks[i].title,
                                 subTitle:
                                     '[${_allTasks[i].date}/${_allTasks[i].month}/${_allTasks[i].year}] ${_allTasks[i].subTitle}',
-                                year: _allTasks[i].year, month: _allTasks[i].month, day: _allTasks[i].date,
+                                iD: _allTasks[i].iD ?? 0,
                               );
                             },
                           );

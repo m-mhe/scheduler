@@ -10,7 +10,7 @@ Future<void> main() async {
   await openDatabase(join(await getDatabasesPath(), 'scheduler.db'),
       onCreate: (Database db, int v) async {
     await db.execute(
-        'CREATE TABLE IF NOT EXISTS active_task(title TEXT, subtitle TEXT, taskState TEXT, fromTime INTEGER, toTime INTEGER, date INTEGER, month INTEGER, year INTEGER)');
+        'CREATE TABLE IF NOT EXISTS active_task(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, subtitle TEXT, taskState TEXT, fromTime INTEGER, toTime INTEGER, date INTEGER, month INTEGER, year INTEGER)');
     await db.execute(
         'CREATE TABLE IF NOT EXISTS inActive_task(title TEXT, subtitle TEXT, taskState TEXT)');
     await db.execute(

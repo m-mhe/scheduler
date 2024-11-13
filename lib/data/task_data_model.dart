@@ -1,6 +1,7 @@
 class TaskDataModel {
   TaskDataModel(
-      {required this.title,
+      {this.iD,
+      required this.title,
       required this.subTitle,
       required this.taskState,
       required this.fromTime,
@@ -9,6 +10,7 @@ class TaskDataModel {
       required this.month,
       required this.year});
 
+  final int? iD;
   final String title;
   final String subTitle;
   String taskState;
@@ -25,7 +27,7 @@ class TaskDataModel {
       'taskState': taskState,
       'fromTime': fromTime,
       'toTime': toTime,
-      'date' : date,
+      'date': date,
       'month': month,
       'year': year,
     };

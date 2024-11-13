@@ -324,7 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         taskState: _allTasks[i].taskState,
                         day: _allTasks[i].date.toString(),
                         month: _allTasks[i].month.toString(),
-                        year: _allTasks[i].year.toString());
+                        year: _allTasks[i].year.toString(),
+                        iD: _allTasks[i].iD ?? 0);
                   },
                   separatorBuilder: (context, i) {
                     return const SizedBox(
@@ -382,7 +383,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       taskState: _currentTasks[i].taskState,
                       day: _currentTasks[i].date.toString(),
                       month: _currentTasks[i].month.toString(),
-                      year: _currentTasks[i].year.toString());
+                      year: _currentTasks[i].year.toString(),
+                      iD: _currentTasks[i].iD ?? 0);
                 },
                 separatorBuilder: (context, i) {
                   return const SizedBox(
@@ -636,7 +638,8 @@ class _HomeScreenState extends State<HomeScreen> {
       required String day,
       required String month,
       required String year,
-      required taskState}) {
+      required taskState,
+      required int iD}) {
     return ListTile(
       title: Text(
         taskTitle.toUpperCase(),
@@ -673,9 +676,7 @@ class _HomeScreenState extends State<HomeScreen> {
               return AskTaskCompleteConfirmation(
                 title: taskTitle,
                 subTitle: '[$day/$month/$year] $taskSubTitle',
-                year: int.parse(year),
-                month: int.parse(month),
-                day: int.parse(day),
+                iD: iD,
               );
             },
           );

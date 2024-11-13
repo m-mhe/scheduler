@@ -9,13 +9,11 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
       {super.key,
       required this.title,
       required this.subTitle,
-      required this.year, required this.month, required this.day});
+      required this.iD});
 
   final String title;
   final String subTitle;
-  final int year;
-  final int month;
-  final int day;
+  final int iD;
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +51,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
           onPressed: () async {
             await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Canceled'));
-            await LocalDatabase.deleteFromActiveDB(title: title, year: year, month: month, day: day);
+            await LocalDatabase.deleteFromActiveDB(iD: iD);
             Get.back();
           },
           child: const Icon(Icons.delete_outline),
@@ -62,7 +60,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
           onPressed: () async {
             await LocalDatabase.saveInactiveTask(OldTaskDataModel(
                 title: title, subTitle: subTitle, taskState: 'Completed'));
-            await LocalDatabase.deleteFromActiveDB(title: title, year: year, month: month, day: day);
+            await LocalDatabase.deleteFromActiveDB(iD: iD);
             Get.back();
           },
           child: const Text('Yes'),
