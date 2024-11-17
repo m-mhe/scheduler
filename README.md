@@ -27,15 +27,15 @@ Welcome to **Scheduler**, a versatile and intuitive time management app designed
 
 ## App Interface  
 
-![Home Screen](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/1.png)  
-![Task View](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/2.png)  
-![Task Status](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/3.png)  
-![Interactive Notes](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/4.png)  
-![Pomodoro Timer](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/5.png)  
-![Focus Statistics](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/6.png)  
-![Pie Chart Visualization](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/7.png)  
-![Calendar Navigation](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/8.png)  
-![Customization Options](https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/9.png)  
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/1.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/2.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/3.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/4.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/5.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/6.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/7.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/8.png" width="500" />
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/9.png" width="500" />
 
 ---
 
