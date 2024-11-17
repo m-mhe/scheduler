@@ -207,7 +207,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                         ),
                   ),
                   content: Text(
-                    'Great job! You have completed a ${widget.endTime + 1} minutes focus, do you wanna take a short break to recharge?',
+                    'Great job! You have completed a ${widget.endTime + 1} minutes focus session, do you wanna take a short break to recharge?',
                     style: Theme.of(context).textTheme.titleSmall!.copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent

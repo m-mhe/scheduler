@@ -24,7 +24,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
       backgroundColor:
           Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.lightColor,
       title: Text(
-        'Have you completed this task?',
+        'Have you completed the task?',
         textAlign: TextAlign.center,
         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: Get.isDarkMode
