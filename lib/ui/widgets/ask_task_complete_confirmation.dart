@@ -33,7 +33,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
             ),
       ),
       content: Text(
-        "If this task is completed then click 'Yes', Otherwise click 'No'. You can cancel this task by Deleting it.",
+        "If this task is completed, click 'Yes.' Otherwise, click 'No' or cancel the task.",
         style: Theme.of(context).textTheme.titleSmall!.copyWith(
               color: Get.isDarkMode
                   ? ThemeColors.darkAccent
@@ -54,7 +54,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
             await LocalDatabase.deleteFromActiveDB(iD: iD);
             Get.back();
           },
-          child: const Icon(Icons.delete_outline),
+          child: const Text("Cancel"),
         ),
         ElevatedButton(
           onPressed: () async {

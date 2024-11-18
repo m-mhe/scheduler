@@ -60,7 +60,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   List<FocusSessionDataModel> _sessions = [];
   DateTime _currentDateTime = DateTime.now();
   double _todayTotalHour = 0.0;
-  int _dailyGoal = 3;
+  double _dailyGoal = 3;
   int _workTask = 0;
   int _codingTask = 0;
   int _studyTask = 0;
@@ -535,7 +535,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       fontSize: 28,
                     ),
                     bottomLabelText:
-                        '${(_dailyGoal - _todayTotalHour).toStringAsFixed(1)} hours left',
+                        _todayTotalHour==_dailyGoal?'Completed':'${(_dailyGoal - _todayTotalHour).toStringAsFixed(1)} hours left',
                     bottomLabelStyle:
                         Theme.of(context).textTheme.labelMedium!.copyWith(
                               color: Get.isDarkMode
@@ -587,8 +587,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                               child: const Text('Cancel')),
                           ElevatedButton(
                               onPressed: () async {
-                                int? data =
-                                int.tryParse(dailyGoalTEC.text.trim());
+                                double? data =
+                                double.tryParse(dailyGoalTEC.text.trim());
                                 if (data != null && data > 0) {
                                   await LocalCache.saveDailyHourGoal(data);
                                   await _fetch();

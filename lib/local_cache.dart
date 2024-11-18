@@ -1,13 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalCache{
-  static Future<void> saveDailyHourGoal(final int hour) async{
+  static Future<void> saveDailyHourGoal(final double hour) async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    await sharedPreferences.setInt('dailyFocusGoal', hour);
+    await sharedPreferences.setDouble('dailyFocusGoal', hour);
   }
-  static Future<int?> getDailyHourGoal() async{
+  static Future<double?> getDailyHourGoal() async{
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.getInt('dailyFocusGoal');
+    return sharedPreferences.getDouble('dailyFocusGoal');
   }
 
   static Future<void> saveTheme({required final bool isDark}) async{
