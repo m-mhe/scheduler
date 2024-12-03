@@ -13,6 +13,15 @@ class LocalDatabase {
     await connectToDataBase.close();
   }
 
+  static Future<void> editActiveTask(TaskDataModel dataEntity) async {
+    final connectToDataBase = await openDatabase(
+      join(await getDatabasesPath(), 'scheduler.db'),
+    );
+    await connectToDataBase.update('active_task', dataEntity.toMap(),
+        where: 'ID = ?', whereArgs: [dataEntity.iD]);
+    await connectToDataBase.close();
+  }
+
   static Future<List<TaskDataModel>> fetchFromActiveDB() async {
     List<TaskDataModel> taskList = [];
     final connectToDataBase = await openDatabase(

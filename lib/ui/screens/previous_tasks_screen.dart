@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/local_database.dart';
-import 'package:scheduler/ui/widgets/task_tile.dart';
+import 'package:scheduler/ui/widgets/old_task_tile.dart';
 import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
@@ -34,19 +34,17 @@ class _PreviousTasksState extends State<PreviousTasks> {
         replacement: Center(
           child: Text(
             'Empty',
-            style: Theme.of(context)
-                .textTheme
-                .bodyLarge!
-                .copyWith(color: Get.isDarkMode
-                ? ThemeColors.darkAccent
-                : ThemeColors.accentColor),
+            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.accentColor),
           ),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: ListView.separated(
               itemBuilder: (context, i) {
-                return TaskTile(
+                return OldTaskTile(
                   taskTitle: _allTasks[i].title,
                   subTitle: _allTasks[i].subTitle,
                   taskStatus: _allTasks[i].taskState,

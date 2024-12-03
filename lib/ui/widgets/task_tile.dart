@@ -8,13 +8,15 @@ class TaskTile extends StatelessWidget {
     required this.taskTitle,
     required this.subTitle,
     required this.taskStatus,
-    required this.onTap,
+    required this.onTapForComplete,
+    required this.onTapForEdit,
   });
 
   final String taskTitle;
   final String subTitle;
   final String taskStatus;
-  final VoidCallback onTap;
+  final VoidCallback onTapForComplete;
+  final VoidCallback onTapForEdit;
 
   @override
   Widget build(BuildContext context) {
@@ -24,28 +26,34 @@ class TaskTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: ListTile(
-        title: Text(
-          taskTitle.toUpperCase(),
-          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: taskStatus == 'Completed' || taskStatus == 'Due'
-                    ? Get.isDarkMode
-                        ? ThemeColors.darkAccent
-                        : ThemeColors.titleColor
-                    : Colors.red,
-              ),
+        title: InkWell(
+          onTap: onTapForEdit,
+          child: Text(
+            taskTitle.toUpperCase(),
+            style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                  color: taskStatus == 'Completed' || taskStatus == 'Due'
+                      ? Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.titleColor
+                      : Colors.red,
+                ),
+          ),
         ),
-        subtitle: Text(
-          subTitle,
-          style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                color: taskStatus == 'Completed' || taskStatus == 'Due'
-                    ? Get.isDarkMode
-                        ? ThemeColors.darkAccent
-                        : ThemeColors.accentColor
-                    : Colors.red,
-              ),
+        subtitle: InkWell(
+          onTap: onTapForEdit,
+          child: Text(
+            subTitle,
+            style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                  color: taskStatus == 'Completed' || taskStatus == 'Due'
+                      ? Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor
+                      : Colors.red,
+                ),
+          ),
         ),
         trailing: ElevatedButton(
-          onPressed: onTap,
+          onPressed: onTapForComplete,
           style: ElevatedButton.styleFrom(
               backgroundColor: taskStatus == 'Completed' || taskStatus == 'Due'
                   ? Get.isDarkMode

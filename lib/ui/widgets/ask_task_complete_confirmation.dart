@@ -18,6 +18,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      actionsAlignment: MainAxisAlignment.spaceBetween,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),

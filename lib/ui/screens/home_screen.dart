@@ -7,6 +7,7 @@ import 'package:scheduler/data/old_task_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/screens/create_task_screen.dart';
 import 'package:scheduler/ui/screens/focus_session_screen.dart';
+import 'package:scheduler/ui/widgets/ask_for_edit_confirmation.dart';
 import '../utils/theme_colors.dart';
 import '../widgets/ask_task_complete_confirmation.dart';
 
@@ -317,15 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(vertical: 0),
               child: ListView.separated(
                   itemBuilder: (context, i) {
-                    return _taskList(
-                        buildContext: context,
-                        taskTitle: _allTasks[i].title,
-                        taskSubTitle: _allTasks[i].subTitle,
-                        taskState: _allTasks[i].taskState,
-                        day: _allTasks[i].date.toString(),
-                        month: _allTasks[i].month.toString(),
-                        year: _allTasks[i].year.toString(),
-                        iD: _allTasks[i].iD ?? 0);
+                    return _taskList(taskDataModel: _allTasks[i]);
                   },
                   separatorBuilder: (context, i) {
                     return const SizedBox(
@@ -372,27 +365,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       : ThemeColors.accentColor),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
-            child: ListView.separated(
-                itemBuilder: (context, i) {
-                  return _taskList(
-                      buildContext: context,
-                      taskTitle: _currentTasks[i].title,
-                      taskSubTitle: _currentTasks[i].subTitle,
-                      taskState: _currentTasks[i].taskState,
-                      day: _currentTasks[i].date.toString(),
-                      month: _currentTasks[i].month.toString(),
-                      year: _currentTasks[i].year.toString(),
-                      iD: _currentTasks[i].iD ?? 0);
-                },
-                separatorBuilder: (context, i) {
-                  return const SizedBox(
-                    height: 0,
-                  );
-                },
-                itemCount: _currentTasks.length),
-          ),
+          child: ListView.separated(
+              itemBuilder: (context, i) {
+                return _taskList(taskDataModel: _currentTasks[i]);
+              },
+              separatorBuilder: (context, i) {
+                return const SizedBox(
+                  height: 0,
+                );
+              },
+              itemCount: _currentTasks.length),
         ),
       ),
     );
@@ -631,39 +613,49 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  ListTile _taskList(
-      {required BuildContext buildContext,
-      required String taskTitle,
-      required String taskSubTitle,
-      required String day,
-      required String month,
-      required String year,
-      required taskState,
-      required int iD}) {
+  ListTile _taskList({required TaskDataModel taskDataModel}) {
     return ListTile(
-      title: Text(
-        taskTitle.toUpperCase(),
-        style: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: taskState == 'Due'
-                  ? Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor
-                  : Colors.red,
-            ),
+      title: InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AskForEditConfirmation(taskDataModel: taskDataModel);
+              });
+        },
+        child: Text(
+          taskDataModel.title.toUpperCase(),
+          style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                color: taskDataModel.taskState == 'Due'
+                    ? Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.titleColor
+                    : Colors.red,
+              ),
+        ),
       ),
-      subtitle: Text(
-        taskSubTitle,
-        style: Theme.of(context).textTheme.labelMedium!.copyWith(
-              color: taskState == 'Due'
-                  ? Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor
-                  : Colors.red,
-            ),
+      subtitle: InkWell(
+        onTap: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AskForEditConfirmation(taskDataModel: taskDataModel);
+              });
+        },
+        child: Text(
+          taskDataModel.subTitle,
+          style: Theme.of(context).textTheme.labelMedium!.copyWith(
+                color: taskDataModel.taskState == 'Due'
+                    ? Get.isDarkMode
+                        ? ThemeColors.darkAccent
+                        : ThemeColors.accentColor
+                    : Colors.red,
+              ),
+        ),
       ),
       trailing: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: taskState == 'Due'
+          backgroundColor: taskDataModel.taskState == 'Due'
               ? Get.isDarkMode
                   ? ThemeColors.darkAccent
                   : ThemeColors.accentColor
@@ -674,15 +666,16 @@ class _HomeScreenState extends State<HomeScreen> {
             context: context,
             builder: (context) {
               return AskTaskCompleteConfirmation(
-                title: taskTitle,
-                subTitle: '[$day/$month/$year] $taskSubTitle',
-                iD: iD,
+                title: taskDataModel.title,
+                subTitle:
+                    '[${taskDataModel.date}/${taskDataModel.month}/${taskDataModel.year}] ${taskDataModel.subTitle}',
+                iD: taskDataModel.iD!,
               );
             },
           );
           await _fetch();
         },
-        child: Text(taskState),
+        child: Text(taskDataModel.taskState),
       ),
     );
   }

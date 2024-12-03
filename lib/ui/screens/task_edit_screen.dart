@@ -7,23 +7,27 @@ import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
-class CreateTaskScreen extends StatefulWidget {
-  const CreateTaskScreen({super.key, required this.taskTime});
+class TaskEditScreen extends StatefulWidget {
+  const TaskEditScreen({
+    super.key,
+    required this.taskDataModel,
+  });
 
-  final DateTime taskTime;
+  final TaskDataModel taskDataModel;
 
   @override
-  State<CreateTaskScreen> createState() => _CreateTaskScreenState();
+  State<TaskEditScreen> createState() => _TaskEditScreenState();
 }
 
-class _CreateTaskScreenState extends State<CreateTaskScreen> {
+class _TaskEditScreenState extends State<TaskEditScreen> {
   @override
   void initState() {
-    _taskTime = widget.taskTime;
-    _fromTime = _taskTime.hour;
-    _toTime = _taskTime.hour;
-    _toTimeMin = _toTime;
+    _fromTime = widget.taskDataModel.fromTime;
+    _toTime = widget.taskDataModel.toTime;
+    _toTimeMin = 0;
     _aMPMClock();
+    _titleTEC.text = widget.taskDataModel.title;
+    _subTitleTEC.text = widget.taskDataModel.subTitle.split('M] ')[1];
     super.initState();
   }
 
@@ -43,10 +47,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               _titleTextField(context),
               _descriptionTextField(context),
               const SizedBox(
-                height: 3,
+                height: 10,
               ),
-              _yearRepeatButton(),
-              _createTaskButton()
+              _updateTaskButton()
             ],
           ),
         ),
@@ -64,13 +67,11 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   //---------------------------------------Variables---------------------------------------
   final TextEditingController _titleTEC = TextEditingController();
   final TextEditingController _subTitleTEC = TextEditingController();
-  late final DateTime _taskTime;
   late int _fromTime;
   late int _toTime;
   late String _fromTime12;
   late String _toTime12;
   late int _toTimeMin;
-  bool _isYearlyRepeatOn = false;
 
   //---------------------------------------Functions---------------------------------------
   void _aMPMClock() {
@@ -104,45 +105,26 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
-      if (_isYearlyRepeatOn) {
-        for (int i = 0; i < 60; i++) {
-          TaskDataModel dataEntity = TaskDataModel(
-              title: _titleTEC.text,
-              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-              fromTime: _fromTime,
-              toTime: _toTime,
-              month: _taskTime.month,
-              year: (_taskTime.year + i),
-              taskState: 'Due',
-              date: _taskTime.day);
-          await LocalDatabase.saveActiveTask(dataEntity);
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-          _bottomPopUpMessage(
-              text: 'Task is successfully created!', color: Colors.green),
-        );
-        Get.offAll(() => CommonBottomNavBar());
-      } else {
-        TaskDataModel dataEntity = TaskDataModel(
-            title: _titleTEC.text,
-            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-            fromTime: _fromTime,
-            toTime: _toTime,
-            month: _taskTime.month,
-            year: _taskTime.year,
-            taskState: 'Due',
-            date: _taskTime.day);
-        ScaffoldMessenger.of(context).showSnackBar(
-          _bottomPopUpMessage(
-              text: 'Task is successfully created!', color: Colors.green),
-        );
-        await LocalDatabase.saveActiveTask(dataEntity);
-        Get.offAll(() => CommonBottomNavBar());
-      }
+      TaskDataModel updatedData = TaskDataModel(
+          iD: widget.taskDataModel.iD,
+          title: _titleTEC.text,
+          subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+          fromTime: _fromTime,
+          toTime: _toTime,
+          month: widget.taskDataModel.month,
+          year: widget.taskDataModel.year,
+          taskState: 'Due',
+          date: widget.taskDataModel.date);
+      ScaffoldMessenger.of(context).showSnackBar(
+        _bottomPopUpMessage(
+            text: 'Task is successfully edited!', color: Colors.green),
+      );
+      await LocalDatabase.editActiveTask(updatedData);
+      Get.offAll(() => CommonBottomNavBar());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         _bottomPopUpMessage(
-            text: 'Please give a title to your task!', color: Colors.red),
+            text: 'Please set a title to your task!', color: Colors.red),
       );
     }
   }
@@ -159,13 +141,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   }
 
   //---------------------------------------Widgets---------------------------------------
-  ElevatedButton _createTaskButton() {
+  ElevatedButton _updateTaskButton() {
     return ElevatedButton(
       onPressed: _onCompleted,
       style: ElevatedButton.styleFrom(
         fixedSize: const Size.fromWidth(double.maxFinite),
       ),
-      child: const Text('Create Task'),
+      child: const Text('Update Task'),
     );
   }
 
@@ -204,7 +186,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               color: Get.isDarkMode
                   ? ThemeColors.darkAccent
                   : ThemeColors.titleColor),
-          minValue: _taskTime.hour,
+          minValue: 0,
           maxValue: 24,
           value: _fromTime,
           onChanged: (i) {
@@ -257,56 +239,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               setState(() {});
             }),
       ],
-    );
-  }
-
-  InkWell _yearRepeatButton() {
-    return InkWell(
-      onTap: () {
-        if (_isYearlyRepeatOn) {
-          _isYearlyRepeatOn = false;
-        } else {
-          _isYearlyRepeatOn = true;
-        }
-        setState(() {});
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              height: 15,
-              width: 15,
-              decoration: BoxDecoration(
-                  color: Get.isDarkMode
-                      ? _isYearlyRepeatOn
-                          ? ThemeColors.darkAccent
-                          : Colors.transparent
-                      : _isYearlyRepeatOn
-                          ? ThemeColors.accentColor
-                          : Colors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.accentColor,
-                      width: 2)),
-            ),
-            const SizedBox(
-              width: 7.5,
-            ),
-            Text(
-              'Repeat in every year',
-              style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor),
-            )
-          ],
-        ),
-      ),
     );
   }
 }

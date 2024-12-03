@@ -4,6 +4,7 @@ import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/ask_task_complete_confirmation.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../utils/theme_colors.dart';
+import '../widgets/ask_for_edit_confirmation.dart';
 import '../widgets/task_tile.dart';
 import 'create_task_screen.dart';
 import 'package:get/get.dart';
@@ -95,7 +96,7 @@ class _TaskScreenState extends State<TaskScreen> {
                         taskTitle: _allTasks[i].title,
                         subTitle: _allTasks[i].subTitle,
                         taskStatus: _allTasks[i].taskState,
-                        onTap: () async {
+                        onTapForComplete: () async {
                           await showDialog(
                             context: context,
                             builder: (context) {
@@ -108,6 +109,14 @@ class _TaskScreenState extends State<TaskScreen> {
                             },
                           );
                           await _fetch();
+                        },
+                        onTapForEdit: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AskForEditConfirmation(
+                                    taskDataModel: _allTasks[i]);
+                              });
                         },
                       );
                     },
