@@ -26,7 +26,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
   void initState() {
     _fromTime = widget.taskDataModel.fromTime;
     _toTime = widget.taskDataModel.toTime;
-    _toTimeMin = 0;
+    _toTimeMin = _fromTime;
     _aMPMClock();
     _titleTEC.text = widget.taskDataModel.title;
     _subTitleTEC.text = widget.taskDataModel.subTitle.split('M] ')[1];
