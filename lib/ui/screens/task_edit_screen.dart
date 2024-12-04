@@ -7,6 +7,8 @@ import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
+import '../widgets/bottom_popup_message.dart';
+
 class TaskEditScreen extends StatefulWidget {
   const TaskEditScreen({
     super.key,
@@ -116,28 +118,17 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
           taskState: 'Due',
           date: widget.taskDataModel.date);
       ScaffoldMessenger.of(context).showSnackBar(
-        _bottomPopUpMessage(
+        bottomPopupMessage(
             text: 'Task is successfully edited!', color: Colors.green),
       );
       await LocalDatabase.editActiveTask(updatedData);
       Get.offAll(() => CommonBottomNavBar());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        _bottomPopUpMessage(
+        bottomPopupMessage(
             text: 'Please set a title to your task!', color: Colors.red),
       );
     }
-  }
-
-  SnackBar _bottomPopUpMessage({required String text, required Color color}) {
-    return SnackBar(
-      duration: const Duration(seconds: 1),
-      content: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
-      backgroundColor: color,
-    );
   }
 
   //---------------------------------------Widgets---------------------------------------

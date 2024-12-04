@@ -50,6 +50,7 @@ class _TaskScreenState extends State<TaskScreen> {
       body: Column(
         children: [
           TableCalendar(
+            rowHeight: MediaQuery.sizeOf(context).height / 15,
             onDaySelected: (DateTime selectedDate, DateTime focusDate) {
               _currentSelectedDateTime = selectedDate;
               _fetch();

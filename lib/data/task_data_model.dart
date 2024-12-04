@@ -16,9 +16,9 @@ class TaskDataModel {
   String taskState;
   final int fromTime;
   final int toTime;
-  final int date;
-  final int month;
-  final int year;
+  int date;
+  int month;
+  int year;
 
   Map<String, dynamic> toMap() {
     return {

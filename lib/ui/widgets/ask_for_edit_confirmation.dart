@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/ui/screens/task_edit_screen.dart';
+import 'package:scheduler/ui/screens/task_postpone_screen.dart';
 import '../utils/theme_colors.dart';
 
 class AskForEditConfirmation extends StatelessWidget {
@@ -38,13 +39,15 @@ class AskForEditConfirmation extends StatelessWidget {
       actions: [
         ElevatedButton(
           onPressed: () {
-            Get.back();
+            Get.off(() => TaskPostponeScreen(
+                  taskDataModel: taskDataModel,
+                ));
           },
           child: const Text('Postpone'),
         ),
         ElevatedButton(
           onPressed: () {
-            Get.off(TaskEditScreen(taskDataModel: taskDataModel));
+            Get.off(() => TaskEditScreen(taskDataModel: taskDataModel));
           },
           child: const Text("Edit"),
         ),

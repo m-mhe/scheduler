@@ -7,6 +7,8 @@ import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
+import '../widgets/bottom_popup_message.dart';
+
 class CreateTaskScreen extends StatefulWidget {
   const CreateTaskScreen({super.key, required this.taskTime});
 
@@ -105,6 +107,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       if (_isYearlyRepeatOn) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          bottomPopupMessage(
+              text: 'Task is successfully created!', color: Colors.green),
+        );
         for (int i = 0; i < 60; i++) {
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,
@@ -117,10 +123,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               date: _taskTime.day);
           await LocalDatabase.saveActiveTask(dataEntity);
         }
-        ScaffoldMessenger.of(context).showSnackBar(
-          _bottomPopUpMessage(
-              text: 'Task is successfully created!', color: Colors.green),
-        );
         Get.offAll(() => CommonBottomNavBar());
       } else {
         TaskDataModel dataEntity = TaskDataModel(
@@ -133,7 +135,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             taskState: 'Due',
             date: _taskTime.day);
         ScaffoldMessenger.of(context).showSnackBar(
-          _bottomPopUpMessage(
+          bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
         );
         await LocalDatabase.saveActiveTask(dataEntity);
@@ -141,21 +143,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        _bottomPopUpMessage(
+        bottomPopupMessage(
             text: 'Please give a title to your task!', color: Colors.red),
       );
     }
-  }
-
-  SnackBar _bottomPopUpMessage({required String text, required Color color}) {
-    return SnackBar(
-      duration: const Duration(seconds: 1),
-      content: Text(
-        text,
-        textAlign: TextAlign.center,
-      ),
-      backgroundColor: color,
-    );
   }
 
   //---------------------------------------Widgets---------------------------------------
