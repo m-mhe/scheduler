@@ -17,27 +17,6 @@ class TaskScreen extends StatefulWidget {
 }
 
 class _TaskScreenState extends State<TaskScreen> {
-  final List<TaskDataModel> _allTasks = [];
-  DateTime _currentSelectedDateTime = DateTime.now();
-
-  Future<void> _fetch() async {
-    final DateTime currentTime = DateTime.now();
-    _allTasks.clear();
-    List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
-    for (TaskDataModel data in dataList) {
-      if (data.date == _currentSelectedDateTime.day &&
-          data.month == _currentSelectedDateTime.month &&
-          data.year == _currentSelectedDateTime.year) {
-        if (currentTime.isAfter(
-            DateTime(data.year, data.month, data.date, (data.toTime + 1)))) {
-          data.taskState = 'Late';
-        }
-        _allTasks.add(data);
-      }
-    }
-    setState(() {});
-  }
-
   @override
   void initState() {
     _fetch();
@@ -157,5 +136,28 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
     );
+  }
+
+  //---------------------------------------Variables---------------------------------------
+  final List<TaskDataModel> _allTasks = [];
+  DateTime _currentSelectedDateTime = DateTime.now();
+
+  //---------------------------------------Functions---------------------------------------
+  Future<void> _fetch() async {
+    final DateTime currentTime = DateTime.now();
+    _allTasks.clear();
+    List<TaskDataModel> dataList = await LocalDatabase.fetchFromActiveDB();
+    for (TaskDataModel data in dataList) {
+      if (data.date == _currentSelectedDateTime.day &&
+          data.month == _currentSelectedDateTime.month &&
+          data.year == _currentSelectedDateTime.year) {
+        if (currentTime.isAfter(
+            DateTime(data.year, data.month, data.date, (data.toTime + 1)))) {
+          data.taskState = 'Late';
+        }
+        _allTasks.add(data);
+      }
+    }
+    setState(() {});
   }
 }

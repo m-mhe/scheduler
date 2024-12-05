@@ -107,9 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final int secondToMinus = (remainingTimeFrom.second);
       final int totalSecondToWait = ((minuteToWait * 60) - secondToMinus);
       await Future.delayed(Duration(seconds: (totalSecondToWait + 1)));
-      if (DateTime.now().hour != _currentTime.hour) {
-        await _fetch();
-      }
+      await _fetch();
     }
   }
 

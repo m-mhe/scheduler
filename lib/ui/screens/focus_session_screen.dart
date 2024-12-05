@@ -597,7 +597,6 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   ? ThemeColors.darkAccent
                   : ThemeColors.accentColor),
           onPressed: () {
-            setState(() {});
             if (_isTimerOn) {
               _timer!.cancel();
               _isTimerOn = false;
@@ -605,6 +604,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
               _timeCountdown();
               _isTimerOn = true;
             }
+            setState(() {});
           },
           icon: _isTimerOn
               ? const Icon(Icons.pause)
