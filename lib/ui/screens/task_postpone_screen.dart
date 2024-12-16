@@ -31,47 +31,7 @@ class _TaskPostponeScreenState extends State<TaskPostponeScreen> {
     return Scaffold(
       appBar: commonAppBar(context),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          TableCalendar(
-            rowHeight: MediaQuery.sizeOf(context).height / 15,
-            onDaySelected: (DateTime selectedDate, DateTime focusDate) {
-              _currentSelectedDateTime = selectedDate;
-              setState(() {});
-            },
-            calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkBlue
-                      : ThemeColors.accentColor,
-                  shape: BoxShape.circle),
-              todayTextStyle: TextStyle(
-                color: Get.isDarkMode
-                    ? ThemeColors.darkMain
-                    : ThemeColors.lightColor,
-              ),
-              disabledTextStyle: TextStyle(
-                color: Get.isDarkMode ? Colors.white30 : Colors.black26,
-              ),
-            ),
-            firstDay: _currentDateTime.isAfter(_currentSelectedDateTime)
-                ? _currentSelectedDateTime
-                : _currentDateTime,
-            lastDay: DateTime(3024, 11, 5),
-            focusedDay: _currentSelectedDateTime,
-            currentDay: _currentSelectedDateTime,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: ElevatedButton(
-              onPressed: _onPostponed,
-              style: ElevatedButton.styleFrom(
-                fixedSize: const Size.fromWidth(double.maxFinite),
-              ),
-              child: const Text('Postpone Task'),
-            ),
-          )
-        ],
+        children: [_calenderView(context), _postponeButton()],
       ),
     );
   }
@@ -93,5 +53,47 @@ class _TaskPostponeScreenState extends State<TaskPostponeScreen> {
     );
     await LocalDatabase.editActiveTask(_taskDataModel);
     Get.offAll(() => CommonBottomNavBar());
+  }
+
+  //---------------------------------------Widgets---------------------------------------
+  Padding _postponeButton() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: ElevatedButton(
+        onPressed: _onPostponed,
+        style: ElevatedButton.styleFrom(
+          fixedSize: const Size.fromWidth(double.maxFinite),
+        ),
+        child: const Text('Postpone Task'),
+      ),
+    );
+  }
+
+  TableCalendar<dynamic> _calenderView(BuildContext context) {
+    return TableCalendar(
+      rowHeight: MediaQuery.sizeOf(context).height / 15,
+      onDaySelected: (DateTime selectedDate, DateTime focusDate) {
+        _currentSelectedDateTime = selectedDate;
+        setState(() {});
+      },
+      calendarStyle: CalendarStyle(
+        todayDecoration: BoxDecoration(
+            color:
+                Get.isDarkMode ? ThemeColors.darkBlue : ThemeColors.accentColor,
+            shape: BoxShape.circle),
+        todayTextStyle: TextStyle(
+          color: Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.lightColor,
+        ),
+        disabledTextStyle: TextStyle(
+          color: Get.isDarkMode ? Colors.white30 : Colors.black26,
+        ),
+      ),
+      firstDay: _currentDateTime.isAfter(_currentSelectedDateTime)
+          ? _currentSelectedDateTime
+          : _currentDateTime,
+      lastDay: DateTime(3024, 11, 5),
+      focusedDay: _currentSelectedDateTime,
+      currentDay: _currentSelectedDateTime,
+    );
   }
 }
