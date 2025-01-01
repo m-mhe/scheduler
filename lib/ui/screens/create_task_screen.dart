@@ -154,7 +154,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     return ElevatedButton(
       onPressed: _onCompleted,
       style: ElevatedButton.styleFrom(
-        fixedSize: const Size.fromWidth(double.maxFinite),
+        fixedSize: const Size.fromWidth(double.maxFinite),//Size(double width, double height)
       ),
       child: const Text('Create Task'),
     );
