@@ -689,7 +689,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           : ThemeColors.darkSecond
                       : _second.isEven
                           ? ThemeColors.accentColor
-                          : ThemeColors.accentColor.withOpacity(0.5),
+                          : ThemeColors.accentColor.withAlpha(127),
                   radius: 5,
                 ),
               ),
@@ -705,7 +705,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                           : ThemeColors.darkSecond
                       : _second.isEven
                           ? ThemeColors.accentColor
-                          : ThemeColors.accentColor.withOpacity(0.5),
+                          : ThemeColors.accentColor.withAlpha(127),
                   radius: 5,
                 ),
               )

@@ -290,12 +290,12 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(7),
             color: Get.isDarkMode
                 ? ThemeColors.darkSecond
-                : ThemeColors.secondColor.withOpacity(0.4),
+                : ThemeColors.secondColor.withAlpha(102),
             boxShadow: [
               BoxShadow(
                 color: Get.isDarkMode
                     ? Colors.transparent
-                    : ThemeColors.lightColor.withOpacity(0.4),
+                    : ThemeColors.lightColor.withAlpha(102),
                 spreadRadius: 1,
                 blurRadius: 7,
               ),
@@ -345,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
             BoxShadow(
               color: Get.isDarkMode
                   ? Colors.transparent
-                  : ThemeColors.lightColor.withOpacity(0.4),
+                  : ThemeColors.lightColor.withAlpha(102),
               spreadRadius: 1,
               blurRadius: 7,
             ),
@@ -461,8 +461,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           showTitle: _chartTouchedIndex == 1,
                           value: _totalCanceled,
                           color: Get.isDarkMode
-                              ? ThemeColors.darkBlue.withOpacity(0.7)
-                              : ThemeColors.midColor.withOpacity(0.4),
+                              ? ThemeColors.darkBlue.withAlpha(178)
+                              : ThemeColors.midColor.withAlpha(102),
                         ),
                       ],
                     ),
@@ -536,8 +536,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 10,
                             width: 10,
                             color: Get.isDarkMode
-                                ? ThemeColors.darkBlue.withOpacity(0.7)
-                                : ThemeColors.midColor.withOpacity(0.4),
+                                ? ThemeColors.darkBlue.withAlpha(178)
+                                : ThemeColors.midColor.withAlpha(102),
                           ),
                           const SizedBox(
                             width: 5,

@@ -196,8 +196,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                           preventCurveOverShooting: true,
                           belowBarData: BarAreaData(
                               color: Get.isDarkMode
-                                  ? ThemeColors.darkAccent.withOpacity(0.2)
-                                  : ThemeColors.secondColor.withOpacity(0.9),
+                                  ? ThemeColors.darkAccent.withAlpha(51)
+                                  : ThemeColors.secondColor.withAlpha(229),
                               show: true),
                           spots: [
                             FlSpot(1, _seventhDay.toDouble()),
@@ -297,7 +297,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         title: 'Work',
                         value: _workTask.toDouble(),
                         color: Get.isDarkMode
-                            ? ThemeColors.darkBlue.withOpacity(0.8)
+                            ? ThemeColors.darkBlue.withAlpha(204)
                             : ThemeColors.secondThemeAccent,
                       ),
                       PieChartSectionData(
@@ -305,7 +305,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         title: 'Exercise',
                         value: _exerciseTask.toDouble(),
                         color: Get.isDarkMode
-                            ? ThemeColors.darkBlue.withOpacity(0.6)
+                            ? ThemeColors.darkBlue.withAlpha(153)
                             : ThemeColors.secondColor,
                       ),
                       PieChartSectionData(
@@ -313,15 +313,15 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         title: 'Coding',
                         value: _codingTask.toDouble(),
                         color: Get.isDarkMode
-                            ? ThemeColors.darkBlue.withOpacity(0.4)
-                            : ThemeColors.secondColor.withOpacity(0.6),
+                            ? ThemeColors.darkBlue.withAlpha(102)
+                            : ThemeColors.secondColor.withAlpha(153),
                       ),
                       PieChartSectionData(
                         showTitle: false,
                         title: 'Other',
                         value: _otherTask.toDouble(),
                         color: Get.isDarkMode
-                            ? ThemeColors.darkBlue.withOpacity(0.3)
+                            ? ThemeColors.darkBlue.withAlpha(76)
                             : ThemeColors.secondThemeSecond,
                       ),
                     ]),
@@ -382,7 +382,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       height: 10,
                       width: 10,
                       color: Get.isDarkMode
-                          ? ThemeColors.darkBlue.withOpacity(0.8)
+                          ? ThemeColors.darkBlue.withAlpha(204)
                           : ThemeColors.secondThemeAccent,
                     ),
                     const SizedBox(
@@ -405,7 +405,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       height: 10,
                       width: 10,
                       color: Get.isDarkMode
-                          ? ThemeColors.darkBlue.withOpacity(0.6)
+                          ? ThemeColors.darkBlue.withAlpha(93)
                           : ThemeColors.secondColor,
                     ),
                     const SizedBox(
@@ -428,8 +428,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       height: 10,
                       width: 10,
                       color: Get.isDarkMode
-                          ? ThemeColors.darkBlue.withOpacity(0.4)
-                          : ThemeColors.secondColor.withOpacity(0.6),
+                          ? ThemeColors.darkBlue.withAlpha(102)
+                          : ThemeColors.secondColor.withAlpha(153),
                     ),
                     const SizedBox(
                       width: 5,
@@ -451,7 +451,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       height: 10,
                       width: 10,
                       color: Get.isDarkMode
-                          ? ThemeColors.darkBlue.withOpacity(0.3)
+                          ? ThemeColors.darkBlue.withAlpha(76)
                           : ThemeColors.secondThemeSecond,
                     ),
                     const SizedBox(

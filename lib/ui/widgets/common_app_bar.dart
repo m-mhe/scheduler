@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/local_cache.dart';
-import 'package:scheduler/ui/utils/theme_controller.dart';
 import '../utils/theme_colors.dart';
 
 AppBar commonAppBar(BuildContext context) {
