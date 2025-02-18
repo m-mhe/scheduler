@@ -1,0 +1,2 @@
+C:/flutter_codebase/scheduler/android/app/.cxx/RelWithDebInfo/3h5r566r/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/flutter_codebase/scheduler/android/app/.cxx/RelWithDebInfo/3h5r566r/arm64-v8a/CMakeFiles/rebuild_cache.dir
