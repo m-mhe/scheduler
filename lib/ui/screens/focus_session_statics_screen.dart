@@ -625,8 +625,9 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
       actions: [
         IconButton(
             onPressed: () {
-              Get.changeThemeMode(
-                  Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+              final bool isDarkMode = Get.isDarkMode;
+              Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
+              LocalCache.saveTheme(isDark: !isDarkMode);
             },
             icon: Get.isDarkMode
                 ? const Icon(Icons.dark_mode_rounded)
