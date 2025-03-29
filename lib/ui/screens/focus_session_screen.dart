@@ -137,7 +137,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   actions: [
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.release();
+                        await _audioPlayer.stop();
+                        await _audioPlayer.play(
+                          AssetSource('audio/clock.mp3'),
+                          volume: 0,
+                        );
+                        _audioPlayer.setReleaseMode(ReleaseMode.loop);
                         _isBreak = false;
                         _timeCountdown();
                         _isTimerOn = true;
@@ -147,7 +152,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.release();
+                        await _audioPlayer.stop();
+                        await _audioPlayer.play(
+                          AssetSource('audio/clock.mp3'),
+                          volume: 0,
+                        );
+                        _audioPlayer.setReleaseMode(ReleaseMode.loop);
                         _isBreak = true;
                         _timeCountdown();
                         _isTimerOn = true;
@@ -217,7 +227,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   actions: [
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.release();
+                        await _audioPlayer.stop();
+                        await _audioPlayer.play(
+                          AssetSource('audio/clock.mp3'),
+                          volume: 0,
+                        );
+                        _audioPlayer.setReleaseMode(ReleaseMode.loop);
                         _isBreak = true;
                         _timeCountdown();
                         _isTimerOn = true;
@@ -227,7 +242,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.release();
+                        await _audioPlayer.stop();
+                        await _audioPlayer.play(
+                          AssetSource('audio/clock.mp3'),
+                          volume: 0,
+                        );
+                        _audioPlayer.setReleaseMode(ReleaseMode.loop);
                         _isBreak = false;
                         _timeCountdown();
                         _isTimerOn = true;
@@ -314,7 +334,12 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       children: [
                         IconButton(
                             onPressed: () async {
-                              await _audioPlayer.release();
+                              await _audioPlayer.stop();
+                              await _audioPlayer.play(
+                                AssetSource('audio/clock.mp3'),
+                                volume: 0,
+                              );
+                              _audioPlayer.setReleaseMode(ReleaseMode.loop);
                               Get.back();
                             },
                             icon: Icon(
@@ -328,7 +353,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/clock.mp3'));
+                                  .play(AssetSource('audio/clock.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -621,7 +647,6 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
             _isBreak = false;
             _timer?.cancel();
             _isTimerOn = false;
-            await _audioPlayer.release();
             setState(() {});
           },
           icon: const Icon(Icons.stop_circle_rounded),
