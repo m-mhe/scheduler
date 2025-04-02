@@ -104,6 +104,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
             await _audioPlayer.release();
             await _audioPlayer.play(
               AssetSource('audio/ringtone_on_complete.mp3'),
+              volume: 1,
             );
             await _audioPlayer.setReleaseMode(ReleaseMode.stop);
             await showDialog(
@@ -137,7 +138,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   actions: [
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.stop();
+                        await _audioPlayer.release();
                         await _audioPlayer.play(
                           AssetSource('audio/clock.mp3'),
                           volume: 0,
@@ -152,7 +153,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.stop();
+                        await _audioPlayer.release();
                         await _audioPlayer.play(
                           AssetSource('audio/clock.mp3'),
                           volume: 0,
@@ -190,6 +191,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
             await _audioPlayer.release();
             await _audioPlayer.play(
               AssetSource('audio/ringtone_on_complete.mp3'),
+              volume: 1,
             );
             await _audioPlayer.setReleaseMode(ReleaseMode.stop);
             await LocalDatabase.saveFocusSessions(FocusSessionDataModel(
@@ -227,7 +229,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                   actions: [
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.stop();
+                        await _audioPlayer.release();
                         await _audioPlayer.play(
                           AssetSource('audio/clock.mp3'),
                           volume: 0,
@@ -242,7 +244,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () async {
-                        await _audioPlayer.stop();
+                        await _audioPlayer.release();
                         await _audioPlayer.play(
                           AssetSource('audio/clock.mp3'),
                           volume: 0,
@@ -334,7 +336,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                       children: [
                         IconButton(
                             onPressed: () async {
-                              await _audioPlayer.stop();
+                              await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/clock.mp3'),
                                 volume: 0,
@@ -371,7 +373,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/owls.mp3'),
-                                volume: 0.9,
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -388,7 +390,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/fire.mp3'));
+                                  .play(AssetSource('audio/fire.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -404,7 +407,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/piano_one.mp3'));
+                                  .play(AssetSource('audio/piano_one.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -420,7 +424,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/water.mp3'));
+                                  .play(AssetSource('audio/water.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -437,7 +442,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/memory.mp3'),
-                                volume: 0.9,
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -454,7 +459,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/stream_one.mp3'));
+                                  .play(AssetSource('audio/stream_one.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -471,7 +477,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/cheel.mp3'),
-                                volume: 0.9,
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -489,6 +495,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/stream_two.mp3'),
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -506,7 +513,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/time.mp3'),
-                                volume: 0.9,
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -523,7 +530,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/rain.mp3'));
+                                  .play(AssetSource('audio/rain.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -540,7 +548,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/eddy.mp3'),
-                                volume: 0.9,
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -557,7 +565,8 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                             onPressed: () async {
                               await _audioPlayer.release();
                               await _audioPlayer
-                                  .play(AssetSource('audio/thunderstorm.mp3'));
+                                  .play(AssetSource('audio/thunderstorm.mp3'),
+                                volume: 1,);
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
                               Get.back();
@@ -574,6 +583,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/lofi_rain.mp3'),
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
@@ -591,6 +601,7 @@ class _FocusSessionScreenState extends State<FocusSessionScreen> {
                               await _audioPlayer.release();
                               await _audioPlayer.play(
                                 AssetSource('audio/forest_rain.mp3'),
+                                volume: 1,
                               );
                               await _audioPlayer
                                   .setReleaseMode(ReleaseMode.loop);
