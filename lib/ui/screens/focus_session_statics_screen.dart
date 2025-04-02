@@ -164,7 +164,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              'Trends in past 7 days',
+              'Trends in past 168 hours',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
                   color: Get.isDarkMode
                       ? ThemeColors.darkAccent
@@ -200,13 +200,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                                   : ThemeColors.secondColor.withAlpha(229),
                               show: true),
                           spots: [
-                            FlSpot(1, _seventhDay.toDouble()),
-                            FlSpot(2, _sixthDay.toDouble()),
-                            FlSpot(3, _fifthDay.toDouble()),
+                            FlSpot(1, _firstDay.toDouble()),
+                            FlSpot(2, _secondDay.toDouble()),
+                            FlSpot(3, _thirdDay.toDouble()),
                             FlSpot(4, _fourthDay.toDouble()),
-                            FlSpot(5, _thirdDay.toDouble()),
-                            FlSpot(6, _secondDay.toDouble()),
-                            FlSpot(7, _firstDay.toDouble()),
+                            FlSpot(5, _fifthDay.toDouble()),
+                            FlSpot(6, _sixthDay.toDouble()),
+                            FlSpot(7, _seventhDay.toDouble()),
                           ]),
                     ],
                     titlesData: FlTitlesData(
@@ -228,7 +228,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                             return Padding(
                               padding: const EdgeInsets.all(3),
                               child: Text(
-                                (dayNumber - 8).toStringAsFixed(0).split('')[1],
+                                (dayNumber).toStringAsFixed(0),
                                 style: TextStyle(
                                     color: Get.isDarkMode
                                         ? ThemeColors.darkAccent
