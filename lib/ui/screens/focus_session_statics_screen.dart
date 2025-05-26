@@ -27,7 +27,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor:
-          Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeSecond,
+      Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeSecond,
       appBar: _appBar(context),
       body: SingleChildScrollView(
         child: Padding(
@@ -95,22 +95,320 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
     _seventhDay = 0;
     _sessions = await LocalDatabase.fetchFromFocusSessionDB();
     for (FocusSessionDataModel session in _sessions) {
-      if (session.dateTime.difference(_currentDateTime).inDays == 0) {
+      if (session.dateTime.day == _currentDateTime.day) {
         _firstDay = _firstDay + session.minutes;
-        if (session.dateTime.day == _currentDateTime.day) {
-          _todayTotalHour = _todayTotalHour + (session.minutes / 60);
-        }
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -1) {
+        _todayTotalHour = _todayTotalHour + (session.minutes / 60);
+      } else if ((_currentDateTime.day - session.dateTime.day == 1 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -30 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _secondDay = _secondDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -2) {
+      } else if ((_currentDateTime.day - session.dateTime.day == 2 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -29 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _thirdDay = _thirdDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -3) {
+      } else if ((_currentDateTime.day - session.dateTime.day == 3 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -28 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _fourthDay = _fourthDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -4) {
+      } else if ((_currentDateTime.day - session.dateTime.day == 4 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -27 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _fifthDay = _fifthDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -5) {
+      } else if ((_currentDateTime.day - session.dateTime.day == 5 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -26 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _sixthDay = _sixthDay + session.minutes;
-      } else if (session.dateTime.difference(_currentDateTime).inDays == -6) {
+      } else if ((_currentDateTime.day - session.dateTime.day == 6 &&
+          _currentDateTime.month == session.dateTime.month &&
+          _currentDateTime.year == session.dateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 1 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (session.dateTime.day - _currentDateTime.day < 24 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 2 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 3 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -24 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 4 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 5 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -24 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 6 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 7 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 8 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -24 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 9 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 10 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -24 &&
+              _currentDateTime.month - session.dateTime.month == 1 &&
+              session.dateTime.month == 11 &&
+              session.dateTime.year == _currentDateTime.year) ||
+          (_currentDateTime.day - session.dateTime.day == -25 &&
+              _currentDateTime.month - session.dateTime.month == -11 &&
+              session.dateTime.month == 12 &&
+              _currentDateTime.year - session.dateTime.year == 1)) {
         _seventhDay = _seventhDay + session.minutes;
       }
       if (session.taskType == 'Work') {
@@ -147,14 +445,16 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   Container _graphSection(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: (MediaQuery.sizeOf(context).width / 1.8),
+      height: (MediaQuery
+          .sizeOf(context)
+          .width / 1.8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
         boxShadow: [
           BoxShadow(
               color:
-                  Get.isDarkMode ? Colors.transparent : ThemeColors.lightColor,
+              Get.isDarkMode ? Colors.transparent : ThemeColors.lightColor,
               spreadRadius: 1,
               blurRadius: 7),
         ],
@@ -164,8 +464,12 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              'Trends in past 168 hours',
-              style: Theme.of(context).textTheme.labelLarge!.copyWith(
+              'Trends in past 7 days',
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .labelLarge!
+                  .copyWith(
                   color: Get.isDarkMode
                       ? ThemeColors.darkAccent
                       : ThemeColors.secondThemeMain),
@@ -221,22 +525,22 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                         ),
                         bottomTitles: AxisTitles(
                             sideTitles: SideTitles(
-                          showTitles: true,
-                          interval: 1,
-                          getTitlesWidget:
-                              (double dayNumber, TitleMeta titleMeta) {
-                            return Padding(
-                              padding: const EdgeInsets.all(3),
-                              child: Text(
-                                (dayNumber).toStringAsFixed(0),
-                                style: TextStyle(
-                                    color: Get.isDarkMode
-                                        ? ThemeColors.darkAccent
-                                        : ThemeColors.secondThemeMain),
-                              ),
-                            );
-                          },
-                        ))),
+                              showTitles: true,
+                              interval: 1,
+                              getTitlesWidget:
+                                  (double dayNumber, TitleMeta titleMeta) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(3),
+                                  child: Text(
+                                    (dayNumber).toStringAsFixed(0),
+                                    style: TextStyle(
+                                        color: Get.isDarkMode
+                                            ? ThemeColors.darkAccent
+                                            : ThemeColors.secondThemeMain),
+                                  ),
+                                );
+                              },
+                            ))),
                     gridData: const FlGridData(show: false)),
               ),
             ),
@@ -251,8 +555,12 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Container(
-          width: MediaQuery.sizeOf(context).width / 1.65,
-          height: MediaQuery.sizeOf(context).width / 1.65,
+          width: MediaQuery
+              .sizeOf(context)
+              .width / 1.65,
+          height: MediaQuery
+              .sizeOf(context)
+              .width / 1.65,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
@@ -282,7 +590,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               child: PieChart(
                 PieChartData(
                     centerSpaceColor:
-                        Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
+                    Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
                     sections: [
                       PieChartSectionData(
                         showTitle: false,
@@ -330,9 +638,15 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           ),
         ),
         Container(
-          width: MediaQuery.sizeOf(context).width -
-              ((MediaQuery.sizeOf(context).width / 1.65) + 30),
-          height: MediaQuery.sizeOf(context).width / 1.65,
+          width: MediaQuery
+              .sizeOf(context)
+              .width -
+              ((MediaQuery
+                  .sizeOf(context)
+                  .width / 1.65) + 30),
+          height: MediaQuery
+              .sizeOf(context)
+              .width / 1.65,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
@@ -366,8 +680,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       width: 5,
                     ),
                     Text(
-                      'Study(${((_studyTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      'Study(${((_studyTask / _totalTask) * 100)
+                          .toStringAsFixed(0)}%)',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent
                               : ThemeColors.secondThemeMain),
@@ -389,8 +708,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       width: 5,
                     ),
                     Text(
-                      'Work(${((_workTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      'Work(${((_workTask / _totalTask) * 100).toStringAsFixed(
+                          0)}%)',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent
                               : ThemeColors.secondThemeMain),
@@ -412,8 +736,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       width: 5,
                     ),
                     Text(
-                      'Exercise(${((_exerciseTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      'Exercise(${((_exerciseTask / _totalTask) * 100)
+                          .toStringAsFixed(0)}%)',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent
                               : ThemeColors.secondThemeMain),
@@ -435,8 +764,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       width: 5,
                     ),
                     Text(
-                      'Coding(${((_codingTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      'Coding(${((_codingTask / _totalTask) * 100)
+                          .toStringAsFixed(0)}%)',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent
                               : ThemeColors.secondThemeMain),
@@ -458,8 +792,13 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                       width: 5,
                     ),
                     Text(
-                      'Other(${((_otherTask / _totalTask) * 100).toStringAsFixed(0)}%)',
-                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      'Other(${((_otherTask / _totalTask) * 100)
+                          .toStringAsFixed(0)}%)',
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .labelSmall!
+                          .copyWith(
                           color: Get.isDarkMode
                               ? ThemeColors.darkAccent
                               : ThemeColors.secondThemeMain),
@@ -477,14 +816,16 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
   Container _dailyGoalSection(BuildContext context) {
     return Container(
       width: double.maxFinite,
-      height: MediaQuery.sizeOf(context).width / 1.4,
+      height: MediaQuery
+          .sizeOf(context)
+          .width / 1.4,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Get.isDarkMode ? ThemeColors.darkSecond : Colors.white,
         boxShadow: [
           BoxShadow(
               color:
-                  Get.isDarkMode ? Colors.transparent : ThemeColors.lightColor,
+              Get.isDarkMode ? Colors.transparent : ThemeColors.lightColor,
               spreadRadius: 1,
               blurRadius: 7),
         ],
@@ -500,7 +841,9 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               appearance: CircularSliderAppearance(
                   animDurationMultiplier: 2.5,
                   spinnerMode: false,
-                  size: MediaQuery.sizeOf(context).width / 1.6,
+                  size: MediaQuery
+                      .sizeOf(context)
+                      .width / 1.6,
                   angleRange: 360,
                   startAngle: 270,
                   customWidths: CustomSliderWidths(
@@ -520,11 +863,15 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                   infoProperties: InfoProperties(
                     topLabelText: 'Daily Goal',
                     topLabelStyle:
-                        Theme.of(context).textTheme.labelMedium!.copyWith(
-                              color: Get.isDarkMode
-                                  ? ThemeColors.darkAccent
-                                  : ThemeColors.secondThemeMain,
-                            ),
+                    Theme
+                        .of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.secondThemeMain,
+                    ),
                     modifier: (v) {
                       return '${v.toStringAsFixed(1)} h';
                     },
@@ -534,21 +881,27 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                           : ThemeColors.secondThemeMain,
                       fontSize: 28,
                     ),
-                    bottomLabelText:
-                        _todayTotalHour==_dailyGoal?'Completed':'${(_dailyGoal - _todayTotalHour).toStringAsFixed(1)} hours left',
+                    bottomLabelText: _todayTotalHour == _dailyGoal
+                        ? 'Completed'
+                        : '${(_dailyGoal - _todayTotalHour).toStringAsFixed(
+                        1)} hours left',
                     bottomLabelStyle:
-                        Theme.of(context).textTheme.labelMedium!.copyWith(
-                              color: Get.isDarkMode
-                                  ? ThemeColors.darkAccent
-                                  : ThemeColors.secondThemeMain,
-                            ),
+                    Theme
+                        .of(context)
+                        .textTheme
+                        .labelMedium!
+                        .copyWith(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.secondThemeMain,
+                    ),
                   )),
             ),
           ),
           IconButton(
               onPressed: () {
                 final TextEditingController dailyGoalTEC =
-                    TextEditingController();
+                TextEditingController();
                 showDialog(
                     context: context,
                     builder: (context) {
@@ -564,17 +917,26 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
                           'Set your daily goal',
                           textAlign: TextAlign.center,
                           style:
-                              Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                    color: Get.isDarkMode
-                                        ? ThemeColors.darkAccent
-                                        : ThemeColors.titleColor,
-                                  ),
+                          Theme
+                              .of(context)
+                              .textTheme
+                              .bodyLarge!
+                              .copyWith(
+                            color: Get.isDarkMode
+                                ? ThemeColors.darkAccent
+                                : ThemeColors.titleColor,
+                          ),
                         ),
                         content: TextField(
                           controller: dailyGoalTEC,
-                          style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                              color:
-                              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .labelLarge!
+                              .copyWith(
+                              color: Get.isDarkMode
+                                  ? ThemeColors.darkAccent
+                                  : ThemeColors.titleColor),
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                               hintText: 'Daily Goal:', suffixText: 'hour'),
@@ -617,16 +979,21 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
     return AppBar(
       title: Text(
         'Focus Stats',
-        style: Theme.of(context).textTheme.titleLarge!.copyWith(
+        style: Theme
+            .of(context)
+            .textTheme
+            .titleLarge!
+            .copyWith(
             color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white),
       ),
       backgroundColor:
-          Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeMain,
+      Get.isDarkMode ? ThemeColors.darkMain : ThemeColors.secondThemeMain,
       actions: [
         IconButton(
             onPressed: () {
               final bool isDarkMode = Get.isDarkMode;
-              Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
+              Get.changeThemeMode(
+                  isDarkMode ? ThemeMode.light : ThemeMode.dark);
               LocalCache.saveTheme(isDark: !isDarkMode);
             },
             icon: Get.isDarkMode
