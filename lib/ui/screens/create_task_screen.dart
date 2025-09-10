@@ -76,8 +76,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   //---------------------------------------Functions---------------------------------------
   void _aMPMClock() {
-    if (_fromTime < 12) {
-      if (_fromTime == 0) {
+    if (_fromTime < 12 || _fromTime == 24) {
+      if (_fromTime == 0 || _fromTime == 24) {
         _fromTime12 = '12 AM';
       } else {
         _fromTime12 = '$_fromTime AM';
@@ -89,8 +89,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
         _fromTime12 = '${_fromTime - 12} PM';
       }
     }
-    if (_toTime < 12) {
-      if (_toTime == 0) {
+    if (_toTime < 12 || _toTime == 24) {
+      if (_toTime == 0 || _toTime == 24) {
         _toTime12 = '12 AM';
       } else {
         _toTime12 = '$_toTime AM';
