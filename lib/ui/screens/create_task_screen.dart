@@ -4,6 +4,7 @@ import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
+import '../../local_cache.dart';
 import '../utils/theme_colors.dart';
 import 'package:get/get.dart';
 
@@ -32,7 +33,24 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: commonAppBar(context),
+      appBar: AppBar(
+        title: Text(
+          "${_taskTime.day.toString().padLeft(2, '0')}/${_taskTime.month.toString().padLeft(2, "0")}/${_taskTime.year}",
+          style: Theme.of(context).textTheme.titleLarge!.copyWith(
+              color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white),
+        ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                final bool isDarkMode = Get.isDarkMode;
+                Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                LocalCache.saveTheme(isDark: !isDarkMode);
+              },
+              icon: Get.isDarkMode
+                  ? const Icon(Icons.dark_mode_rounded)
+                  : const Icon(Icons.dark_mode_outlined))
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
