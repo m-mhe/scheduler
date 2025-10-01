@@ -196,7 +196,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
                   ? ThemeColors.darkAccent
                   : ThemeColors.titleColor),
           minValue: 0,
-          maxValue: 24,
+          maxValue: 23,
           value: _fromTime,
           onChanged: (i) {
             _fromTime = i;
@@ -240,7 +240,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
                     ? ThemeColors.darkAccent
                     : ThemeColors.titleColor),
             minValue: _toTimeMin,
-            maxValue: 24,
+            maxValue: 23,
             value: _toTime,
             onChanged: (i) {
               _toTime = i;
