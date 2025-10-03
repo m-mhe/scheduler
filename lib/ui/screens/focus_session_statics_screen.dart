@@ -166,7 +166,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 5),
             child: Text(
-              'Trends in past 7 days',
+              'Trends in past 168 hours',
               style: Theme
                   .of(context)
                   .textTheme
