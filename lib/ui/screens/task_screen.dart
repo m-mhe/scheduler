@@ -137,7 +137,7 @@ class _TaskScreenState extends State<TaskScreen> {
         ),
       ),
       firstDay: DateTime.now(),
-      lastDay: DateTime(3024, 11, 5),
+      lastDay: DateTime.now().add(Duration(days:73050)),
       focusedDay: _currentSelectedDateTime,
       currentDay: _currentSelectedDateTime,
     );
