@@ -27,6 +27,7 @@ Welcome to **Scheduler**, a versatile and intuitive time management app designed
 
 ## App Interface  
 
+<img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/0.png" width="500" />
 <img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/1.png" width="500" />
 <img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/2.png" width="500" />
 <img src="https://github.com/m-mhe/scheduler/blob/main/App_Overview_pictures/3.png" width="500" />
