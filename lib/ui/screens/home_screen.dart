@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     _fetch();
+    _lastFetchedTime = DateTime.now();
     _refreshScreen();
     _audioPlayer.play(
       AssetSource('audio/clock.mp3'),
@@ -61,10 +63,13 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   dispose() {
     _audioPlayer.dispose();
+    _timer.cancel();
     super.dispose();
   }
 
   //-------------------------------Variables-------------------------------
+  late final Timer _timer;
+  late DateTime _lastFetchedTime;
   List<OldTaskDataModel> _oldTaskList = [];
   double _totalCanceled = 0;
   double _totalCompleted = 0;
@@ -100,15 +105,16 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _refreshScreen() async {
-    const bool active = true;
-    while (active) {
-      final DateTime remainingTimeFrom = DateTime.now();
-      final int minuteToWait = (60 - remainingTimeFrom.minute);
-      final int secondToMinus = (remainingTimeFrom.second);
-      final int totalSecondToWait = ((minuteToWait * 60) - secondToMinus);
-      await Future.delayed(Duration(seconds: (totalSecondToWait + 1)));
-      await _fetch();
-    }
+    _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      final DateTime currentTime = DateTime.now();
+      if (currentTime.hour != _lastFetchedTime.hour ||
+          currentTime.day != _lastFetchedTime.day ||
+          currentTime.month != _lastFetchedTime.month ||
+          currentTime.year != _lastFetchedTime.year) {
+        _fetch();
+        _lastFetchedTime = DateTime.now();
+      }
+    });
   }
 
   Future<void> _calculateTask() async {
