@@ -541,7 +541,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               min: 0,
               max: _dailyGoal.toDouble(),
               appearance: CircularSliderAppearance(
-                  animDurationMultiplier: 2.5,
+                  animDurationMultiplier: 1.5,
                   spinnerMode: false,
                   size: MediaQuery
                       .sizeOf(context)
