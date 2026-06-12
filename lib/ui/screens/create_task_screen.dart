@@ -151,7 +151,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
         );
-        for (int i = 0; i < 120; i++) {
+        for (int i = 0; i < 200; i++) {
           final DateTime newDate = _taskTime.add(Duration(days: i));
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,
@@ -170,7 +170,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
         );
-        for (int i = 0; i < 120; i++) {
+        for (int i = 0; i < 200; i++) {
           final DateTime newDate = _taskTime.add(Duration(days: (i * 7)));
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,

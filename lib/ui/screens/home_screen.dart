@@ -403,7 +403,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     blurRadius: 7),
               ],
             ),
-            height: 250,
+            height: 240,
             width: MediaQuery.sizeOf(context).width / 1.6,
             child: Center(
               child: Visibility(
@@ -499,7 +499,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         blurRadius: 7),
                   ],
                 ),
-                height: 170,
+                height: 165,
                 width: MediaQuery.sizeOf(context).width -
                     ((MediaQuery.sizeOf(context).width / 1.6) + 25),
                 child: Padding(
@@ -584,7 +584,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  height: 75,
+                  height: 70,
                   width: MediaQuery.sizeOf(context).width -
                       ((MediaQuery.sizeOf(context).width / 1.6) + 25),
                   child: Stack(
