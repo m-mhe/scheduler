@@ -10,7 +10,6 @@ class LocalDatabase {
       join(await getDatabasesPath(), 'scheduler.db'),
     );
     await connectToDataBase.insert('active_task', dataEntity.toMap());
-    await connectToDataBase.close();
   }
 
   static Future<void> editActiveTask(TaskDataModel dataEntity) async {

@@ -42,7 +42,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           IconButton(
               onPressed: () {
                 final bool isDarkMode = Get.isDarkMode;
-                Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                Get.changeThemeMode(
+                    isDarkMode ? ThemeMode.light : ThemeMode.dark);
                 LocalCache.saveTheme(isDark: !isDarkMode);
               },
               icon: Get.isDarkMode
@@ -65,6 +66,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
                 height: 3,
               ),
               _yearRepeatButton(),
+              _weekRepeatButton(),
               _dailyRepeatButton(),
               _createTaskButton()
             ],
@@ -144,22 +146,41 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           await LocalDatabase.saveActiveTask(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
-      }else if (_isDailyRepeatOn) {
+      } else if (_isDailyRepeatOn) {
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
         );
-        for (int i = 0; i < 365; i++) {
+        for (int i = 0; i < 120; i++) {
+          final DateTime newDate = _taskTime.add(Duration(days: i));
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,
               subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
               fromTime: _fromTime,
               toTime: _toTime,
-              month: _taskTime.month,
-              year: (_taskTime.year),
+              month: newDate.month,
+              year: (newDate.year),
               taskState: 'Due',
-              date: (_taskTime.day + i)
-          );
+              date: (newDate.day));
+          await LocalDatabase.saveActiveTask(dataEntity);
+        }
+        Get.offAll(() => CommonBottomNavBar());
+      } else if (_isWeeklyRepeatOn) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          bottomPopupMessage(
+              text: 'Task is successfully created!', color: Colors.green),
+        );
+        for (int i = 0; i < 120; i++) {
+          final DateTime newDate = _taskTime.add(Duration(days: (i * 7)));
+          TaskDataModel dataEntity = TaskDataModel(
+              title: _titleTEC.text,
+              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+              fromTime: _fromTime,
+              toTime: _toTime,
+              month: newDate.month,
+              year: (newDate.year),
+              taskState: 'Due',
+              date: (newDate.day));
           await LocalDatabase.saveActiveTask(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
@@ -193,7 +214,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     return ElevatedButton(
       onPressed: _onCompleted,
       style: ElevatedButton.styleFrom(
-        fixedSize: const Size.fromWidth(double.maxFinite),//Size(double width, double height)
+        fixedSize: const Size.fromWidth(
+            double.maxFinite), //Size(double width, double height)
       ),
       child: const Text('Create Task'),
     );
@@ -306,34 +328,31 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width/3.45),
-              child: Container(
-                height: 15,
-                width: 15,
-                decoration: BoxDecoration(
-                    color: Get.isDarkMode
-                        ? _isYearlyRepeatOn
-                            ? ThemeColors.darkAccent
-                            : Colors.transparent
-                        : _isYearlyRepeatOn
-                            ? ThemeColors.accentColor
-                            : Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Get.isDarkMode
-                            ? ThemeColors.darkAccent
-                            : ThemeColors.accentColor,
-                        width: 2)),
-              ),
+            Container(
+              height: 15,
+              width: 15,
+              decoration: BoxDecoration(
+                  color: Get.isDarkMode
+                      ? _isYearlyRepeatOn
+                          ? ThemeColors.darkAccent
+                          : Colors.transparent
+                      : _isYearlyRepeatOn
+                          ? ThemeColors.accentColor
+                          : Colors.transparent,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
+                      width: 2)),
             ),
             const SizedBox(
               width: 7.5,
             ),
             Text(
-              'Repeat in every year',
+              'Repeat in every year  ',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Get.isDarkMode
@@ -345,6 +364,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       ),
     );
   }
+
   InkWell _weekRepeatButton() {
     return InkWell(
       onTap: () {
@@ -360,35 +380,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width/3.45),
-              child: Container(
-                height: 15,
-                width: 15,
-                decoration: BoxDecoration(
-                    color: Get.isDarkMode
-                        ? _isWeeklyRepeatOn
-                        ? ThemeColors.darkAccent
-                        : Colors.transparent
-                        : _isWeeklyRepeatOn
-                        ? ThemeColors.accentColor
-                        : Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Get.isDarkMode
-                            ? ThemeColors.darkAccent
-                            : ThemeColors.accentColor,
-                        width: 2)),
-              ),
+            Container(
+              height: 15,
+              width: 15,
+              decoration: BoxDecoration(
+                  color: Get.isDarkMode
+                      ? _isWeeklyRepeatOn
+                          ? ThemeColors.darkAccent
+                          : Colors.transparent
+                      : _isWeeklyRepeatOn
+                          ? ThemeColors.accentColor
+                          : Colors.transparent,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
+                      width: 2)),
             ),
             const SizedBox(
               width: 7.5,
             ),
             Text(
-              'Repeat in every week',
+              'Repeat in every week ',
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   color: Get.isDarkMode
@@ -400,6 +417,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       ),
     );
   }
+
   InkWell _dailyRepeatButton() {
     return InkWell(
       onTap: () {
@@ -415,29 +433,26 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(left: MediaQuery.sizeOf(context).width/3.45),
-              child: Container(
-                height: 15,
-                width: 15,
-                decoration: BoxDecoration(
-                    color: Get.isDarkMode
-                        ? _isDailyRepeatOn
-                        ? ThemeColors.darkAccent
-                        : Colors.transparent
-                        : _isDailyRepeatOn
-                        ? ThemeColors.accentColor
-                        : Colors.transparent,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                        color: Get.isDarkMode
-                            ? ThemeColors.darkAccent
-                            : ThemeColors.accentColor,
-                        width: 2)),
-              ),
+            Container(
+              height: 15,
+              width: 15,
+              decoration: BoxDecoration(
+                  color: Get.isDarkMode
+                      ? _isDailyRepeatOn
+                          ? ThemeColors.darkAccent
+                          : Colors.transparent
+                      : _isDailyRepeatOn
+                          ? ThemeColors.accentColor
+                          : Colors.transparent,
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                      color: Get.isDarkMode
+                          ? ThemeColors.darkAccent
+                          : ThemeColors.accentColor,
+                      width: 2)),
             ),
             const SizedBox(
               width: 7.5,
@@ -455,5 +470,4 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       ),
     );
   }
-
 }

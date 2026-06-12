@@ -339,7 +339,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Padding _currentTaskWidget(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 0, bottom: 10),
+      padding: const EdgeInsets.only(top: 0, bottom: 5),
       child: Container(
         width: double.maxFinite,
         height: MediaQuery.sizeOf(context).height / 6,
@@ -389,7 +389,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(7),
@@ -403,8 +403,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     blurRadius: 7),
               ],
             ),
-            height: 240,
-            width: MediaQuery.sizeOf(context).width / 1.7,
+            height: 250,
+            width: MediaQuery.sizeOf(context).width / 1.6,
             child: Center(
               child: Visibility(
                 visible: _oldTaskList.isNotEmpty,
@@ -417,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       fontWeight: FontWeight.w600),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(5),
                   child: PieChart(
                     duration: const Duration(seconds: 2),
                     PieChartData(
@@ -479,13 +479,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         const SizedBox(
-          width: 10,
+          width: 5,
         ),
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 5),
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(7),
@@ -499,11 +499,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         blurRadius: 7),
                   ],
                 ),
-                height: 165,
+                height: 170,
                 width: MediaQuery.sizeOf(context).width -
-                    ((MediaQuery.sizeOf(context).width / 1.7) + 30),
+                    ((MediaQuery.sizeOf(context).width / 1.6) + 25),
                 child: Padding(
-                  padding: const EdgeInsets.only(left: 10),
+                  padding: const EdgeInsets.only(left: 5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -566,7 +566,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5),
               child: InkWell(
                 onTap: _focusSessionTimeSelection,
                 child: Container(
@@ -584,9 +584,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  height: 65,
+                  height: 75,
                   width: MediaQuery.sizeOf(context).width -
-                      ((MediaQuery.sizeOf(context).width / 1.7) + 30),
+                      ((MediaQuery.sizeOf(context).width / 1.6) + 25),
                   child: Stack(
                     alignment: AlignmentDirectional.center,
                     children: [
