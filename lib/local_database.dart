@@ -67,6 +67,17 @@ class LocalDatabase {
     );
     await connectToDatabase.close();
   }
+  static Future<void> deleteAllFromActiveDB({required String title}) async {
+    final connectToDatabase = await openDatabase(
+      join(await getDatabasesPath(), 'scheduler.db'),
+    );
+    await connectToDatabase.delete(
+      'active_task',
+      where: 'title = ?',
+      whereArgs: [title],
+    );
+    await connectToDatabase.close();
+  }
 
   static Future<void> saveInactiveTask(OldTaskDataModel dataEntity) async {
     final connectToDataBase = await openDatabase(

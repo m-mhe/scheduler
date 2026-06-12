@@ -41,6 +41,7 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
                   : ThemeColors.titleColor,
             ),
       ),
+      actionsOverflowAlignment: OverflowBarAlignment.end,
       actions: [
         ElevatedButton(
           onPressed: () {
@@ -56,6 +57,15 @@ class AskTaskCompleteConfirmation extends StatelessWidget {
             Get.back();
           },
           child: const Text("Cancel"),
+        ),
+        ElevatedButton(
+          onPressed: () async {
+            await LocalDatabase.saveInactiveTask(OldTaskDataModel(
+                title: title, subTitle: subTitle, taskState: 'Canceled'));
+            await LocalDatabase.deleteAllFromActiveDB(title: title);
+            Get.back();
+          },
+          child: const Text("Cancel All"),
         ),
         ElevatedButton(
           onPressed: () async {
