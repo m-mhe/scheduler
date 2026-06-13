@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/local_database.dart';
+import 'package:scheduler/repeated_database_entry.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../../local_cache.dart';
 import '../utils/theme_colors.dart';
@@ -129,6 +130,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       if (_isYearlyRepeatOn) {
+        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
+        await Future.delayed(Duration(milliseconds: 10));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
@@ -143,10 +146,12 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (_taskTime.year + i),
               taskState: 'Due',
               date: _taskTime.day);
-          await LocalDatabase.saveActiveTask(dataEntity);
+          await repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isDailyRepeatOn) {
+        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
+        await Future.delayed(Duration(milliseconds: 5));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
@@ -162,15 +167,17 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (newDate.year),
               taskState: 'Due',
               date: (newDate.day));
-          await LocalDatabase.saveActiveTask(dataEntity);
+          await repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isWeeklyRepeatOn) {
+        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
+        await Future.delayed(Duration(milliseconds: 10));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
         );
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < 60; i++) {
           final DateTime newDate = _taskTime.add(Duration(days: (i * 7)));
           TaskDataModel dataEntity = TaskDataModel(
               title: _titleTEC.text,
@@ -181,7 +188,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (newDate.year),
               taskState: 'Due',
               date: (newDate.day));
-          await LocalDatabase.saveActiveTask(dataEntity);
+          await repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else {
