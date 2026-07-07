@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:scheduler/ui/screens/Note.dart';
 import 'package:scheduler/ui/screens/home_screen.dart';
 import 'package:scheduler/ui/screens/task_screen.dart';
 import 'package:scheduler/ui/screens/previous_tasks_screen.dart';
 import 'package:scheduler/ui/utils/nav_bar_controller.dart';
+import 'package:scheduler/ui/utils/theme_colors.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +18,8 @@ class CommonBottomNavBar extends StatelessWidget {
         appBar: commonAppBar(context),
         body: screens[controller.currentIndex],
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: ThemeColors.darkMain,
+          type: BottomNavigationBarType.fixed,
             currentIndex: controller.currentIndex,
             onTap: (index) {
               controller.setCurrentIndex(index);
@@ -29,6 +33,8 @@ class CommonBottomNavBar extends StatelessWidget {
                 icon: Icon(Icons.home_outlined),
                 label: 'Home',
               ),
+              BottomNavigationBarItem(icon: Icon(Icons.edit_note_outlined),
+              label: "Note"),
               BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today_outlined),
                 label: 'Calendar',
@@ -42,6 +48,7 @@ class CommonBottomNavBar extends StatelessWidget {
   final List<Widget> screens = [
     const PreviousTasks(),
     const HomeScreen(),
+    const Note(),
     const TaskScreen(),
   ];
 }

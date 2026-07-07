@@ -35,19 +35,19 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
           child: Column(
             children: [
               const SizedBox(
-                height: 10,
+                height: 5.7,
               ),
               _dailyGoalSection(context),
               const SizedBox(
-                height: 10,
+                height: 5.7,
               ),
               _pieChartSection(context),
               const SizedBox(
-                height: 10,
+                height: 5.7,
               ),
               _graphSection(context),
               const SizedBox(
-                height: 10,
+                height: 5.7,
               ),
             ],
           ),
@@ -345,7 +345,7 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               .width -
               ((MediaQuery
                   .sizeOf(context)
-                  .width / 1.65) + 30),
+                  .width / 1.65) + 25),
           height: MediaQuery
               .sizeOf(context)
               .width / 1.65,
