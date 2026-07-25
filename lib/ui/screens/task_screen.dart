@@ -145,10 +145,6 @@ class _TaskScreenState extends State<TaskScreen> {
 
   FloatingActionButton _taskAddingButton() {
     return FloatingActionButton(
-      backgroundColor:
-          Get.isDarkMode ? ThemeColors.darkBlue : ThemeColors.accentColor,
-      foregroundColor:
-          Get.isDarkMode ? ThemeColors.darkSecond : ThemeColors.lightColor,
       onPressed: () {
         final DateTime currentTime = DateTime.now();
         if (currentTime.day == _currentSelectedDateTime.day &&

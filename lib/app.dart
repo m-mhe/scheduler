@@ -22,6 +22,14 @@ class MyApp extends StatelessWidget {
 
   ThemeData _lightTheme(BuildContext context) {
     return ThemeData(
+      dialogTheme: DialogThemeData(
+        backgroundColor: ThemeColors.lightColor,
+        titleTextStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            color: ThemeColors.titleColor, fontWeight: FontWeight.w600),
+        contentTextStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+              color: ThemeColors.titleColor,
+            ),
+      ),
       textTheme: const TextTheme(
           titleLarge: TextStyle(
             fontSize: 22,
@@ -96,14 +104,24 @@ class MyApp extends StatelessWidget {
         foregroundColor: ThemeColors.accentColor,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          unselectedItemColor: Colors.black45,
+          backgroundColor: ThemeColors.titleColor,
+          unselectedItemColor: Colors.white,
           elevation: 20,
-          selectedItemColor: ThemeColors.titleColor),
+          selectedItemColor: ThemeColors.lightColor),
     );
   }
 
   ThemeData _darkTheme(BuildContext context) {
     return ThemeData(
+      dialogTheme: DialogThemeData(
+        backgroundColor: ThemeColors.darkMain,
+        titleTextStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
+            color: ThemeColors.darkAccent, fontWeight: FontWeight.w600),
+        contentTextStyle: Theme.of(context)
+            .textTheme
+            .titleSmall!
+            .copyWith(color: ThemeColors.darkAccent),
+      ),
       brightness: Brightness.dark,
       scaffoldBackgroundColor: ThemeColors.darkMain,
       textTheme: const TextTheme(
@@ -185,6 +203,7 @@ class MyApp extends StatelessWidget {
         foregroundColor: ThemeColors.darkSecond,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          backgroundColor: ThemeColors.darkMain,
           unselectedItemColor: ThemeColors.accentColor,
           elevation: 20,
           selectedItemColor: ThemeColors.darkAccent),

@@ -1,11 +1,33 @@
 import 'package:flutter/material.dart';
+import '../widgets/note_tile.dart';
 
-class Note extends StatelessWidget {
+class Note extends StatefulWidget {
   const Note({super.key});
 
   @override
+  State<Note> createState() => _NoteState();
+}
+
+class _NoteState extends State<Note> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: ListView.separated(
+          itemBuilder: (BuildContext context, int i) {
+            return NoteTile(
+              index: i,
+            );
+          },
+          separatorBuilder: (BuildContext context, int i) {
+            return SizedBox(
+              height: 10,
+            );
+          },
+          itemCount: 500,
+        ),
+      ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -17,7 +39,7 @@ class Note extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left:10),
+            padding: const EdgeInsets.only(left: 10),
             child: FloatingActionButton(
               onPressed: () {},
               child: const Icon(

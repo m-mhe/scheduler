@@ -4,7 +4,6 @@ import 'package:scheduler/ui/screens/home_screen.dart';
 import 'package:scheduler/ui/screens/task_screen.dart';
 import 'package:scheduler/ui/screens/previous_tasks_screen.dart';
 import 'package:scheduler/ui/utils/nav_bar_controller.dart';
-import 'package:scheduler/ui/utils/theme_colors.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +17,6 @@ class CommonBottomNavBar extends StatelessWidget {
         appBar: commonAppBar(context),
         body: screens[controller.currentIndex],
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: ThemeColors.darkMain,
           type: BottomNavigationBarType.fixed,
             currentIndex: controller.currentIndex,
             onTap: (index) {
