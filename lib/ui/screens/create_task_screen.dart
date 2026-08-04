@@ -22,6 +22,7 @@ class CreateTaskScreen extends StatefulWidget {
 class _CreateTaskScreenState extends State<CreateTaskScreen> {
   @override
   void initState() {
+    _repeatedDatabaseEntry = RepeatedDatabaseEntry();
     _taskTime = widget.taskTime;
     _fromTime = _taskTime.hour;
     _toTime = _taskTime.hour;
@@ -79,6 +80,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
 
   @override
   void dispose() {
+    _repeatedDatabaseEntry.disconnectFromDatabase();
     _titleTEC.dispose();
     _subTitleTEC.dispose();
     super.dispose();
@@ -93,6 +95,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   late String _fromTime12;
   late String _toTime12;
   late int _toTimeMin;
+  late final RepeatedDatabaseEntry _repeatedDatabaseEntry;
   bool _isYearlyRepeatOn = false;
   bool _isWeeklyRepeatOn = false;
   bool _isDailyRepeatOn = false;
@@ -130,8 +133,6 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       if (_isYearlyRepeatOn) {
-        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
-        await Future.delayed(Duration(milliseconds: 10));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
@@ -146,12 +147,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (_taskTime.year + i),
               taskState: 'Due',
               date: _taskTime.day);
-          await repeatedDatabaseEntry.saveToDB(dataEntity);
+          await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isDailyRepeatOn) {
-        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
-        await Future.delayed(Duration(milliseconds: 5));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
@@ -167,12 +166,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (newDate.year),
               taskState: 'Due',
               date: (newDate.day));
-          await repeatedDatabaseEntry.saveToDB(dataEntity);
+          await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isWeeklyRepeatOn) {
-        RepeatedDatabaseEntry repeatedDatabaseEntry = RepeatedDatabaseEntry();
-        await Future.delayed(Duration(milliseconds: 10));
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
               text: 'Task is successfully created!', color: Colors.green),
@@ -188,7 +185,7 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               year: (newDate.year),
               taskState: 'Due',
               date: (newDate.day));
-          await repeatedDatabaseEntry.saveToDB(dataEntity);
+          await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else {

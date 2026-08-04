@@ -13,7 +13,7 @@ class _NoteState extends State<Note> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
         child: ListView.separated(
           itemBuilder: (BuildContext context, int i) {
             return NoteTile(
