@@ -419,7 +419,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(5),
                   child: PieChart(
-                    duration: const Duration(seconds: 2),
+                    duration: const Duration(seconds: 1),
                     PieChartData(
                       centerSpaceColor: Get.isDarkMode
                           ? ThemeColors.darkSecond
