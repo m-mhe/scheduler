@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:scheduler/ui/screens/create_note_screen.dart';
 import '../widgets/note_tile.dart';
 
 class Note extends StatefulWidget {
@@ -32,7 +34,10 @@ class _NoteState extends State<Note> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            heroTag: 'createNoteFab',
+            onPressed: () {
+              Get.to(()=>CreateNoteScreen());
+            },
             child: const Icon(
               Icons.add,
               size: 30,

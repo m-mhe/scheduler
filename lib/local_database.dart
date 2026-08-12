@@ -1,4 +1,5 @@
 import 'package:scheduler/data/focus_session_data_model.dart';
+import 'package:scheduler/data/note_data_model.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:path/path.dart';
 import 'package:scheduler/data/old_task_data_model.dart';
@@ -145,4 +146,28 @@ class LocalDatabase {
     await connectToDataBase.close();
     return sessions;
   }
+
+
+  static Future<void> saveUserNote(NoteDataModel noteDataModel) async{
+    final connectionToTheDB = await openDatabase(join(await getDatabasesPath(), "scheduler.db"));
+    await connectionToTheDB.insert("user_note", noteDataModel.toMap());
+    await connectionToTheDB.close();
+  }
+
+  static Future<List<NoteDataModel>> fetchUserNote() async{
+    final List<NoteDataModel> noteDataList = [];
+    final connectionToTheDB = await openDatabase(join (await getDatabasesPath(), "scheduler.db"));
+    List<Map> data = await connectionToTheDB.query("user_note");
+    for (final {
+    'ID': ID as int,
+    'title': title as String,
+    'body': body as String,
+    'creation_time': creation_time as String,
+    } in data) {
+      noteDataList.add(NoteDataModel(title: title, body: body, creation_time: creation_time, ID: ID));
+    }
+    await connectionToTheDB.close();
+    return noteDataList;
+  }
+
 }

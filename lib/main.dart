@@ -15,6 +15,9 @@ Future<void> main() async {
         'CREATE TABLE IF NOT EXISTS inActive_task(title TEXT, subtitle TEXT, taskState TEXT)');
     await db.execute(
         'CREATE TABLE IF NOT EXISTS focus_sessions(minutes INTEGER, dateTime TEXT, taskType TEXT)');
+    await db.execute(
+      "CREATE TABLE IF NOT EXISTS user_note(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT, creation_time TEXT)"
+    );
   }, version: 1);
   ThemeController.changeTheme(isDark: await LocalCache.fetchTheme());
   runApp(const MyApp());
