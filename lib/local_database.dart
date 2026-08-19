@@ -18,8 +18,12 @@ class LocalDatabase {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
-    await connectToDataBase.update('active_task', dataEntity.toMap(),
-        where: 'ID = ?', whereArgs: [dataEntity.iD]);
+    await connectToDataBase.update(
+      'active_task',
+      dataEntity.toMap(),
+      where: 'ID = ?',
+      whereArgs: [dataEntity.iD],
+    );
     await connectToDataBase.close();
   }
 
@@ -38,19 +42,21 @@ class LocalDatabase {
           'toTime': toTime as int,
           'date': date as int,
           'month': month as int,
-          'year': year as int
-        } in data) {
+          'year': year as int,
+        }
+        in data) {
       taskList.add(
         TaskDataModel(
-            iD: iD,
-            title: title,
-            subTitle: subtitle,
-            taskState: taskState,
-            fromTime: fromTime,
-            toTime: toTime,
-            month: month,
-            year: year,
-            date: date),
+          iD: iD,
+          title: title,
+          subTitle: subtitle,
+          taskState: taskState,
+          fromTime: fromTime,
+          toTime: toTime,
+          month: month,
+          year: year,
+          date: date,
+        ),
       );
     }
     await connectToDataBase.close();
@@ -68,6 +74,7 @@ class LocalDatabase {
     );
     await connectToDatabase.close();
   }
+
   static Future<void> deleteAllFromActiveDB({required String title}) async {
     final connectToDatabase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
@@ -84,8 +91,11 @@ class LocalDatabase {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
-    await connectToDataBase.insert('inActive_task', dataEntity.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await connectToDataBase.insert(
+      'inActive_task',
+      dataEntity.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
     await connectToDataBase.close();
   }
 
@@ -99,7 +109,8 @@ class LocalDatabase {
           'title': title as String,
           'subtitle': subtitle as String,
           'taskState': taskState as String,
-        } in data) {
+        }
+        in data) {
       taskList.insert(
         0,
         OldTaskDataModel(
@@ -114,12 +125,16 @@ class LocalDatabase {
   }
 
   static Future<void> saveFocusSessions(
-      FocusSessionDataModel dataEntity) async {
+    FocusSessionDataModel dataEntity,
+  ) async {
     final connectToDataBase = await openDatabase(
       join(await getDatabasesPath(), 'scheduler.db'),
     );
-    await connectToDataBase.insert('focus_sessions', dataEntity.toMap(),
-        conflictAlgorithm: ConflictAlgorithm.replace);
+    await connectToDataBase.insert(
+      'focus_sessions',
+      dataEntity.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
     await connectToDataBase.close();
   }
 
@@ -133,7 +148,8 @@ class LocalDatabase {
           'minutes': minutes as int,
           'dateTime': dateTime as String,
           'taskType': taskType as String,
-        } in data) {
+        }
+        in data) {
       sessions.insert(
         0,
         FocusSessionDataModel(
@@ -147,27 +163,70 @@ class LocalDatabase {
     return sessions;
   }
 
-
-  static Future<void> saveUserNote(NoteDataModel noteDataModel) async{
-    final connectionToTheDB = await openDatabase(join(await getDatabasesPath(), "scheduler.db"));
+  static Future<void> saveUserNote(NoteDataModel noteDataModel) async {
+    final connectionToTheDB = await openDatabase(
+      join(await getDatabasesPath(), "scheduler.db"),
+    );
     await connectionToTheDB.insert("user_note", noteDataModel.toMap());
     await connectionToTheDB.close();
   }
 
-  static Future<List<NoteDataModel>> fetchUserNote() async{
+  static Future<List<NoteDataModel>> fetchUserNote() async {
     final List<NoteDataModel> noteDataList = [];
-    final connectionToTheDB = await openDatabase(join (await getDatabasesPath(), "scheduler.db"));
+    final connectionToTheDB = await openDatabase(
+      join(await getDatabasesPath(), "scheduler.db"),
+    );
     List<Map> data = await connectionToTheDB.query("user_note");
     for (final {
-    'ID': ID as int,
-    'title': title as String,
-    'body': body as String,
-    'creation_time': creation_time as String,
-    } in data) {
-      noteDataList.add(NoteDataModel(title: title, body: body, creation_time: creation_time, ID: ID));
+          'ID': ID as int,
+          'title': title as String,
+          'body': body as String,
+          'creation_time': creation_time as String,
+        }
+        in data) {
+      noteDataList.add(
+        NoteDataModel(
+          title: title,
+          body: body,
+          creation_time: creation_time,
+          ID: ID,
+        ),
+      );
     }
     await connectionToTheDB.close();
     return noteDataList;
   }
 
+  static Future<List<NoteDataModel>> searchThroughUserNote(
+    String searchKeyWord,
+  ) async {
+    final List<NoteDataModel> noteDataList = [];
+    final connectionToTheDB = await openDatabase(
+      join(await getDatabasesPath(), "scheduler.db"),
+    );
+    List<Map> data = await connectionToTheDB.query(
+      "user_note",
+      where: "title LIKE ?",
+      whereArgs: ["%$searchKeyWord%"],
+    );
+    await connectionToTheDB.close();
+    for (final {
+          'ID': ID as int,
+          'title': title as String,
+          'body': body as String,
+          'creation_time': creation_time as String,
+        }
+        in data) {
+      noteDataList.add(
+        NoteDataModel(
+          title: title,
+          body: body,
+          creation_time: creation_time,
+          ID: ID,
+        ),
+      );
+    }
+
+    return noteDataList;
+  }
 }

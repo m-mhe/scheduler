@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:scheduler/data/note_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/screens/create_note_screen.dart';
+import 'package:scheduler/ui/screens/searched_notes.dart';
+import 'package:scheduler/ui/widgets/bottom_popup_message.dart';
 import '../utils/theme_colors.dart';
 import '../widgets/note_tile.dart';
 
@@ -26,6 +28,7 @@ class _NoteState extends State<Note> {
   }
 
   List<NoteDataModel> _userNotes = [];
+  final TextEditingController _tECSearch = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,12 +75,69 @@ class _NoteState extends State<Note> {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: FloatingActionButton(
-              onPressed: () {},
+              heroTag: 'searchNoteFab',
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      actionsAlignment: MainAxisAlignment.spaceBetween,
+                      title: Text("Search Notes", textAlign: TextAlign.center),
+                      content: TextField(
+                        controller: _tECSearch,
+                        maxLines: 1,
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                          color: Get.isDarkMode
+                              ? ThemeColors.darkAccent
+                              : ThemeColors.titleColor,
+                        ),
+                        decoration: const InputDecoration(
+                          hintText: 'Search notes by title:',
+                        ),
+                      ),
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Get.back();
+                          },
+                          child: Text("Close"),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.green,
+                          ),
+                          onPressed: () {
+                            if (_tECSearch.text.trim() == "") {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                bottomPopupMessage(
+                                  text: "Please enter a keyword to search.",
+                                  color: Colors.red,
+                                ),
+                              );
+                            } else {
+                              Get.to(
+                                SearchedNotes(searchKeyWord: _tECSearch.text),
+                              );
+                            }
+                          },
+                          child: Icon(Icons.search_outlined, size: 20),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
               child: const Icon(Icons.search_outlined, size: 30),
             ),
           ),
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tECSearch.dispose();
+    super.dispose();
   }
 }

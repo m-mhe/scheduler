@@ -97,4 +97,11 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    _tECDescription.dispose();
+    _tECTitle.dispose();
+    super.dispose();
+  }
 }
