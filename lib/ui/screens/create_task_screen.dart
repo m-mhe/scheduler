@@ -38,19 +38,22 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
         title: Text(
           "${_taskTime.day.toString().padLeft(2, '0')}/${_taskTime.month.toString().padLeft(2, "0")}/${_taskTime.year}",
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white),
+            color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white,
+          ),
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                final bool isDarkMode = Get.isDarkMode;
-                Get.changeThemeMode(
-                    isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                LocalCache.saveTheme(isDark: !isDarkMode);
-              },
-              icon: Get.isDarkMode
-                  ? const Icon(Icons.dark_mode_rounded)
-                  : const Icon(Icons.dark_mode_outlined))
+            onPressed: () {
+              final bool isDarkMode = Get.isDarkMode;
+              Get.changeThemeMode(
+                isDarkMode ? ThemeMode.light : ThemeMode.dark,
+              );
+              LocalCache.saveTheme(isDark: !isDarkMode);
+            },
+            icon: Get.isDarkMode
+                ? const Icon(Icons.dark_mode_rounded)
+                : const Icon(Icons.dark_mode_outlined),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -59,18 +62,14 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
           child: Column(
             children: [
               _timeSelector(context),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _titleTextField(context),
               _descriptionTextField(context),
-              const SizedBox(
-                height: 3,
-              ),
+              const SizedBox(height: 3),
               _yearRepeatButton(),
               _weekRepeatButton(),
               _dailyRepeatButton(),
-              _createTaskButton()
+              _createTaskButton(),
             ],
           ),
         ),
@@ -135,72 +134,84 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       if (_isYearlyRepeatOn) {
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
-              text: 'Task is successfully created!', color: Colors.green),
+            text: 'Tasks are successfully created!',
+            color: Colors.green,
+          ),
         );
         for (int i = 0; i < 100; i++) {
           TaskDataModel dataEntity = TaskDataModel(
-              title: _titleTEC.text,
-              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-              fromTime: _fromTime,
-              toTime: _toTime,
-              month: _taskTime.month,
-              year: (_taskTime.year + i),
-              taskState: 'Due',
-              date: _taskTime.day);
+            title: _titleTEC.text,
+            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+            fromTime: _fromTime,
+            toTime: _toTime,
+            month: _taskTime.month,
+            year: (_taskTime.year + i),
+            taskState: 'Due',
+            date: _taskTime.day,
+          );
           await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isDailyRepeatOn) {
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
-              text: 'Task is successfully created!', color: Colors.green),
+            text: 'Tasks are successfully created!',
+            color: Colors.green,
+          ),
         );
         for (int i = 0; i < 200; i++) {
           final DateTime newDate = _taskTime.add(Duration(days: i));
           TaskDataModel dataEntity = TaskDataModel(
-              title: _titleTEC.text,
-              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-              fromTime: _fromTime,
-              toTime: _toTime,
-              month: newDate.month,
-              year: (newDate.year),
-              taskState: 'Due',
-              date: (newDate.day));
+            title: _titleTEC.text,
+            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+            fromTime: _fromTime,
+            toTime: _toTime,
+            month: newDate.month,
+            year: (newDate.year),
+            taskState: 'Due',
+            date: (newDate.day),
+          );
           await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else if (_isWeeklyRepeatOn) {
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
-              text: 'Task is successfully created!', color: Colors.green),
+            text: 'Tasks are successfully created!',
+            color: Colors.green,
+          ),
         );
         for (int i = 0; i < 60; i++) {
           final DateTime newDate = _taskTime.add(Duration(days: (i * 7)));
           TaskDataModel dataEntity = TaskDataModel(
-              title: _titleTEC.text,
-              subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-              fromTime: _fromTime,
-              toTime: _toTime,
-              month: newDate.month,
-              year: (newDate.year),
-              taskState: 'Due',
-              date: (newDate.day));
+            title: _titleTEC.text,
+            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+            fromTime: _fromTime,
+            toTime: _toTime,
+            month: newDate.month,
+            year: (newDate.year),
+            taskState: 'Due',
+            date: (newDate.day),
+          );
           await _repeatedDatabaseEntry.saveToDB(dataEntity);
         }
         Get.offAll(() => CommonBottomNavBar());
       } else {
         TaskDataModel dataEntity = TaskDataModel(
-            title: _titleTEC.text,
-            subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-            fromTime: _fromTime,
-            toTime: _toTime,
-            month: _taskTime.month,
-            year: _taskTime.year,
-            taskState: 'Due',
-            date: _taskTime.day);
+          title: _titleTEC.text,
+          subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+          fromTime: _fromTime,
+          toTime: _toTime,
+          month: _taskTime.month,
+          year: _taskTime.year,
+          taskState: 'Due',
+          date: _taskTime.day,
+        );
         ScaffoldMessenger.of(context).showSnackBar(
           bottomPopupMessage(
-              text: 'Task is successfully created!', color: Colors.green),
+            text: 'Task is successfully created!',
+            color: Colors.green,
+          ),
         );
         await LocalDatabase.saveActiveTask(dataEntity);
         Get.offAll(() => CommonBottomNavBar());
@@ -208,7 +219,9 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         bottomPopupMessage(
-            text: 'Please give a title to your task!', color: Colors.red),
+          text: 'Please give a title to your task!',
+          color: Colors.red,
+        ),
       );
     }
   }
@@ -219,7 +232,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       onPressed: _onCompleted,
       style: ElevatedButton.styleFrom(
         fixedSize: const Size.fromWidth(
-            double.maxFinite), //Size(double width, double height)
+          double.maxFinite,
+        ), //Size(double width, double height)
       ),
       child: const Text('Create Task'),
     );
@@ -230,8 +244,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       controller: _subTitleTEC,
       maxLines: 5,
       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          color:
-              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+        color: Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor,
+      ),
       decoration: const InputDecoration(hintText: 'Description (optional):'),
     );
   }
@@ -243,8 +257,8 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       maxLength: 20,
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          color:
-              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+        color: Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor,
+      ),
       decoration: const InputDecoration(hintText: 'Title:'),
     );
   }
@@ -255,11 +269,13 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
       children: [
         NumberPicker(
           textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
+            color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45,
+          ),
           selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: Get.isDarkMode
-                  ? ThemeColors.darkAccent
-                  : ThemeColors.titleColor),
+            color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.titleColor,
+          ),
           minValue: _taskTime.hour,
           maxValue: 23,
           value: _fromTime,
@@ -276,9 +292,10 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             Text(
               'Time',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor),
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.titleColor,
+              ),
             ),
             Icon(
               Icons.arrow_forward_rounded,
@@ -290,28 +307,31 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
             Text(
               '$_fromTime12 to $_toTime12',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor),
-            )
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.titleColor,
+              ),
+            ),
           ],
         ),
         NumberPicker(
-            textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                color:
-                    Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
-            selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: Get.isDarkMode
-                    ? ThemeColors.darkAccent
-                    : ThemeColors.titleColor),
-            minValue: _toTimeMin,
-            maxValue: 23,
-            value: _toTime,
-            onChanged: (i) {
-              _toTime = i;
-              _aMPMClock();
-              setState(() {});
-            }),
+          textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+            color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45,
+          ),
+          selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+            color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.titleColor,
+          ),
+          minValue: _toTimeMin,
+          maxValue: 23,
+          value: _toTime,
+          onChanged: (i) {
+            _toTime = i;
+            _aMPMClock();
+            setState(() {});
+          },
+        ),
       ],
     );
   }
@@ -338,31 +358,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               height: 15,
               width: 15,
               decoration: BoxDecoration(
-                  color: Get.isDarkMode
-                      ? _isYearlyRepeatOn
+                color: Get.isDarkMode
+                    ? _isYearlyRepeatOn
                           ? ThemeColors.darkAccent
                           : Colors.transparent
-                      : _isYearlyRepeatOn
-                          ? ThemeColors.accentColor
-                          : Colors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.accentColor,
-                      width: 2)),
+                    : _isYearlyRepeatOn
+                    ? ThemeColors.accentColor
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.accentColor,
+                  width: 2,
+                ),
+              ),
             ),
-            const SizedBox(
-              width: 7.5,
-            ),
+            const SizedBox(width: 7.5),
             Text(
               'Repeat in every year  ',
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor),
-            )
+                fontWeight: FontWeight.w600,
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.accentColor,
+              ),
+            ),
           ],
         ),
       ),
@@ -391,31 +412,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               height: 15,
               width: 15,
               decoration: BoxDecoration(
-                  color: Get.isDarkMode
-                      ? _isWeeklyRepeatOn
+                color: Get.isDarkMode
+                    ? _isWeeklyRepeatOn
                           ? ThemeColors.darkAccent
                           : Colors.transparent
-                      : _isWeeklyRepeatOn
-                          ? ThemeColors.accentColor
-                          : Colors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.accentColor,
-                      width: 2)),
+                    : _isWeeklyRepeatOn
+                    ? ThemeColors.accentColor
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.accentColor,
+                  width: 2,
+                ),
+              ),
             ),
-            const SizedBox(
-              width: 7.5,
-            ),
+            const SizedBox(width: 7.5),
             Text(
               'Repeat in every week ',
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor),
-            )
+                fontWeight: FontWeight.w600,
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.accentColor,
+              ),
+            ),
           ],
         ),
       ),
@@ -444,31 +466,32 @@ class _CreateTaskScreenState extends State<CreateTaskScreen> {
               height: 15,
               width: 15,
               decoration: BoxDecoration(
-                  color: Get.isDarkMode
-                      ? _isDailyRepeatOn
+                color: Get.isDarkMode
+                    ? _isDailyRepeatOn
                           ? ThemeColors.darkAccent
                           : Colors.transparent
-                      : _isDailyRepeatOn
-                          ? ThemeColors.accentColor
-                          : Colors.transparent,
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Get.isDarkMode
-                          ? ThemeColors.darkAccent
-                          : ThemeColors.accentColor,
-                      width: 2)),
+                    : _isDailyRepeatOn
+                    ? ThemeColors.accentColor
+                    : Colors.transparent,
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Get.isDarkMode
+                      ? ThemeColors.darkAccent
+                      : ThemeColors.accentColor,
+                  width: 2,
+                ),
+              ),
             ),
-            const SizedBox(
-              width: 7.5,
-            ),
+            const SizedBox(width: 7.5),
             Text(
               'Repeat this task daily',
               style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.accentColor),
-            )
+                fontWeight: FontWeight.w600,
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.accentColor,
+              ),
+            ),
           ],
         ),
       ),

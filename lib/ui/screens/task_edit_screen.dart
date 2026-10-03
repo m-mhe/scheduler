@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:scheduler/data/task_data_model.dart';
 import 'package:scheduler/local_database.dart';
-import 'package:scheduler/ui/widgets/common_app_bar.dart';
 import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../../local_cache.dart';
 import '../utils/theme_colors.dart';
@@ -11,10 +10,7 @@ import 'package:get/get.dart';
 import '../widgets/bottom_popup_message.dart';
 
 class TaskEditScreen extends StatefulWidget {
-  const TaskEditScreen({
-    super.key,
-    required this.taskDataModel,
-  });
+  const TaskEditScreen({super.key, required this.taskDataModel});
 
   final TaskDataModel taskDataModel;
 
@@ -41,18 +37,22 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
         title: Text(
           "${widget.taskDataModel.date.toString().padLeft(2, '0')}/${widget.taskDataModel.month.toString().padLeft(2, "0")}/${widget.taskDataModel.year}",
           style: Theme.of(context).textTheme.titleLarge!.copyWith(
-              color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white),
+            color: Get.isDarkMode ? ThemeColors.darkAccent : Colors.white,
+          ),
         ),
         actions: [
           IconButton(
-              onPressed: () {
-                final bool isDarkMode = Get.isDarkMode;
-                Get.changeThemeMode(isDarkMode ? ThemeMode.light : ThemeMode.dark);
-                LocalCache.saveTheme(isDark: !isDarkMode);
-              },
-              icon: Get.isDarkMode
-                  ? const Icon(Icons.dark_mode_rounded)
-                  : const Icon(Icons.dark_mode_outlined))
+            onPressed: () {
+              final bool isDarkMode = Get.isDarkMode;
+              Get.changeThemeMode(
+                isDarkMode ? ThemeMode.light : ThemeMode.dark,
+              );
+              LocalCache.saveTheme(isDark: !isDarkMode);
+            },
+            icon: Get.isDarkMode
+                ? const Icon(Icons.dark_mode_rounded)
+                : const Icon(Icons.dark_mode_outlined),
+          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -61,15 +61,11 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
           child: Column(
             children: [
               _timeSelector(context),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _titleTextField(context),
               _descriptionTextField(context),
-              const SizedBox(
-                height: 10,
-              ),
-              _updateTaskButton()
+              const SizedBox(height: 10),
+              _updateTaskButton(),
             ],
           ),
         ),
@@ -126,25 +122,30 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
   Future<void> _onCompleted() async {
     if (_titleTEC.text.trim().isNotEmpty) {
       TaskDataModel updatedData = TaskDataModel(
-          iD: widget.taskDataModel.iD,
-          title: _titleTEC.text,
-          subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
-          fromTime: _fromTime,
-          toTime: _toTime,
-          month: widget.taskDataModel.month,
-          year: widget.taskDataModel.year,
-          taskState: 'Due',
-          date: widget.taskDataModel.date);
+        iD: widget.taskDataModel.iD,
+        title: _titleTEC.text,
+        subTitle: '[$_fromTime12 - $_toTime12] ${_subTitleTEC.text}',
+        fromTime: _fromTime,
+        toTime: _toTime,
+        month: widget.taskDataModel.month,
+        year: widget.taskDataModel.year,
+        taskState: 'Due',
+        date: widget.taskDataModel.date,
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         bottomPopupMessage(
-            text: 'Task is successfully edited!', color: Colors.green),
+          text: 'Task is successfully edited!',
+          color: Colors.green,
+        ),
       );
       await LocalDatabase.editActiveTask(updatedData);
       Get.offAll(() => CommonBottomNavBar());
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         bottomPopupMessage(
-            text: 'Please set a title to your task!', color: Colors.red),
+          text: 'Please set a title to your task!',
+          color: Colors.red,
+        ),
       );
     }
   }
@@ -156,7 +157,7 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
       style: ElevatedButton.styleFrom(
         fixedSize: const Size.fromWidth(double.maxFinite),
       ),
-      child: const Text('Update Task'),
+      child: const Text('Save Changes'),
     );
   }
 
@@ -165,8 +166,8 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
       controller: _subTitleTEC,
       maxLines: 5,
       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          color:
-              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+        color: Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor,
+      ),
       decoration: const InputDecoration(hintText: 'Description (optional):'),
     );
   }
@@ -178,8 +179,8 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
       maxLength: 20,
       textAlign: TextAlign.center,
       style: Theme.of(context).textTheme.labelLarge!.copyWith(
-          color:
-              Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor),
+        color: Get.isDarkMode ? ThemeColors.darkAccent : ThemeColors.titleColor,
+      ),
       decoration: const InputDecoration(hintText: 'Title:'),
     );
   }
@@ -190,11 +191,13 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
       children: [
         NumberPicker(
           textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-              color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
+            color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45,
+          ),
           selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-              color: Get.isDarkMode
-                  ? ThemeColors.darkAccent
-                  : ThemeColors.titleColor),
+            color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.titleColor,
+          ),
           minValue: 0,
           maxValue: 23,
           value: _fromTime,
@@ -211,9 +214,10 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
             Text(
               'Time',
               style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor),
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.titleColor,
+              ),
             ),
             Icon(
               Icons.arrow_forward_rounded,
@@ -225,28 +229,31 @@ class _TaskEditScreenState extends State<TaskEditScreen> {
             Text(
               '$_fromTime12 to $_toTime12',
               style: Theme.of(context).textTheme.labelMedium!.copyWith(
-                  color: Get.isDarkMode
-                      ? ThemeColors.darkAccent
-                      : ThemeColors.titleColor),
-            )
+                color: Get.isDarkMode
+                    ? ThemeColors.darkAccent
+                    : ThemeColors.titleColor,
+              ),
+            ),
           ],
         ),
         NumberPicker(
-            textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
-                color:
-                    Get.isDarkMode ? ThemeColors.accentColor : Colors.black45),
-            selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
-                color: Get.isDarkMode
-                    ? ThemeColors.darkAccent
-                    : ThemeColors.titleColor),
-            minValue: _toTimeMin,
-            maxValue: 23,
-            value: _toTime,
-            onChanged: (i) {
-              _toTime = i;
-              _aMPMClock();
-              setState(() {});
-            }),
+          textStyle: Theme.of(context).textTheme.labelSmall!.copyWith(
+            color: Get.isDarkMode ? ThemeColors.accentColor : Colors.black45,
+          ),
+          selectedTextStyle: Theme.of(context).textTheme.labelLarge!.copyWith(
+            color: Get.isDarkMode
+                ? ThemeColors.darkAccent
+                : ThemeColors.titleColor,
+          ),
+          minValue: _toTimeMin,
+          maxValue: 23,
+          value: _toTime,
+          onChanged: (i) {
+            _toTime = i;
+            _aMPMClock();
+            setState(() {});
+          },
+        ),
       ],
     );
   }

@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:scheduler/data/note_data_model.dart';
 import 'package:scheduler/local_database.dart';
 import 'package:scheduler/ui/widgets/common_app_bar.dart';
+import 'package:scheduler/ui/widgets/common_bottom_nav_bar.dart';
 import '../utils/theme_colors.dart';
+import '../widgets/bottom_popup_message.dart';
 import '../widgets/note_tile.dart';
 
 class SearchedNotes extends StatefulWidget {
@@ -41,7 +43,8 @@ class _SearchedNotesState extends State<SearchedNotes> {
           visible: _userNotes.isNotEmpty,
           replacement: Center(
             child: Text(
-              'Empty',
+              textAlign: TextAlign.center,
+              "Nothing found\nTry using different words to find the note.",
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                 color: Get.isDarkMode
                     ? ThemeColors.darkAccent
@@ -55,6 +58,18 @@ class _SearchedNotesState extends State<SearchedNotes> {
                 index: _userNotes[i].ID ?? i,
                 title: _userNotes[i].title,
                 description: _userNotes[i].body,
+                onNoteDelete: () async {
+                  await LocalDatabase.deleteFromUserNote(
+                    ID: _userNotes[i].ID ?? i,
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    bottomPopupMessage(
+                      text: 'Note is successfully deleted!',
+                      color: Colors.green,
+                    ),
+                  );
+                  Get.offAll(() => CommonBottomNavBar());
+                },
               );
             },
             separatorBuilder: (BuildContext context, int i) {

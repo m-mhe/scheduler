@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/local_cache.dart';
@@ -18,8 +19,8 @@ AppBar commonAppBar(BuildContext context) {
             LocalCache.saveTheme(isDark: !isDarkMode);
           },
           icon: Get.isDarkMode
-              ? const Icon(Icons.dark_mode_rounded)
-              : const Icon(Icons.dark_mode_outlined))
+              ? const Icon(CupertinoIcons.cloud_moon_fill)
+              : const Icon(CupertinoIcons.cloud_sun_fill))
     ],
   );
 }

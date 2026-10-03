@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:scheduler/ui/screens/edit_note_screen.dart';
 import '../utils/theme_colors.dart';
 
 class NoteTile extends StatelessWidget {
@@ -9,11 +9,13 @@ class NoteTile extends StatelessWidget {
     required this.index,
     required this.title,
     required this.description,
+    required this.onNoteDelete,
   });
 
   final int index;
   final String title;
   final String description;
+  final VoidCallback onNoteDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class NoteTile extends StatelessWidget {
         borderRadius: BorderRadius.circular(7),
       ),
       child: ListTile(
-        onLongPress: () {
+        onTap: () {
           showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -51,14 +53,22 @@ class NoteTile extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    onPressed: () {},
+                    onPressed: onNoteDelete,
                     child: Icon(Icons.delete),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.off(
+                        () => EditNoteScreen(
+                          index: index,
+                          title: title,
+                          description: description,
+                        ),
+                      );
+                    },
                     child: Icon(Icons.edit),
                   ),
                   ElevatedButton(

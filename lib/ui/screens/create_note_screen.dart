@@ -9,7 +9,7 @@ import '../utils/theme_colors.dart';
 import '../widgets/common_app_bar.dart';
 
 class CreateNoteScreen extends StatefulWidget {
-  CreateNoteScreen({super.key});
+  const CreateNoteScreen({super.key});
 
   @override
   State<CreateNoteScreen> createState() => _CreateNoteScreenState();
@@ -33,7 +33,7 @@ class _CreateNoteScreenState extends State<CreateNoteScreen> {
         NoteDataModel(
           title: _tECTitle.text,
           body: _tECDescription.text,
-          creation_time: DateTime.now().toString(),
+          updation_time: DateTime.now().toString(),
         ),
       );
       ScaffoldMessenger.of(

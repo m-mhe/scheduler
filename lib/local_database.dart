@@ -181,14 +181,14 @@ class LocalDatabase {
           'ID': ID as int,
           'title': title as String,
           'body': body as String,
-          'creation_time': creation_time as String,
+          'updation_time': updation_time as String,
         }
         in data) {
       noteDataList.add(
         NoteDataModel(
           title: title,
           body: body,
-          creation_time: creation_time,
+          updation_time: updation_time,
           ID: ID,
         ),
       );
@@ -214,19 +214,44 @@ class LocalDatabase {
           'ID': ID as int,
           'title': title as String,
           'body': body as String,
-          'creation_time': creation_time as String,
+          'updation_time': updation_time as String,
         }
         in data) {
       noteDataList.add(
         NoteDataModel(
           title: title,
           body: body,
-          creation_time: creation_time,
+          updation_time: updation_time,
           ID: ID,
         ),
       );
     }
 
     return noteDataList;
+  }
+
+  static Future<void> deleteFromUserNote({required int ID}) async {
+    final connectionToTheDB = await openDatabase(
+      join(await getDatabasesPath(), "scheduler.db"),
+    );
+    await connectionToTheDB.delete(
+      "user_note",
+      where: "ID = ?",
+      whereArgs: [ID],
+    );
+    await connectionToTheDB.close();
+  }
+
+  static Future<void> editUserNote(NoteDataModel noteDataModel) async {
+    final connectionToTheDB = await openDatabase(
+      join(await getDatabasesPath(), "scheduler.db"),
+    );
+    await connectionToTheDB.update(
+      "user_note",
+      noteDataModel.toMap(),
+      where: "ID = ?",
+      whereArgs: [noteDataModel.ID],
+    );
+    await connectionToTheDB.close();
   }
 }

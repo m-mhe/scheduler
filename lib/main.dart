@@ -7,18 +7,24 @@ import 'package:path/path.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await openDatabase(join(await getDatabasesPath(), 'scheduler.db'),
-      onCreate: (Database db, int v) async {
-    await db.execute(
-        'CREATE TABLE IF NOT EXISTS active_task(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, subtitle TEXT, taskState TEXT, fromTime INTEGER, toTime INTEGER, date INTEGER, month INTEGER, year INTEGER)');
-    await db.execute(
-        'CREATE TABLE IF NOT EXISTS inActive_task(title TEXT, subtitle TEXT, taskState TEXT)');
-    await db.execute(
-        'CREATE TABLE IF NOT EXISTS focus_sessions(minutes INTEGER, dateTime TEXT, taskType TEXT)');
-    await db.execute(
-      "CREATE TABLE IF NOT EXISTS user_note(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT DEFAULT '', creation_time TEXT DEFAULT '')"
-    );
-  }, version: 1);
+  await openDatabase(
+    join(await getDatabasesPath(), 'scheduler.db'),
+    onCreate: (Database db, int v) async {
+      await db.execute(
+        'CREATE TABLE IF NOT EXISTS active_task(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, subtitle TEXT, taskState TEXT, fromTime INTEGER, toTime INTEGER, date INTEGER, month INTEGER, year INTEGER)',
+      );
+      await db.execute(
+        'CREATE TABLE IF NOT EXISTS inActive_task(title TEXT, subtitle TEXT, taskState TEXT)',
+      );
+      await db.execute(
+        'CREATE TABLE IF NOT EXISTS focus_sessions(minutes INTEGER, dateTime TEXT, taskType TEXT)',
+      );
+      await db.execute(
+        "CREATE TABLE IF NOT EXISTS user_note(ID INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, body TEXT DEFAULT '', updation_time TEXT DEFAULT '')",
+      );
+    },
+    version: 1,
+  );
   ThemeController.changeTheme(isDark: await LocalCache.fetchTheme());
   runApp(const MyApp());
 }

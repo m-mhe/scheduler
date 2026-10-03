@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:scheduler/data/focus_session_data_model.dart';
@@ -699,8 +700,8 @@ class _FocusSessionStaticsScreenState extends State<FocusSessionStaticsScreen> {
               LocalCache.saveTheme(isDark: !isDarkMode);
             },
             icon: Get.isDarkMode
-                ? const Icon(Icons.dark_mode_rounded)
-                : const Icon(Icons.dark_mode_outlined))
+                ? const Icon(CupertinoIcons.cloud_moon_fill)
+                : const Icon(CupertinoIcons.cloud_sun_fill))
       ],
     );
   }

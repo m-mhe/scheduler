@@ -53,6 +53,19 @@ class _NoteState extends State<Note> {
                 index: _userNotes[i].ID ?? i,
                 title: _userNotes[i].title,
                 description: _userNotes[i].body,
+                onNoteDelete: () async {
+                  await LocalDatabase.deleteFromUserNote(
+                    ID: _userNotes[i].ID ?? i,
+                  );
+                  await _loadNotes();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    bottomPopupMessage(
+                      text: 'Note is successfully deleted!',
+                      color: Colors.green,
+                    ),
+                  );
+                  Get.back();
+                },
               );
             },
             separatorBuilder: (BuildContext context, int i) {
@@ -115,8 +128,8 @@ class _NoteState extends State<Note> {
                                 ),
                               );
                             } else {
-                              Get.to(
-                                SearchedNotes(searchKeyWord: _tECSearch.text),
+                              Get.off(
+                                  () => SearchedNotes(searchKeyWord: _tECSearch.text),
                               );
                             }
                           },

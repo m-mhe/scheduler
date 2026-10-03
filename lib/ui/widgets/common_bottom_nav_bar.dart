@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:scheduler/ui/screens/Note.dart';
 import 'package:scheduler/ui/screens/home_screen.dart';
@@ -24,17 +25,21 @@ class CommonBottomNavBar extends StatelessWidget {
             },
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_view_week),
+                icon: Icon(CupertinoIcons.collections),
+                activeIcon: Icon(CupertinoIcons.collections_solid),
                 label: 'Old Tasks',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
+                activeIcon: Icon(Icons.home),
                 label: 'Home',
               ),
-              BottomNavigationBarItem(icon: Icon(Icons.edit_note_outlined),
+              BottomNavigationBarItem(icon: Icon(Icons.note_add_outlined),
+              activeIcon: Icon(Icons.note_add_rounded),
               label: "Note"),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calendar_today_outlined),
+                icon: Icon(CupertinoIcons.calendar_today),
+                activeIcon: Icon(CupertinoIcons.calendar_today),
                 label: 'Calendar',
               )
             ]),
